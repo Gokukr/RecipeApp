@@ -10,17 +10,14 @@ function init(){
     res.send(recipes)
   });
 
-  router.post("/:userId/save-recipe",async (req,res) => {
+  router.post("/:userId/save-recipe", async (req,res) => {
     const userId = req.params.userId;
     const recipeId = req.body.recipeId;
     const date = req.body.date;
-    // console.log(userId,recipeId);
     const result = await saveRecipe(userId, recipeId, date);
-    // if(result.status === "success"){
-    //   res.send(result.recipe);
-    // }
     res.send(result);
-  })
+  });
+  
   return router;
 }
 
