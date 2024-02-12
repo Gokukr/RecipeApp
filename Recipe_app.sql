@@ -52,6 +52,16 @@ create table Cuisine_type(
 	Name varchar(25),
 	Description text
 );
+INSERT INTO Cuisine_type (Name, Description)
+VALUES
+    ('Italian', 'Italian cuisine is known for its regional diversity, abundance of pasta, pizza, and use of ingredients like tomatoes, olive oil, and garlic.'),
+    ('Chinese', 'Chinese cuisine is diverse, with a wide range of cooking styles and flavors influenced by regions such as Sichuan, Cantonese, and Hunan.'),
+    ('Spanish', 'Spanish cuisine is characterized by its Mediterranean influence, including dishes like paella, tapas, and a variety of seafood.'),
+    ('Thai', 'Thai cuisine features bold flavors, aromatic herbs, and spices, with dishes like pad Thai, green curry, and tom yum soup.'),
+    ('Indian', 'Indian cuisine is known for its rich flavors, diverse spices, and wide variety of vegetarian and non-vegetarian dishes, including curries, biryanis, and tandoori.'),
+    ('American', 'American cuisine encompasses a wide range of regional dishes and influences, including burgers, barbecue, Tex-Mex, and soul food.'),
+    ('Asian', 'Asian cuisine is a broad category that includes diverse culinary traditions from countries like China, Japan, Korea, Thailand, and Vietnam, known for their unique flavors and ingredients.'),
+    ('Japanese', 'Japanese cuisine is characterized by its emphasis on fresh, seasonal ingredients, simplicity, and precision, with dishes like sushi, tempura, and ramen.');
 select * from Cuisine_type;
 
 Create table Favorites(
