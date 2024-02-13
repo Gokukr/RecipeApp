@@ -61,8 +61,7 @@ VALUES
     ('Indian', 'Indian cuisine is known for its rich flavors, diverse spices, and wide variety of vegetarian and non-vegetarian dishes, including curries, biryanis, and tandoori.'),
     ('American', 'American cuisine encompasses a wide range of regional dishes and influences, including burgers, barbecue, Tex-Mex, and soul food.'),
     ('Asian', 'Asian cuisine is a broad category that includes diverse culinary traditions from countries like China, Japan, Korea, Thailand, and Vietnam, known for their unique flavors and ingredients.'),
-    ('Japanese', 'Japanese cuisine is characterized by its emphasis on fresh, seasonal ingredients, simplicity, and precision, with dishes like sushi, tempura, and ramen.')
-	;
+    ('Japanese', 'Japanese cuisine is characterized by its emphasis on fresh, seasonal ingredients, simplicity, and precision, with dishes like sushi, tempura, and ramen.');
 select * from Cuisine_type;
 
 Create table Favorites(
