@@ -117,7 +117,7 @@ const AddRecipe = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1200/api/add",
+        "http://localhost:1200/api/manage/add",
         newRecipe
       );
       console.log("Recipe added:", response.data);
