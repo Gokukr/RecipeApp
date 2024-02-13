@@ -31,9 +31,9 @@ const SearchBar = ({ onSearch, onFilter }) => {
           value={query}
           onChange={handleChange}
         />
-        <button type="submit">
+        {/* <button type="submit">
           <img className="h-[23px] w-[22.7px]" alt="" src={search} />
-        </button>
+        </button> */}
       </form>
       <FilterButton onClick={handleFilterClick} />
       {showFilterDialog && (
@@ -46,7 +46,8 @@ const SearchBar = ({ onSearch, onFilter }) => {
 const FilterButton = ({ onClick }) => {
   return (
     <button
-      className="ml-auto bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-bold py-2 px-4 rounded"
+      className="ml-auto bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-open-sans py-2 px-4 rounded"
+      style={{ letterSpacing: "0.05em" }}
       onClick={onClick}
     >
       Filter

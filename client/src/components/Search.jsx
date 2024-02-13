@@ -1,4 +1,3 @@
-// Search.js
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import Container from "./Container";

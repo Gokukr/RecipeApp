@@ -8,6 +8,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "North Indian",
     recipeId: "1111",
+    course: "Main Course",
   },
   {
     foodName: "Paneer Tikka",
@@ -17,6 +18,7 @@ const data = [
     mealType: "Veg",
     cuisine: "North Indian",
     recipeId: "2222",
+    course: "Starter",
   },
   {
     foodName: "Dal Makhani",
@@ -26,7 +28,9 @@ const data = [
     mealType: "Veg",
     cuisine: "North Indian",
     recipeId: "3333",
+    course: "Main Course",
   },
+  
   {
     foodName: "Chicken Tikka Masala",
     timeTaken: "35 mins",
@@ -35,6 +39,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "North Indian",
     recipeId: "4444",
+    course: "Main Course",
   },
   {
     foodName: "Margherita Pizza",
@@ -44,15 +49,7 @@ const data = [
     mealType: "Veg",
     cuisine: "Italian",
     recipeId: "5555",
-  },
-  {
-    foodName: "Margherita Pizza",
-    timeTaken: "20 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Margherita Pizza image
-    rating: 4.6,
-    mealType: "Veg",
-    cuisine: "Italian",
-    recipeId: "5555",
+    course: "Main Course",
   },
   {
     foodName: "Spaghetti Carbonara",
@@ -62,6 +59,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "Italian",
     recipeId: "6666",
+    course: "Main Course",
   },
   {
     foodName: "Tiramisu",
@@ -71,6 +69,7 @@ const data = [
     mealType: "Veg",
     cuisine: "Italian",
     recipeId: "7777",
+    course: "Dessert",
   },
   {
     foodName: "Sushi",
@@ -80,6 +79,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "Japanese",
     recipeId: "8888",
+    course: "Main Course",
   },
   {
     foodName: "Ramen",
@@ -89,6 +89,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "Japanese",
     recipeId: "9999",
+    course: "Main Course",
   },
   {
     foodName: "Udon",
@@ -98,6 +99,7 @@ const data = [
     mealType: "Veg",
     cuisine: "Japanese",
     recipeId: "1010",
+    course: "Main Course",
   },
   {
     foodName: "Mapo Tofu",
@@ -107,6 +109,7 @@ const data = [
     mealType: "Veg",
     cuisine: "Chinese",
     recipeId: "1111",
+    course: "Main Course",
   },
   {
     foodName: "Kung Pao Chicken",
@@ -116,6 +119,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "Chinese",
     recipeId: "1212",
+    course: "Main Course",
   },
   {
     foodName: "Peking Duck",
@@ -125,6 +129,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "Chinese",
     recipeId: "1313",
+    course: "Main Course",
   },
   {
     foodName: "Beef Wellington",
@@ -134,6 +139,7 @@ const data = [
     mealType: "Non-Veg",
     cuisine: "Continental",
     recipeId: "1414",
+    course: "Main Course",
   },
   {
     foodName: "Caesar Salad",
@@ -143,6 +149,7 @@ const data = [
     mealType: "Veg",
     cuisine: "Continental",
     recipeId: "1515",
+    course: "Starter",
   },
   {
     foodName: "Croissant",
@@ -152,15 +159,7 @@ const data = [
     mealType: "Veg",
     cuisine: "Continental",
     recipeId: "1616",
-  },
-  {
-    foodName: "Croissant",
-    timeTaken: "45 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Croissant image
-    rating: 4.6,
-    mealType: "Veg",
-    cuisine: "Continental",
-    recipeId: "1616",
+    course: "Main Course",
   },
 ];
 
