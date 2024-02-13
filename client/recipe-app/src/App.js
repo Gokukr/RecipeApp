@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import Search from "./components/Search";
+import Footer from "./components/Footer";
+import "./index.css";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -12,10 +16,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Welcome to React and Express App</h1>
-        <p>Message from Server: {message}</p>
-      </header>
+      <Header />
+      <Search />
+      <Footer />
     </div>
   );
 }
