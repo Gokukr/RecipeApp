@@ -22,7 +22,7 @@ function init(){
   router.get("/:userId/saved-recipes/search", async (req,res) => {
     const result = await searchSavedRecipe(
       req.params.userId,
-      req.body.searchText      
+      req.query.searchText      
     )
     res.send(result);
   })

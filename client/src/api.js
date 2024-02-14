@@ -8,9 +8,9 @@ export async function getSavedRecipesById(id){
   return res;
 };
 
-export async function searchSavedRecipesByText(userId, text){
-  const url = `${base}/${userId}/saved-recipes/search`;
-  const res = await axios.get(url,{searchText:text});
+export async function getSavedRecipesByText(userId, text){
+  const url = `${base}/${userId}/saved-recipes/search?searchText=${text}`;
+  const res = await axios.get(url);
   return res;
 }
 

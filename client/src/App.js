@@ -5,7 +5,7 @@ import SavedRecipe from "./Pages/SavedRecipe";
 function App() {
   return (
     <Routes >
-      <Route path="/api/:user_id/saved-recipes" element={<SavedRecipe/>}/>
+      <Route path="/api/:userId/saved-recipes" element={<SavedRecipe/>}/>
     </Routes>
   );
 }
