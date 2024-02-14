@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const middleware = require('../Middleware')
+const savedRecipe = require('./SavedRecipes')
 
 function init(){
-  router.use('/api',middleware);
+  router.use('/api',savedRecipe);
   return router;
 }
 
