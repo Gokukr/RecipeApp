@@ -1,9 +1,8 @@
-// data.js
 const data = [
   {
     foodName: "Butter Chicken",
     timeTaken: "30 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Butter Chicken image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.7,
     mealType: "Non-Veg",
     cuisine: "North Indian",
@@ -13,7 +12,7 @@ const data = [
   {
     foodName: "Paneer Tikka",
     timeTaken: "25 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Paneer Tikka image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.6,
     mealType: "Veg",
     cuisine: "North Indian",
@@ -23,18 +22,18 @@ const data = [
   {
     foodName: "Dal Makhani",
     timeTaken: "40 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Dal Makhani image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.8,
     mealType: "Veg",
     cuisine: "North Indian",
     recipeId: "3333",
     course: "Main Course",
   },
-  
+
   {
     foodName: "Chicken Tikka Masala",
     timeTaken: "35 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Chicken Tikka Masala image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.5,
     mealType: "Non-Veg",
     cuisine: "North Indian",
@@ -44,7 +43,7 @@ const data = [
   {
     foodName: "Margherita Pizza",
     timeTaken: "20 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Margherita Pizza image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.6,
     mealType: "Veg",
     cuisine: "Italian",
@@ -54,7 +53,7 @@ const data = [
   {
     foodName: "Spaghetti Carbonara",
     timeTaken: "25 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Spaghetti Carbonara image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.4,
     mealType: "Non-Veg",
     cuisine: "Italian",
@@ -64,7 +63,7 @@ const data = [
   {
     foodName: "Tiramisu",
     timeTaken: "40 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Tiramisu image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.9,
     mealType: "Veg",
     cuisine: "Italian",
@@ -74,7 +73,7 @@ const data = [
   {
     foodName: "Sushi",
     timeTaken: "40 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Sushi image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.8,
     mealType: "Non-Veg",
     cuisine: "Japanese",
@@ -84,7 +83,7 @@ const data = [
   {
     foodName: "Ramen",
     timeTaken: "35 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Ramen image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.7,
     mealType: "Non-Veg",
     cuisine: "Japanese",
@@ -94,7 +93,7 @@ const data = [
   {
     foodName: "Udon",
     timeTaken: "30 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Udon image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.6,
     mealType: "Veg",
     cuisine: "Japanese",
@@ -104,8 +103,7 @@ const data = [
   {
     foodName: "Mapo Tofu",
     timeTaken: "35 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Mapo Tofu image
-    rating: 4.5,
+    imageUrl: "https://via.placeholder.com/300",
     mealType: "Veg",
     cuisine: "Chinese",
     recipeId: "1111",
@@ -114,7 +112,7 @@ const data = [
   {
     foodName: "Kung Pao Chicken",
     timeTaken: "40 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Kung Pao Chicken image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.7,
     mealType: "Non-Veg",
     cuisine: "Chinese",
@@ -124,7 +122,7 @@ const data = [
   {
     foodName: "Peking Duck",
     timeTaken: "60 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Peking Duck image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.8,
     mealType: "Non-Veg",
     cuisine: "Chinese",
@@ -134,7 +132,7 @@ const data = [
   {
     foodName: "Beef Wellington",
     timeTaken: "60 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Beef Wellington image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.9,
     mealType: "Non-Veg",
     cuisine: "Continental",
@@ -144,7 +142,7 @@ const data = [
   {
     foodName: "Caesar Salad",
     timeTaken: "15 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Caesar Salad image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.5,
     mealType: "Veg",
     cuisine: "Continental",
@@ -154,7 +152,7 @@ const data = [
   {
     foodName: "Croissant",
     timeTaken: "45 mins",
-    imageUrl: "https://via.placeholder.com/300", // Placeholder URL for Croissant image
+    imageUrl: "https://via.placeholder.com/300",
     rating: 4.6,
     mealType: "Veg",
     cuisine: "Continental",

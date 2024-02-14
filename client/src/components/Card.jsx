@@ -1,6 +1,13 @@
 import React from "react";
 
-const Card = ({ foodName, timeTaken, imageUrl }) => {
+const Card = ({ foodName, timeTaken, imageUrl, id }) => {
+  console.log("Props received in Card component:", {
+    foodName,
+    timeTaken,
+    imageUrl,
+    id,
+  });
+
   return (
     <div className="w-64 h-56 bg-darkslategray-100 shadow-md rounded-lg overflow-hidden flex flex-col mr-4">
       <img src={imageUrl} alt={foodName} className="w-full h-32 object-cover" />

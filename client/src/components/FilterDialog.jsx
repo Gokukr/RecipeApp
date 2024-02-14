@@ -92,7 +92,7 @@ const FilterDialog = ({ onClose, onApply }) => {
         <div className="flex justify-between">
           <button
             onClick={handleApply}
-            className="bg-whitesmoke text-darkslategray-300 px-4 py-2 rounded-md hover:bg-white-600"
+            className="bg-whitesmoke text-darkslategray-300 px-4 py-2 rounded-md hover:bg-blue-600"
           >
             Apply
           </button>

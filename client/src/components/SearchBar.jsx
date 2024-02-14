@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch, onFilter }) => {
     <div className="relative">
       <form className="w-[331px] rounded-3xs bg-darkslategray-300 flex flex-row items-end justify-between pt-[13px] pb-3.5 pr-4 pl-9 box-border gap-[20px] max-w-full mt-8">
         <input
-          className="w-[280px] font-open-sans text-base bg-transparent text-whitesmoke"
+          className="w-[280px] font-open-sans text-base bg-transparent text-whitesmoke focus-outline-none"
           placeholder="Search"
           type="text"
           value={query}
@@ -46,8 +46,7 @@ const SearchBar = ({ onSearch, onFilter }) => {
 const FilterButton = ({ onClick }) => {
   return (
     <button
-      className="ml-auto bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-open-sans py-2 px-4 rounded"
-      style={{ letterSpacing: "0.05em" }}
+      className="ml-5 bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-open-sans py-2 px-4 rounded-lg mt-8"
       onClick={onClick}
     >
       Filter

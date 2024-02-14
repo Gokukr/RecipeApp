@@ -1,28 +1,29 @@
+// filter.js
 const applyFilters = (data, filterOptions) => {
   let filteredData = data;
 
-  if (filterOptions.mealType && filterOptions.mealType.trim() !== "") {
+  // Apply filter for meal type
+  if (filterOptions.mealType) {
     filteredData = filteredData.filter(
-      (recipe) =>
-        recipe.mealType.toLowerCase() === filterOptions.mealType.toLowerCase()
+      (recipe) => recipe.mealType === filterOptions.mealType
     );
   }
 
-  if (filterOptions.course && filterOptions.course.trim() !== "") {
+  // Apply filter for course
+  if (filterOptions.course) {
     filteredData = filteredData.filter(
-      (recipe) =>
-        recipe.course &&
-        recipe.course.toLowerCase() === filterOptions.course.toLowerCase()
+      (recipe) => recipe.course === filterOptions.course
     );
   }
 
-  if (filterOptions.cuisine && filterOptions.cuisine.trim() !== "") {
+  // Apply filter for cuisine
+  if (filterOptions.cuisine) {
     filteredData = filteredData.filter(
-      (recipe) =>
-        recipe.cuisine.toLowerCase() === filterOptions.cuisine.toLowerCase()
+      (recipe) => recipe.cuisine === filterOptions.cuisine
     );
   }
 
+  // Apply filter for ratings
   filteredData = filteredData.filter(
     (recipe) => recipe.rating >= filterOptions.minRating
   );
