@@ -25,7 +25,11 @@ async function saveRecipe(userId, recipeId, saveDate){
     const hasRecipe = await recipeExists(recipeId);
     const hasUser = await userExists(userId);
     if(hasRecipe && hasUser){
-      await pool.query('INSERT INTO favorites(user_id, recipe_id, Date_added, notes) values ($1, $2 ,$3, $4)',[userId, recipeId, saveDate, "..."]);
+      await pool.query(
+        `INSERT INTO favorites(user_id, recipe_id, Date_added, notes) 
+        values ($1, $2 ,$3, $4)`
+        ,[userId, recipeId, saveDate, "..."]
+      );
       return {status:"success"};
     }
     return {

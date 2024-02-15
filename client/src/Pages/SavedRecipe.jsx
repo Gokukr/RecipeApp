@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import RecipeContainer from "../components/RecipeContainer";
-import {getSavedRecipesByText} from '../api';
+import {searchSavedRecipe} from '../api';
 import { useParams } from "react-router";
 import SearchBar from "../components/SearchBar";
 
@@ -25,7 +25,7 @@ function SavedRecipe() {
   // };
 
   const getRecipes = async (id, text) => {
-    const res = await getSavedRecipesByText(id,text);
+    const res = await searchSavedRecipe(id,text);
     setRecipes(res.data.rows);
   }
   React.useEffect(() => {
@@ -36,12 +36,12 @@ function SavedRecipe() {
     <div className="App">
       <Header />
       <div>
-      <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-darkslategray-100 font-open-sans">
-      <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">
-        <h1>Saved Recipes</h1>
-      </div>
-      <SearchBar onSearch={handleSearch} />
-    </div>
+        <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-darkslategray-100 font-open-sans">
+          <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">
+            <h1>Saved Recipes</h1>
+          </div>
+          <SearchBar onSearch={handleSearch} />
+        </div>
         <RecipeContainer
           data = {recipes}
         />

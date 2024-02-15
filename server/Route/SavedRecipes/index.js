@@ -1,13 +1,24 @@
 const express =  require("express");
-const getSavedRecipesById = require('../../Middleware/getSavedRecipe');
+const getSavedRecipes = require('../../Middleware/getSavedRecipe');
 const saveRecipe = require('../../Middleware/saveRecipe');
-const searchSavedRecipe = require ('./../../Middleware/searchSavedRecipe');
+// const searchSavedRecipe = require ('./../../Middleware/searchSavedRecipe');
 const router = express.Router();
 
 function init(){
   router.get("/:userId/saved-recipes", async (req,res) => {
-    const result = await getSavedRecipesById(req.params.userId);
-    res.send(result)
+    let result;
+    // if(req.query.searchText){
+      result = await getSavedRecipes(
+        req.params.userId,
+        req.query.searchText,
+        {
+          mealType:req.query.mealType,
+          course:req.query.course,
+          cuisine:req.query.cuisine,
+          rating:req.query.rating
+        }
+      );
+    res.send(result);
   });
 
   router.post("/:userId/save-a-recipe", async (req,res) => {
@@ -18,14 +29,6 @@ function init(){
     );
     res.send(result);
   });
-
-  router.get("/:userId/saved-recipes/search", async (req,res) => {
-    const result = await searchSavedRecipe(
-      req.params.userId,
-      req.query.searchText      
-    )
-    res.send(result);
-  })
 
   return router;
 }
