@@ -8,10 +8,25 @@ export async function getSavedRecipesById(id){
   return res;
 };
 
-export async function searchSavedRecipe(userId, text){
-  const url = `${base}/${userId}/saved-recipes/search?searchText=${text}`;
-  const res = await axios.get(url);
-  return res;
+export async function searchSavedRecipe(
+  userId, 
+  text, 
+  {rating, 
+  mealType, 
+  course, 
+  cuisine }){
+    const url = `${base}/${userId}/saved-recipes`;
+    // debugger;
+    const res = await axios.get(url,{
+      params:{
+        searchText:text,
+        rating:rating,
+        mealType:mealType,
+        course:course,
+        cuisine:cuisine
+      }
+    });
+    return res;
 }
 
 export async function saveRecipe(userId,recipeId,date){

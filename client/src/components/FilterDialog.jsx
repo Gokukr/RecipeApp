@@ -3,10 +3,10 @@ import React, { useState } from "react";
 
 const FilterDialog = ({ onClose, onApply }) => {
   const [filters, setFilters] = useState({
-    mealType: "",
-    course: "",
-    cuisine: "",
-    minRating: 0,
+    mealType: null,
+    course: null,
+    cuisine: null,
+    rating: 0,
   });
 
   const handleChange = (e) => {

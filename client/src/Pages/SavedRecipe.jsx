@@ -1,36 +1,30 @@
 import React from "react";
+import { useParams } from "react-router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import RecipeContainer from "../components/RecipeContainer";
 import {searchSavedRecipe} from '../api';
-import { useParams } from "react-router";
 import SearchBar from "../components/SearchBar";
 
 function SavedRecipe() {
   const { userId} = useParams();
   const [recipes,setRecipes] = React.useState([]);
+  const [searchText,setSearchText] = React.useState("");
+  const [filter, setFilter] = React.useState({
+    rating : 0, 
+    mealType : null, 
+    course : null, 
+    cuisine : null
+  });
 
-  const handleSearch = (query) => {
-    getRecipes(userId,query);
-  };
-
-  // const handleFilter = (filters) => {
-  //   // setFilterOptions(filters);
-  //   applyFiltersAndSetResults(filters);
-  // };
-
-  // const applyFiltersAndSetResults = (filters) => {
-  //   const filteredData = applyFilters(recipes, filters);
-  //   setSearchResults(filteredData);
-  // };
-
-  const getRecipes = async (id, text) => {
-    const res = await searchSavedRecipe(id,text);
+  const getRecipes = async (id , text , filter) => {
+    const res = await searchSavedRecipe(id, text, filter);
     setRecipes(res.data.rows);
   }
+
   React.useEffect(() => {
-    getRecipes(userId,"")
-  },[userId]);
+    getRecipes(userId, searchText,filter)
+  },[userId,searchText,filter]);
 
   return (
     <div className="App">
@@ -40,7 +34,7 @@ function SavedRecipe() {
           <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">
             <h1>Saved Recipes</h1>
           </div>
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar onSearch={setSearchText} onFilter={setFilter}/>
         </div>
         <RecipeContainer
           data = {recipes}
