@@ -1,18 +1,21 @@
 // filter.js
+
 const applyFilters = (data, filterOptions) => {
   let filteredData = data;
 
   // Apply filter for meal type
-  if (filterOptions.mealType) {
+  if (filterOptions.meal_type) {
     filteredData = filteredData.filter(
-      (recipe) => recipe.mealType === filterOptions.mealType
+      (recipe) => recipe.meal_type === filterOptions.meal_type
     );
+    console.log(filteredData);
   }
 
   // Apply filter for course
-  if (filterOptions.course) {
+  if (filterOptions.course_type) {
+    // Changed from course to course_type
     filteredData = filteredData.filter(
-      (recipe) => recipe.course === filterOptions.course
+      (recipe) => recipe.course_type === filterOptions.course_type // Changed from course to course_type
     );
   }
 

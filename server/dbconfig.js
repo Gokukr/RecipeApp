@@ -4,7 +4,7 @@ const { Pool } = require("pg");
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "Recipe_app",
+  database: "Recipe",
   password: "gokul196",
   port: 5432,
 });
@@ -14,4 +14,4 @@ pool
   .then(() => console.log("Connected to PostgreSQL database"))
   .catch((err) => console.error("Connection error", err.stack));
 
-module.exports=pool;
+module.exports = pool;

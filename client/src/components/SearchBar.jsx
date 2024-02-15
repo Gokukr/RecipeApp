@@ -1,4 +1,3 @@
-// SearchBar.js
 import React, { useState } from "react";
 import search from "../assets/Search.png";
 import FilterDialog from "./FilterDialog";
@@ -6,6 +5,7 @@ import FilterDialog from "./FilterDialog";
 const SearchBar = ({ onSearch, onFilter }) => {
   const [query, setQuery] = useState("");
   const [showFilterDialog, setShowFilterDialog] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const handleChange = (e) => {
     const inputValue = e.target.value;
@@ -21,21 +21,38 @@ const SearchBar = ({ onSearch, onFilter }) => {
     setShowFilterDialog(false);
   };
 
+  const handleSearchFocus = () => {
+    setIsSearchFocused(true);
+  };
+
+  const handleSearchBlur = () => {
+    setIsSearchFocused(false);
+  };
+
   return (
     <div className="relative">
-      <form className="w-[331px] rounded-3xs bg-darkslategray-300 flex flex-row items-end justify-between pt-[13px] pb-3.5 pr-4 pl-9 box-border gap-[20px] max-w-full mt-8">
-        <input
-          className="w-[280px] font-open-sans text-base bg-transparent text-whitesmoke focus-outline-none"
-          placeholder="Search"
-          type="text"
-          value={query}
-          onChange={handleChange}
-        />
-        {/* <button type="submit">
-          <img className="h-[23px] w-[22.7px]" alt="" src={search} />
-        </button> */}
-      </form>
-      <FilterButton onClick={handleFilterClick} />
+      <div className="flex items-end justify-between gap-8 max-w-full mt-8">
+        <form
+          className={`rounded-3xs bg-darkslategray-300 flex flex-row items-end justify-start pt-[13px] pb-3.5 pr-4 pl-9 box-border ${
+            isSearchFocused ? "border-none" : ""
+          }`}
+        >
+          <input
+            className="font-open-sans text-base bg-transparent text-whitesmoke w-72 outline-none border-none"
+            placeholder="Search"
+            type="text"
+            value={query}
+            onChange={handleChange}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
+          />
+
+          {/* <button type="submit">
+            <img className="h-[23px] w-[22.7px]" alt="" src={search} />
+          </button> */}
+        </form>
+        <FilterButton onClick={handleFilterClick} />
+      </div>
       {showFilterDialog && (
         <FilterDialog onClose={handleCloseFilterDialog} onApply={onFilter} />
       )}
@@ -46,7 +63,7 @@ const SearchBar = ({ onSearch, onFilter }) => {
 const FilterButton = ({ onClick }) => {
   return (
     <button
-      className="ml-5 bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-open-sans py-2 px-4 rounded-lg mt-8"
+      className="bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-open-sans py-2 px-4 rounded-lg mt-8 "
       onClick={onClick}
     >
       Filter

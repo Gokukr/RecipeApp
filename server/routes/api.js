@@ -1,9 +1,15 @@
 const router = require("express").Router();
 const db = require("../dbconfig");
+const path = require("path");
 
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
   res.json(data);
+});
+
+router.get("recipe/:id", (req, res) => {
+  const { id } = req.params;
+  res.redirect(`recipe/${id}`);
 });
 
 //for ingredients data

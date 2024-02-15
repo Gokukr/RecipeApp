@@ -3,8 +3,8 @@ import React, { useState } from "react";
 
 const FilterDialog = ({ onClose, onApply }) => {
   const [filters, setFilters] = useState({
-    mealType: "",
-    course: "",
+    meal_type: "", // Changed from mealType to meal_type to match the keys in the filter function
+    course_type: "", // Changed from course to course_type
     cuisine: "",
     minRating: 0,
   });
@@ -31,8 +31,8 @@ const FilterDialog = ({ onClose, onApply }) => {
             Meal Type:
           </label>
           <select
-            name="mealType"
-            value={filters.mealType}
+            name="meal_type"
+            value={filters.meal_type}
             onChange={handleChange}
             className="border border-gray-300 rounded-md px-2 py-1"
           >
@@ -46,8 +46,8 @@ const FilterDialog = ({ onClose, onApply }) => {
             Course:
           </label>
           <select
-            name="course"
-            value={filters.course}
+            name="course_type"
+            value={filters.course_type}
             onChange={handleChange}
             className="border border-gray-300 rounded-md px-2 py-1"
           >
