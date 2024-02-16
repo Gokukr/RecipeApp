@@ -26,13 +26,14 @@ const Search = () => {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(searchResults);
+  //console.log(searchResults);
 
   const handleSearch = async (query) => {
     if (query.trim() !== "") {
       setSearchUsed(true);
       try {
         const response = await axios.get("http://localhost:1200/api/getdata");
+        const Data = response.data;
         const searchData = response.data.filter((recipe) =>
           recipe.name.toLowerCase().includes(query.toLowerCase())
         );
@@ -47,8 +48,15 @@ const Search = () => {
   };
 
   const handleFilter = (filters) => {
-    const filteredData = applyFilters(searchResults, filters);
     setFilterOptions(filters);
+    applyFiltersAndSetResults(filters);
+    //console.log(filteredData);
+    //setSearchResults(filteredData);
+  };
+  const applyFiltersAndSetResults = (filters) => {
+    const filteredData = applyFilters(searchResults, filters);
+    console.log(searchResults, "back");
+    console.log("fto", filters);
     //console.log(filteredData);
     setSearchResults(filteredData);
   };
@@ -98,6 +106,7 @@ const Search = () => {
         <FilterDialog
           onClose={handleCloseFilterDialog}
           onApply={handleFilter}
+          onClick={handleFilterClick}
         />
       )}
     </div>
