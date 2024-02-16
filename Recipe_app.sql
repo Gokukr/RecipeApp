@@ -27,7 +27,7 @@ Create table Recipe(
 	Cooking_time numeric(5),
 	Total_time numeric(5),
 	Servings varchar(10),
-	Difficulty varchar(10),
+	Difficulty varchar(20),
 	Cuisine varchar(20),
 	Meal_type varchar(20),
 	Status varchar(10),

@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import { PhotoIcon } from "@heroicons/react/24/solid";
-
-const AddRecipe = () => {
+import AddIngredientsDialog from "./AddIngredientsDialog";
+const AddRecipe = ({ userId }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [instruction, setInstruction] = useState("");
   const [preparationTime, setPreparationTime] = useState("");
   const [cookingTime, setCookingTime] = useState("");
   const [servings, setServings] = useState("");
-  const [difficultyLevel, setDifficultyLevel] = useState("");
+  const [difficultyLevel, setDifficultyLevel] = useState("Beginner");
   const [cuisineTypes, setCuisineTypes] = useState([]);
-  const [cuisineType, setCuisineType] = useState("");
-  const [mealType, setMealType] = useState("");
-  const [courseType, setCourseType] = useState("");
+  const [cuisineType, setCuisineType] = useState("American");
+  const [mealType, setMealType] = useState("Non veg");
+  const [courseType, setCourseType] = useState("Juice");
+  const [showAddIngredientDialog, setshowAddIngredientDialog] = useState(false);
+  const [instructions, setInstructions] = useState([""]);
 
   const difficultyLevels = [
     "Beginner",
@@ -53,38 +53,26 @@ const AddRecipe = () => {
     }
   };
 
-  const handleIngredientChange = (e) => {
-    const selectedIngredientId = e.target.value;
-    console.log(selectedIngredientId);
-    const selectedIngredient = ingredients.find(
-      (ingredient) => ingredient.id === selectedIngredientId
-    );
-    if (selectedIngredientId === "other") {
-      const newIngredientName = prompt("Enter the name of the new ingredient:");
-      const newIngredientCategory = prompt(
-        "Enter the category of the new ingredient:"
-      );
-
-      if (newIngredientName && newIngredientCategory) {
-        axios
-          .post("http://localhost:1200/api/manage/ingredients/add", {
-            ingredient_name: newIngredientName,
-            category: newIngredientCategory,
-          })
-          .then((response) => {
-            const newIngredient = response.data;
-            setSelectedIngredients([...selectedIngredients, newIngredient]);
-          })
-          .catch((error) => {
-            console.error("Error adding new ingredient", error);
-          });
-      }
-    }
-    if (selectedIngredient) {
-      setSelectedIngredients([...selectedIngredients, selectedIngredient]);
-    }
+  const handleAddIngredient = () => {
+    setshowAddIngredientDialog(true);
+    fetchIngredients();
   };
 
+  const handleCloseDialog = () => {
+    setshowAddIngredientDialog(false);
+    fetchIngredients();
+  };
+
+  const handleIngredientChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedIngredients([...selectedIngredients, value]);
+    } else {
+      setSelectedIngredients(
+        selectedIngredients.filter((ingredient) => ingredient !== value)
+      );
+    }
+  };
   const fetchCuisineTypes = async () => {
     try {
       const response = await axios.get(
@@ -95,16 +83,30 @@ const AddRecipe = () => {
       console.error("Error fetching cuisines", error);
     }
   };
+  const handleInstructionChange = (index, value) => {
+    const newInstructions = [...instructions];
+    newInstructions[index] = value;
+    setInstructions(newInstructions);
+  };
+
+  const handleAddInstruction = () => {
+    setInstructions([...instructions, ""]);
+  };
+
+  const handleRemoveInstruction = (index) => {
+    const newInstructions = [...instructions];
+    newInstructions.splice(index, 1);
+    setInstructions(newInstructions);
+  };
 
   const handleSubmit = async (e) => {
-    console.log("submit");
     e.preventDefault();
     const newRecipe = {
       name,
       description,
       imageUrl,
-      ingredients: selectedIngredients.map((ingredient) => ingredient.id),
-      instruction,
+      selectedIngredients,
+      instructions,
       preparationTime,
       cookingTime,
       servings,
@@ -112,27 +114,15 @@ const AddRecipe = () => {
       cuisineType,
       mealType,
       courseType,
-      // user_id,
+      userId,
     };
-
     try {
       const response = await axios.post(
         "http://localhost:1200/api/manage/add",
         newRecipe
       );
-      console.log("Recipe added:", response.data);
-      setName("");
-      setDescription("");
-      setImageUrl("");
-      setSelectedIngredients([]);
-      setInstruction("");
-      setPreparationTime("");
-      setCookingTime("");
-      setServings("");
-      setDifficultyLevel("");
-      setCuisineType("");
-      setMealType("");
-      setCourseType("");
+      window.alert("Recipe added successfully!");
+      window.location.reload(); //-------Change to previous page
     } catch (error) {
       console.error("Error adding recipe:", error);
     }
@@ -144,7 +134,7 @@ const AddRecipe = () => {
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-full">
+              <div className="sm:col-span-4">
                 <label
                   htmlFor="recipename"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -166,6 +156,25 @@ const AddRecipe = () => {
                 </div>
               </div>
 
+              <div className="px-10 sm:col-span-2 flex items-center space-x-3">
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Non-veg
+                </span>
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    value={mealType}
+                    className="sr-only peer"
+                    onChange={(e) => {
+                      setMealType(e.target.checked ? "Veg" : "Non-veg");
+                    }}
+                  />
+                  <div className="relative w-11 h-6 bg-red-600 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <span className="pl-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Veg
+                  </span>
+                </label>
+              </div>
               <div className="col-span-full">
                 <label
                   htmlFor="description"
@@ -180,7 +189,6 @@ const AddRecipe = () => {
                     autoComplete="description"
                     rows={3}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={""}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
@@ -308,8 +316,11 @@ const AddRecipe = () => {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={cuisineType}
                     onChange={(e) => setCuisineType(e.target.value)}
+                    defaultValue={
+                      cuisineTypes.length > 0 ? cuisineTypes[0].name : ""
+                    }
                   >
-                    {cuisineTypes.map((cuisineType) => (
+                    {cuisineTypes.map((cuisineType, index) => (
                       <option key={cuisineType.id} value={cuisineType.name}>
                         {cuisineType.name}
                       </option>
@@ -360,81 +371,113 @@ const AddRecipe = () => {
                 </div>
               </div>
 
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-full">
                 <label
                   htmlFor="ingredients"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Ingredients
                 </label>
-                <div className="mt-2">
-                  <select
-                    onChange={handleIngredientChange}
-                    name="ingredients"
-                    id="ingredients"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  >
-                    {ingredients.map((ingredient) => (
-                      <option key={ingredient.id} value={ingredient.id}>
-                        {ingredient.ingredient_name}
-                      </option>
-                    ))}
-                    <option value="other">Other</option>
-                  </select>
+                <div className="mt-2 flex flex-wrap ">
+                  {ingredients.map((ingredient) => (
+                    <div
+                      key={ingredient.id}
+                      className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 px-2 mb-4"
+                    >
+                      <label className="flex items-center space-x-2 block w-full py-1.5 text-gray-900 focus:ring-2 sm:text-sm sm:leading-6">
+                        <input
+                          type="checkbox"
+                          id={ingredient.id}
+                          name="ingredients"
+                          value={ingredient.ingredient_name}
+                          onChange={handleIngredientChange}
+                          className="form-checkbox h-5 w-5 text-indigo-600"
+                        />
+                        <span>{ingredient.ingredient_name}</span>
+                      </label>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="selected-ingredients"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                <button
+                  className="flex items-center mx-auto bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleAddIngredient}
                 >
-                  Selected Ingredients
-                </label>
-                <div className="mt-2">
-                  <ul className="text-s flex leading-5 text-gray-700">
-                    {selectedIngredients
-                      .filter((ingredient, index) => {
-                        return (
-                          selectedIngredients.indexOf(ingredient) === index
-                        );
-                      })
-                      .map((ingredient) => (
-                        <li key={ingredient.id}>
-                          {ingredient.ingredient_name + " - "}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
+                  Add
+                </button>
+                {showAddIngredientDialog && (
+                  <AddIngredientsDialog
+                    existingIngredients={ingredients.map(
+                      (ingredient) => ingredient.ingredient_name
+                    )}
+                    onClose={handleCloseDialog}
+                  />
+                )}
               </div>
 
               <div className="col-span-full">
-                <label
-                  htmlFor="instructions"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
+                <label className="block text-sm font-medium leading-6 text-gray-900">
                   Instructions
                 </label>
                 <div className="mt-2">
-                  <textarea
-                    id="instructions"
-                    name="instructions"
-                    rows={7}
-                    autoComplete="instructions"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={""}
-                    value={instruction}
-                    onChange={(e) => setInstruction(e.target.value)}
-                    required
-                  />
+                  {instructions.map((instruction, index) => (
+                    <div key={index}>
+                      <div className="flex">
+                        <label className="block m-1 text-sm font-medium leading-6 text-gray-600">
+                          Step{index + 1}:
+                        </label>
+                        <button
+                          type="button"
+                          className="bg-gainsboro px-3 "
+                          onClick={() => handleRemoveInstruction(index)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                          </svg>
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        value={instruction}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        onChange={(e) =>
+                          handleInstructionChange(index, e.target.value)
+                        }
+                      />
+                    </div>
+                  ))}
                 </div>
+
+                <button
+                  type="button"
+                  className="p-4"
+                  onClick={handleAddInstruction}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    fill="#2c3e50"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                  </svg>
+                </button>
               </div>
 
               <div className="col-span-full">
                 <div className="mt-6 flex items-center justify-center gap-x-6">
                   <button
                     type="button"
-                    midnight-blue
                     className="rounded-md text-base font-semibold leading-6 text-midnight-blue shadow-md px-10 py-2 hover:bg-red-600 hover:text-zinc-950 bg-white"
+                    // onClick={window.history.back()}
                   >
                     Cancel
                   </button>
