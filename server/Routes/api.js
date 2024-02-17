@@ -10,8 +10,7 @@ const saveRecipe = require('../middleware/savedRecipe');
 
 router.get("/:userId/saved-recipes", async (req,res) => {
   try {
-    let result;
-      result = await getSavedRecipes(
+    let result = await getSavedRecipes(
         req.params.userId,
         req.query.searchText,
         {

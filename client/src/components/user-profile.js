@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 function UserProfile(userId) {
   const [user, setUser] = useState(null);
@@ -15,9 +16,9 @@ function UserProfile(userId) {
     });
   }, [userId]);
 
-  const handleJumpToSavedRecipes = () => {
+  // const handleJumpToSavedRecipes = () => {
     //redirect to the saved recipes page
-  };
+  // };
 
   return (
     <>
@@ -31,12 +32,12 @@ function UserProfile(userId) {
                 <button className="text-base bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
                   Change Password
                 </button>
-                <button
+                <Link
                   className="text-base bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-md"
-                  onClick={handleJumpToSavedRecipes}
+                  to={`/api/${Cookies.get("user_id")}/saved-recipes`}
                 >
                   Saved Recipes
-                </button>
+                </Link>
               </div>
             </div>
             <div className="profile-details flex flex-col gap-4">
