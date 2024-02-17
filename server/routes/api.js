@@ -1,33 +1,154 @@
 const router = require("express").Router();
 const db = require("../dbconfig");
 const path = require("path");
+const bcrypt = require("bcrypt");
+const jwtgenerator = require("../JwtToken/jwtgenerator");
+const Authorize = require("../middleware/authorization");
+const mailservice = require("../services/registrationservices");
 
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
   res.json(data);
 });
+router.post("/register", async (req, res) => {
+  try {
+    const {
+      firstname,
+      lastname,
+      email,
+      address,
+      gender,
+      phonenumber,
+      password,
+      repassword,
+    } = req.body;
+    if (repassword === password) {
+      const registration = await db.query(
+        "SELECT * FROM user_data WHERE email = $1",
+        [email]
+      );
+      if (registration.rows.length > 0) {
+        return res.status(401).send("User already exists");
+      }
+      const saltRounds = 10;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const bcryptPassword = await bcrypt.hash(password, salt);
+      const role = "user";
+      await db.query(
+        "INSERT INTO user_data(first_name, last_name, email, address, gender, role, phone_number, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        [
+          firstname,
+          lastname,
+          email,
+          address,
+          gender,
+          role,
+          phonenumber,
+          bcryptPassword,
+        ]
+      );
+      const newUserQuery = await db.query(
+        "SELECT * FROM user_data WHERE email = $1",
+        [email]
+      );
+      const newUser = newUserQuery.rows[0];
+      console.log(newUser);
+      mailservice.sendmail(
+        email,
+        "Thank You for Signing Up with us",
+        `${newUser.first_name} Thank You For your Registration with we keep data safe and Enjoy in the recipe management by Learning New recipes`
+      );
+      const status = true;
+      res.json({ status });
+    } else {
+      return res.status(401).send("Password Mismatch");
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
-router.get("recipe/:id", (req, res) => {
-  const { id } = req.params;
-  res.redirect(`recipe/${id}`);
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const status = await db.query("select * from user_data where email = $1", [
+      email,
+    ]);
+    if (status.rows.length == 0) {
+      return res.status(401).json("Password or Email is incorrect");
+    }
+    const passwordStatus = await bcrypt.compare(
+      password,
+      status.rows[0].password
+    );
+    if (!passwordStatus) {
+      return res.status(401).json("Password or Email is in correct");
+    }
+    const token = jwtgenerator(status.rows[0].id);
+    const user_id = status.rows[0].id;
+    const role = status.rows[0].role;
+    const body = {
+      token,
+      role,
+      user_id,
+    };
+    res.json(body);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+//for fetching userdata in profile page
+router.get("/user-profile/:id", (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  db.query(
+    `select * from user_data where id= $1`,
+    [userId],
+    (error, result) => {
+      if (error) {
+        console.error("Error fetching user-data", error);
+        res.status(500).json({ error: "Internal error" });
+      } else {
+        if (result.rows.length === 0) {
+          res.status(404).json({ error: "User not found" });
+        } else {
+          const user = result.rows[0];
+          console.log(user);
+          res.json({
+            id: user.id,
+            name: user.first_name + " " + user.last_name,
+            email: user.email,
+            gender: user.gender,
+            role: user.role,
+            phone: user.phone_number,
+            pass: user.password,
+          });
+        }
+      }
+    }
+  );
 });
 
 //for ingredients data
-router.post("/insertdata", async (req, res) => {
-  try {
-    const { ingredient_name, category } = req.body;
+// router.post("/insertdata", async (req, res) => {
+//   try {
+//     const { ingredient_name, category } = req.body;
 
-    await db.query(
-      "INSERT INTO ingredients (ingredient_name,category) VALUES($1,$2)",
-      [ingredient_name, category]
-    );
-    res.json({ success: true, message: "insertion successfull" });
-    console.log(ingredient_name, category);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "internal server error" });
-  }
-});
+//     await db.query(
+//       "INSERT INTO ingredients (ingredient_name,category) VALUES($1,$2)",
+//       [ingredient_name, category]
+//     );
+//     res.json({ success: true, message: "insertion successfull" });
+//     console.log(ingredient_name, category);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: "internal server error" });
+//   }
+// });
 
 //for meal type table
 // router.post("/mealtype", async (req, res) => {

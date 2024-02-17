@@ -1,13 +1,10 @@
 const applyFilters = (data, filterOptions) => {
-  // Ensure data and filterOptions are valid
   if (!Array.isArray(data) || typeof filterOptions !== "object") {
     console.error("Invalid data or filter options.");
     return [];
   }
 
-  // Copy data to avoid mutating the original array
   let filteredData = [...data];
-  console.log("hello", filteredData);
 
   try {
     // Apply filter for meal type

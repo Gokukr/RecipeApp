@@ -1,10 +1,9 @@
-// FilterDialog.js
 import React, { useState } from "react";
 
 const FilterDialog = ({ onClose, onApply }) => {
   const [filters, setFilters] = useState({
-    meal_type: "", // Changed from mealType to meal_type to match the keys in the filter function
-    course_type: "", // Changed from course to course_type
+    meal_type: "",
+    course_type: "",
     cuisine: "",
     minRating: 0,
   });
@@ -19,6 +18,7 @@ const FilterDialog = ({ onClose, onApply }) => {
 
   const handleApply = () => {
     onApply(filters);
+
     onClose();
   };
 

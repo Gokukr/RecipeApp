@@ -2,8 +2,13 @@ import { memo } from "react";
 import hatimage from "../assets/hat.png";
 import search from "../assets/Vector.png";
 import user from "../assets/Vector (1).png";
+import { useNavigate } from "react-router-dom";
 
 const Header = memo(() => {
+  const navigator = useNavigate();
+  function handleProfileclick() {
+    navigator("/user");
+  }
   return (
     <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
       <div className="self-stretch w-[269px] flex flex-row items-start justify-start gap-[9px]">
@@ -47,6 +52,7 @@ const Header = memo(() => {
             loading="eager"
             alt=""
             src={user}
+            onClick={handleProfileclick}
           />
         </div>
       </div>
