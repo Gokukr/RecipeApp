@@ -5,6 +5,37 @@ const bcrypt = require("bcrypt");
 const jwtgenerator = require("../JwtToken/jwtgenerator");
 const Authorize = require("../middleware/authorization");
 const mailservice = require("../services/registrationservices");
+const getSavedRecipes = require('../middleware/getSavedRecipe');
+const saveRecipe = require('../middleware/savedRecipe');
+
+router.get("/:userId/saved-recipes", async (req,res) => {
+  try {
+    let result;
+      result = await getSavedRecipes(
+        req.params.userId,
+        req.query.searchText,
+        {
+          mealType:req.query.mealType,
+          course:req.query.course,
+          cuisine:req.query.cuisine,
+          rating:req.query.rating
+        }
+      );
+    res.send(result);
+    
+  } catch (error) {
+    res.send("Server error")
+  }
+});
+
+router.post("/:userId/save-a-recipe", async (req,res) => {
+  const result = await saveRecipe(
+    req.params.userId, 
+    req.body.recipeId,
+    req.body.date
+  );
+  res.send(result);
+});
 
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
