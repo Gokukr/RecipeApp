@@ -6,8 +6,7 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
   //console.log(id);
 
   return (
-    // pass user Id as well in below call, this id will be taken as recipeId
-    // userId is required for add to favorites
+   
     <Link to={`/detail-recipe/${id}`}>
       {/* {name} */}
 
