@@ -1,37 +1,37 @@
 const router = require("express").Router();
 const pool = require("../dbconfig");
 
-// router.get("/user-profile/:id", (req, res) => {
-//   const userId = req.params.id;
-//   console.log(userId);
+router.get("/user-profile/:id", (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
 
-//   pool.query(
-//     `select * from user_data where id= $1`,
-//     [userId],
-//     (error, result) => {
-//       if (error) {
-//         console.error("Error fetching user-data", error);
-//         res.status(500).json({ error: "Internal error" });
-//       } else {
-//         if (result.rows.length === 0) {
-//           res.status(404).json({ error: "User not found" });
-//         } else {
-//           const user = result.rows[0];
-//           console.log(user);
-//           res.json({
-//             id: user.id,
-//             name: user.first_name + " " + user.last_name,
-//             email: user.email,
-//             gender: user.gender,
-//             role: user.role,
-//             phone: user.phone_number,
-//             pass: user.password,
-//           });
-//         }
-//       }
-//     }
-//   );
-// });
+  pool.query(
+    `select * from user_data where id= $1`,
+    [userId],
+    (error, result) => {
+      if (error) {
+        console.error("Error fetching user-data", error);
+        res.status(500).json({ error: "Internal error" });
+      } else {
+        if (result.rows.length === 0) {
+          res.status(404).json({ error: "User not found" });
+        } else {
+          const user = result.rows[0];
+          console.log(user);
+          res.json({
+            id: user.id,
+            name: user.first_name + " " + user.last_name,
+            email: user.email,
+            gender: user.gender,
+            role: user.role,
+            phone: user.phone_number,
+            pass: user.password,
+          });
+        }
+      }
+    }
+  );
+});
 
 router.post("/favourites/:userId/:recipeId", async (req, res) => {
   const userId = req.params.userId;
