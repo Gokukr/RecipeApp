@@ -17,7 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dash" element={<Dash />} />
           <Route path="/user" element={<UserProfile />} />
-          <Route path="/detail-recipe/:id" element={<Detailrecipe />} />
+          <Route path="/detail-recipe/:recipeId/:userId" element={<Detailrecipe recipeId={recipeid} userId={userId}/>} />
         </Routes>
       </BrowserRouter>
     </div>
