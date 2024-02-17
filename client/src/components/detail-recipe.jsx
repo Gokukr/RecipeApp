@@ -4,9 +4,14 @@ import axios from "axios";
 import Rating from "./Rating";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useParams } from "react-router";
+import Cookies from "js-cookie";
 
-function Detailrecipe({ recipeId, userId }) {
+function Detailrecipe() {
+  const {recipeId} = useParams();
+  const userId = Cookies.get("user_id")
   const [userRole, setUser] = useState(null);
+  debugger;
   // userId = 'cded7396-c732-11ee-993a-505a65b0ab55';
   useEffect(() => {
     const url = `http://localhost:1200/api/detail/user-profile/${userId}`;

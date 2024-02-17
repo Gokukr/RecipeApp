@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -6,7 +5,7 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
   //console.log(id);
 
   return (
-    <Link to={`/detail-recipe/${id}`}>
+    <Link to={`/user/detail-recipe/${id}`}>
       {/* {name} */}
 
       <div className="w-64 h-56 bg-darkslategray-100 shadow-md rounded-lg overflow-hidden flex flex-col mr-4">
