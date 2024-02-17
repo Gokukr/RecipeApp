@@ -136,9 +136,7 @@ function Detailrecipe({ recipeId, userId }) {
           </p>
         )}
         <Rating
-        //   param1={recipeId}
-        //   param2={recipe.rating}
-        //   param3={recipe.count}
+        recipeId={recipeId}
         />
       </div>
       <Footer />
