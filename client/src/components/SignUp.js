@@ -65,13 +65,13 @@ export default function SignUp() {
       <ToastContainer />
       <div className="relative w-1/2 h-full flex flex-col">
         <div className="absolute top-[20%] left-[10%] flex flex-col">
-          <h1 className="text-4x1 text-black font-bold my-4">
+          <p className="text-4x1 text-black font-bold my-4">
             Users can search for recipes based on various criteria such as
             ingredients, cuisine, dietary preferences (e.g., vegetarian,
             gluten-free), meal type (e.g., breakfast, dinner), or cooking time.
             Advanced filtering options allow users to narrow down their search
             results to find recipes that match their specific preferences
-          </h1>
+          </p>
           <p className="text-x1 text-black  font-bold">
             Once users have selected their recipes for the week or month, the
             system can automatically generate a grocery list based on the
@@ -79,12 +79,12 @@ export default function SignUp() {
             process of grocery shopping by ensuring users don't forget any items
             they need
           </p>
-          <h1 className="text-4x1 text-black  font-bold my-4">
+          <p className="text-4x1 text-black  font-bold my-4">
             Some recipe management systems offer features to assist users during
             the cooking process. This may include step-by-step instructions with
             timers, ingredient scaling (for adjusting serving sizes), cooking
             tips,
-          </h1>
+          </p>
           <p className="text-x1 text-black  font-bold">
             Users can personalize their experience by creating profiles with
             their dietary preferences, allergies, and favorite recipes. The
