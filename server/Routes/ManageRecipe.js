@@ -113,6 +113,20 @@ router.put("/update", async (req, res) => {
   }
 });
 
+// Delete recipe
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteRecipe = await pool.query(
+      "DELETE FROM recipe WHERE id = $1",
+      [id]
+    );
+    res.json({ message: "Recipe deleted successfully" });
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 // Get all ingredients
 router.get("/ingredients", async (req, res) => {
   try {
@@ -122,7 +136,6 @@ router.get("/ingredients", async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching ingredients:", error);
-    res.status(500).json({ message: "Internal server error" });
   }
 });
 

@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import DeleteRecipe from "./DeleteRecipe";
 function Detailrecipe() {
   const { recipeId } = useParams();
   const userId = Cookies.get("user_id");
@@ -34,9 +35,9 @@ function Detailrecipe() {
   const handleEdit = () => {
     navigate("/edit-recipe", { state: { recipe } });
   };
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleDelete = () => {
-    //delete route
+    setShowDeleteModal(true);
   };
 
   const handleAddToFavourites = () => {
@@ -91,6 +92,7 @@ function Detailrecipe() {
                 >
                   Edit
                 </button>
+                {showDeleteModal && <DeleteRecipe recipeId={recipeId} />}
                 <button
                   onClick={handleDelete}
                   className="bg-red-500 text-white mr-4 font-medium px-4 py-2 rounded-md hover:bg-red-700"

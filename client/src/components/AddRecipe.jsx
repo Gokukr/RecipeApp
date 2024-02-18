@@ -3,7 +3,7 @@ import ManageRecipes from "./ManageRecipes";
 import Header from "./Header";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const AddRecipe = () => {
   const userId = Cookies.get("user_id");
