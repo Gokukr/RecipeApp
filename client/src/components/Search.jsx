@@ -6,6 +6,7 @@ import Card from "./Card";
 import FilterDialog from "./FilterDialog";
 import applyFilters from "./Filter";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const Search = () => {
   const [role, setRole] = useState("");
@@ -81,9 +82,11 @@ const Search = () => {
     <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-darkslategray-100 font-open-sans relative">
       {role === "admin" && (
         <div className="absolute top-0 right-0 mr-4 mt-4">
-          <button className="bg-darkslategray-100 hover:darkslategray-80 text-white font-bold py-2 px-4 rounded">
-            Add Recipe
-          </button>
+          <Link to="/add-recipe">
+            <button className="bg-darkslategray-100 hover:darkslategray-80 text-white font-bold py-2 px-4 rounded">
+              Add Recipe
+            </button>
+          </Link>
         </div>
       )}
       <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">

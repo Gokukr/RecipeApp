@@ -4,12 +4,13 @@ const pool = require("../dbconfig");
 // Add a recipe
 router.post("/add", async (req, res) => {
   try {
+    console.log(req.body);
     const {
       name,
       description,
       imageUrl,
-      ingredients,
-      instruction,
+      selectedIngredients,
+      instructions,
       preparationTime,
       cookingTime,
       servings,
@@ -17,28 +18,29 @@ router.post("/add", async (req, res) => {
       cuisineType,
       mealType,
       courseType,
+      userId,
     } = req.body;
-    // const userId =
     const newRecipe = await pool.query(
       `INSERT INTO recipe 
-        (name, description, image, ingredients, instructions, preperation_time, cooking_time, total_time, servings, difficulty, cuisine, meal_type, status, course_type) VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) 
+        (name, description, image, ingredients, instructions, preparation_time, cooking_time, total_time, servings, difficulty, cuisine, meal_type, status, course_type, user_id) VALUES 
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) 
         RETURNING *`,
       [
         name,
         description,
         imageUrl,
-        ingredients,
-        instruction,
+        selectedIngredients,
+        instructions,
         preparationTime,
         cookingTime,
-        preparationTime + cookingTime,
+        parseInt(preparationTime) + parseInt(cookingTime),
         servings,
         difficultyLevel,
         cuisineType,
         mealType,
-        1,
+        "Accepted",
         courseType,
+        userId,
       ]
     );
 
@@ -48,10 +50,75 @@ router.post("/add", async (req, res) => {
   }
 });
 
+// Update a recipe
+router.put("/update", async (req, res) => {
+  try {
+    console.log(req.body);
+    const {
+      name,
+      description,
+      imageUrl,
+      selectedIngredients,
+      instructions,
+      preparationTime,
+      cookingTime,
+      servings,
+      difficultyLevel,
+      cuisineType,
+      mealType,
+      courseType,
+      id,
+    } = req.body;
+    const updatedRecipe = await pool.query(
+      `UPDATE recipe
+      SET
+          name = $1,
+          description = $2,
+          image = $3,
+          ingredients = $4,
+          instructions = $5,
+          preparation_time = $6,
+          cooking_time = $7,
+          total_time = $8,
+          servings = $9,
+          difficulty = $10,
+          cuisine = $11,
+          meal_type = $12,
+          course_type = $13
+      WHERE
+          id = $14
+      RETURNING *;
+      `,
+      [
+        name,
+        description,
+        imageUrl,
+        selectedIngredients,
+        instructions,
+        preparationTime,
+        cookingTime,
+        parseInt(preparationTime) + parseInt(cookingTime),
+        servings,
+        difficultyLevel,
+        cuisineType,
+        mealType,
+        courseType,
+        id,
+      ]
+    );
+
+    res.json(updatedRecipe.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 // Get all ingredients
 router.get("/ingredients", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM Ingredients");
+    const result = await pool.query(
+      "SELECT * FROM Ingredients ORDER BY ingredient_name ASC"
+    );
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching ingredients:", error);
@@ -59,26 +126,14 @@ router.get("/ingredients", async (req, res) => {
   }
 });
 
-// Get all cuisines
-router.get("/cuisines", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM cuisine_type");
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching cuisines:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
 // Add new ingredient
 router.post("/ingredients/add", async (req, res) => {
   try {
-    const { ingredient_name, category } = req.body;
+    const { ingredientName, category } = req.body;
     const newIngredient = await pool.query(
       `INSERT INTO ingredients (Ingredient_name, Category) VALUES ($1, $2) RETURNING *`,
-      [ingredient_name, category]
+      [ingredientName, category]
     );
-
     res.json(newIngredient.rows[0]);
   } catch (err) {
     console.error(err.message);

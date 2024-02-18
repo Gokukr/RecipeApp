@@ -6,10 +6,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { useParams } from "react-router";
 import Cookies from "js-cookie";
-
+import { useNavigate } from "react-router-dom";
 function Detailrecipe() {
-  const {recipeId} = useParams();
-  const userId = Cookies.get("user_id")
+  const { recipeId } = useParams();
+  const userId = Cookies.get("user_id");
   const [userRole, setUser] = useState(null);
   // userId = 'cded7396-c732-11ee-993a-505a65b0ab55';
   useEffect(() => {
@@ -30,8 +30,9 @@ function Detailrecipe() {
 
   //   const count = {recipe.count};
 
+  const navigate = useNavigate();
   const handleEdit = () => {
-    //edit route
+    navigate("/edit-recipe", { state: { recipe } });
   };
 
   const handleDelete = () => {
@@ -41,21 +42,24 @@ function Detailrecipe() {
   const handleAddToFavourites = () => {
     // const userId='cded7396-c732-11ee-993a-505a65b0ab55';
     try {
-      const res = axios.post(`http://localhost:1200/api/${userId}/save-a-recipe`,{recipeId:recipeId,date:new Date()});
+      const res = axios.post(
+        `http://localhost:1200/api/${userId}/save-a-recipe`,
+        { recipeId: recipeId, date: new Date() }
+      );
       console.log(res);
-    //   const { data: isFavourite } = axios.get(
-    //     `http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`
-    //   );
+      //   const { data: isFavourite } = axios.get(
+      //     `http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`
+      //   );
 
-    //   if (!isFavourite) {
-    //     // Recipe is not already a favourite, proceed with adding:
-    //     axios.post(
-    //       `http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`
-    //     );
-    //     console.log("Recipe added to favourites successfully.");
-    //   } else {
-    //     console.log("Recipe already exists in favourites.");
-    //   }
+      //   if (!isFavourite) {
+      //     // Recipe is not already a favourite, proceed with adding:
+      //     axios.post(
+      //       `http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`
+      //     );
+      //     console.log("Recipe added to favourites successfully.");
+      //   } else {
+      //     console.log("Recipe already exists in favourites.");
+      //   }
     } catch (error) {
       console.error("Error checking or adding recipe to favourites:", error);
     }
@@ -141,9 +145,7 @@ function Detailrecipe() {
             Loading...
           </p>
         )}
-        <Rating
-        recipeId={recipeId}
-        />
+        <Rating recipeId={recipeId} />
       </div>
       <Footer />
     </>

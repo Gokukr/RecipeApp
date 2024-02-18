@@ -107,7 +107,12 @@ router.get("/recipes/:id", (req, res) => {
             difficulty: recipe.difficulty,
             ingredients: recipe.ingredients,
             count: recipe.total_ratings,
-            instructions: recipe.instruction,
+            instructions: recipe.instructions,
+            description: recipe.description,
+            preparationTime: recipe.preparation_time,
+            cookingTime: recipe.cooking_time,
+            servings: recipe.servings,
+            courseType: recipe.course_type,
           });
         }
       }
