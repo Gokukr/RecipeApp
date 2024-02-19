@@ -3,22 +3,23 @@ import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
-function UserProfile(userId) {
+function UserProfile() {
   const [user, setUser] = useState(null);
   // userId = 'cded7396-c732-11ee-993a-505a65b0ab55';
-  useEffect(() => {
-    const userId = Cookies.get("user_id");
+  const userId = Cookies.get("user_id");
+  useEffect(() => {;
     const url = `http://localhost:1200/api/user-profile/${userId}`;
     axios.get(url).then((response) => {
       setUser(response.data);
     });
   }, [userId]);
-  const navigate = useNavigate();
-  const handleJumpToSavedRecipes = () => {
-    navigate(`/api/${userId}/saved-recipes`);
-  };
+  // const navigate = useNavigate();
+
+  // const handleJumpToSavedRecipes = () => {
+  //   navigate(`/api/${userId}/saved-recipes`);
+  // };
 
   return (
     <>
@@ -34,12 +35,13 @@ function UserProfile(userId) {
                     <button className="text-base bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md ml-4">
                       Change Password
                     </button>
-                    <button
-                      className="text-base bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-md "
-                      onClick={handleJumpToSavedRecipes}
+                    <Link
+                      to={`/api/${userId}/saved-recipes`}
+                      className="text-base bg-green-500 no-underline font-open-sans hover:bg-green-700 text-white px-4 py-2 rounded-md "
+                      // onClick={handleJumpToSavedRecipes}
                     >
                       Saved Recipes
-                    </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="profile-details flex flex-col gap-4">

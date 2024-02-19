@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Card = ({ foodName, timeTaken, imageUrl, id }) => {
-  //console.log(id);
+  // console.log(id);
 
   return (
     <Link to={`/user/detail-recipe/${id}`}>
