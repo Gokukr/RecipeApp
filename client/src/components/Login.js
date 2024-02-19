@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Background from "../assets/design.png"; // Make sure this path is correct
 import Cookies from "js-cookie";
-import {  toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
@@ -59,6 +59,7 @@ export default function Login() {
         backgroundPosition: "center",
       }}
     >
+      <ToastContainer />
       <div className="w-1/2 p-8">
         <div className="space-y-4">
           <p className="text-lg text-gray-700 font-semibold">

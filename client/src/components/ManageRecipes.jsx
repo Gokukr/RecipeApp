@@ -368,6 +368,7 @@ const ManageRecipes = ({ handleSubmit, recipe, back }) => {
                   ))}
                 </div>
                 <button
+                  type="button"
                   className="flex items-center mx-auto bg-darkslategray-300 hover:bg-darkslategray-500 text-white font-bold py-2 px-4 rounded"
                   onClick={handleAddIngredient}
                 >

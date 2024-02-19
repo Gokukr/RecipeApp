@@ -9,28 +9,28 @@ const base = 'http://localhost:1200/api';
 // };
 
 export async function searchSavedRecipe(
-  userId, 
-  text, 
-  {rating, 
-  mealType, 
-  course, 
-  cuisine }){
-    const url = `${base}/${userId}/saved-recipes`;
-    // debugger;
-    const res = await axios.get(url,{
-      params:{
-        searchText:text,
-        rating:rating,
-        mealType:mealType,
-        course:course,
-        cuisine:cuisine
-      }
-    });
-    return res;
+  userId,
+  text,
+  { rating,
+    mealType,
+    course,
+    cuisine }) {
+  const url = `${base}/${userId}/saved-recipes`;
+  // debugger;
+  const res = await axios.get(url, {
+    params: {
+      searchText: text,
+      rating: rating,
+      mealType: mealType,
+      course: course,
+      cuisine: cuisine
+    }
+  });
+  return res;
 }
 
-export async function saveRecipe(userId,recipeId,date){
+export async function saveRecipe(userId, recipeId, date) {
   const url = `${base}/${userId}/save-recipe`;
-  const res = await axios.post(url,recipeId,date);
+  const res = await axios.post(url, recipeId, date);
   return res;
 }

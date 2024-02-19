@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function UserProfile(userId) {
   const [user, setUser] = useState(null);
@@ -14,9 +15,9 @@ function UserProfile(userId) {
       setUser(response.data);
     });
   }, [userId]);
-
+  const navigate = useNavigate();
   const handleJumpToSavedRecipes = () => {
-    //redirect to the saved recipes page
+    navigate(`/api/${userId}/saved-recipes`);
   };
 
   return (
@@ -43,9 +44,9 @@ function UserProfile(userId) {
                 </div>
                 <div className="profile-details flex flex-col gap-4">
                   <div class="mx-30p my-2 sm:my-10 px-4 py-6 rounded-xl bg-darkslategray-300">
-                    <p class="ml-1 mt-4  rounded-lg bg-gray-100 w-[95%] px-3 py-3">
+                    {/* <p class="ml-1 mt-4  rounded-lg bg-gray-100 w-[95%] px-3 py-3">
                       ID: {user.id}
-                    </p>
+                    </p> */}
                     <p class="ml-1 mt-4  rounded-lg bg-white w-[95%] px-3 py-3">
                       Name: {user.name}
                     </p>
@@ -61,9 +62,9 @@ function UserProfile(userId) {
                     <p class="ml-1 mt-4  rounded-lg bg-white w-[95%] px-3 py-3">
                       Role: {user.role}
                     </p>
-                    <p class="ml-1 mt-4  rounded-lg bg-white w-[95%] px-3 py-3">
+                    {/* <p class="ml-1 mt-4  rounded-lg bg-white w-[95%] px-3 py-3">
                       Password: {user.pass}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
