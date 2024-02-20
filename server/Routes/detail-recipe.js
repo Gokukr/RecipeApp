@@ -33,6 +33,22 @@ router.get("/user-profile/:id", (req, res) => {
   );
 });
 
+router.get("/favourites/:userId/:recipeId", async (req, res) => {
+  const userId = req.params.userId;
+  const recipeId = req.params.recipeId;
+  pool.query(`select * from favorites where user_id = $1 and recipe_id = $2`,[userId, recipeId], (error, result) => {
+    if(error) {
+      res.status(500).json({ error: "Internal error" });
+    } else {
+      if (result.rows.length === 0) {
+        res.json({ fav:false });
+      } else {
+        res.json({fav:true});
+      }
+    }
+  });
+});
+
 router.post("/favourites/:userId/:recipeId", async (req, res) => {
   const userId = req.params.userId;
   const recipeId = req.params.recipeId;
