@@ -4,9 +4,28 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const jwtgenerator = require("../JwtToken/jwtgenerator");
 const Authorize = require("../middleware/authorization");
+const allRecipes = require("../middleware/allRecipes");
 const mailservice = require("../services/registrationservices");
 const getSavedRecipes = require('../middleware/getSavedRecipe');
 const saveRecipe = require('../middleware/savedRecipe');
+
+router.get("/recipes/all", async (req,res) => {
+  try {
+    let result = await allRecipes(
+      req.query.searchText,
+        {
+          mealType:req.query.mealType,
+          course:req.query.course,
+          cuisine:req.query.cuisine,
+          rating:req.query.rating
+        }
+    );
+    res.send(result);
+    
+  } catch (error) {
+    res.send("Server error--")
+  }
+})
 
 router.get("/:userId/saved-recipes", async (req,res) => {
   try {
