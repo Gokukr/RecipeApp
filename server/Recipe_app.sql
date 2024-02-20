@@ -35,61 +35,6 @@ Create table Recipe(
 	total_ratings numeric(5), 
 	User_id UUID references user_data(id)		
 );
-
-INSERT INTO Recipe (
-    Name,
-    Description,
-    Image,
-    Rating,
-    Ingredients,
-    Instructions,
-    Preparation_time,
-    Cooking_time,
-    Total_time,
-    Servings,
-    Difficulty,
-    Cuisine,
-    Meal_type,
-    Status,
-    Course_type,
-    total_ratings,
-    User_id
-)
-VALUES ('Vegetable Fried Rice',
-    'Quick and easy fried rice loaded with colorful vegetables.',
-    'https://www.indianhealthyrecipes.com/wp-content/uploads/2020/12/fried-rice.jpg',
-    4.2,
-    '{"Rice", "Carrot", "Peas", "Pepper", "Onion", "Garlic", "Soy Sauce", "Eggs", "Oil"}',
-    '{"1. Cook rice according to package instructions and let cool.', '2. In a large skillet or wok, heat oil over medium heat.', '3. Add onion, garlic, and vegetables, and stir-fry until tender.', '4. Push vegetables to one side and scramble eggs in the empty space.', '5. Add cooked rice and soy sauce, tossing to combine.', '6. Drizzle with sesame oil and toss again before serving."}',
-    10,
-    10,
-    20,
-    '4',
-    'Easy',
-    'north Indian',
-    'Veg',
-    'Accepted',
-    'Main Course',
-    0,
-    '15278c66-2dad-4114-bd4f-039470ff12f7'
-),
-('Classic Margherita Pizza',
-    'Simple and delicious pizza topped with fresh tomato sauce, mozzarella cheese, and basil leaves.',
-    'https://static.toiimg.com/thumb/56868564.cms?imgsize=1948751&width=800&height=800',
-    4.7,
-    '{"Pizza Dough", "Tomatoe", "Cheese", "Basil Leaves", "Olive Oil", "Salt", "Pepper"}',
-    '{"1. Preheat oven to highest setting.', '2. Roll out pizza dough and transfer to a baking sheet.', '3. Spread tomato sauce evenly over the dough.', '4. Top with sliced tomatoes, mozzarella cheese, and basil leaves.', '5. Drizzle with olive oil and season with salt and pepper.', '6. Bake in the preheated oven for 10-12 minutes, or until crust is golden brown and cheese is bubbly."}',
-    20,
-    10,
-    30,
-    '4',
-    'Easy',
-    'Chinese',
-    'Veg',
-    'Accepted',
-    'Main Course',
-    0,
-    '15278c66-2dad-4114-bd4f-039470ff12f7');
 select * from Recipe;
 
 Create table Ingredients(

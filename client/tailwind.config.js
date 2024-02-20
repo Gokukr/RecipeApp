@@ -4,15 +4,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        whitesmoke: "#ecf0f1",
         gainsboro: "#d9d9d9",
-        darkslategray: {
+        primary: {
           100: "#2c3e50",
           200: "#333",
           300: "rgba(44, 62, 80, 0.9)",
         },
         black: "#000",
         white: "#fff",
+        bg: "#F9F9F9",
+        textbg: "#EAEBEC",
+        secondary: "#ff9900",
       },
       spacing: {},
       fontFamily: {
