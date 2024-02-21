@@ -23,7 +23,8 @@ router.get("/recipes/all", async (req,res) => {
     res.send(result);
     
   } catch (error) {
-    res.send("Server error--")
+    console.log("error recieving reicpes --",error);
+    res.send("Server error");
   }
 })
 
