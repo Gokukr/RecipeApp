@@ -27,16 +27,12 @@ const SearchBar = () => {
     });
   };
   const handleApplyFilters = () => {
-    // Logic to apply filters
     console.log("Selected Filters:", selectedFilters);
-    // You can implement further logic here, such as filtering data based on selected filters.
-    // For now, let's just close the sidebar.
+
     toggleSidebar();
   };
 
   const handleCancelFilters = () => {
-    // Logic to cancel filters
-    // Reset selectedFilters to initial state
     setSelectedFilters({
       cuisine: [],
       mealType: [],
@@ -92,7 +88,6 @@ const SearchBar = () => {
           className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-y-auto"
           style={{ marginTop: "40px" }}
         >
-          {/* Sidebar content goes here */}
           <div className="text-primary-300 p-4">
             <h4 className="text-lg font-semibold font-open-sans">Filters</h4>
             {/* Cuisine */}
@@ -211,8 +206,6 @@ const SearchBar = () => {
                   </li>
                 </div>
               </ul>
-
-              {/* Add more cuisine options */}
             </div>
             {/* Meal Type */}
             <div className="mb-4">
@@ -255,7 +248,6 @@ const SearchBar = () => {
                   </label>
                 </div>
               </div>
-              {/* Add more meal type options */}
             </div>
             {/* Course Type */}
             <div className="mb-4">
@@ -369,7 +361,6 @@ const SearchBar = () => {
                     Dessert
                   </label>
                 </div>
-                {/* Add more course type options */}
               </div>
               {/* Rating */}
               <div>
