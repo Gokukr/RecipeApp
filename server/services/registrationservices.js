@@ -4,19 +4,18 @@ const nodemailer = require('nodemailer');
 function sendmail(receiveremailid, subjectline, emailbody) {
     nodemailer.createTestAccount((err, account) => {
         let transporter = nodemailer.createTransport({
-            host: 'smtp.googlemail.com', // Gmail Host
-            port: 465, // Port
-            secure: true, // this is true as port is 465
+            host: 'smtp.googlemail.com', 
+            port: 465, 
+            secure: true, 
             auth: {
-                user: 'pardhuvuppala', //Gmail username
+                user: 'pardhuvuppala', 
                 pass: 'bdpoyjspqcxnbwvw'
-                 // Gmail App password
             }
         });
 
         let mailOptions = {
             from: 'Recipe Management Site',
-            to: receiveremailid, // Recepient email address. Multiple emails can send separated by commas
+            to: receiveremailid, 
             subject: subjectline,
             text: emailbody
         };
@@ -24,7 +23,6 @@ function sendmail(receiveremailid, subjectline, emailbody) {
             if (error) {
                 return console.log(error);
             }
-            // console.log('Message sent: %s', info.messageId);
         });
     });
 
