@@ -8,7 +8,7 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
     <Link to={`/user/detail-recipe/${id}`}>
       {/* {name} */}
 
-      <div className="w-64 h-56 bg-darkslategray-100 shadow-md rounded-lg overflow-hidden flex flex-col mr-4">
+      <div className="w-72 h-56 bg-primary-300 drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4">
         <img
           src={imageUrl}
           alt={foodName}
@@ -19,13 +19,13 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
           style={{ paddingTop: "5px" }}
         >
           <h3
-            className="text-base text-gray-300 font-open-sans mb-1"
+            className="text-base text-white font-open-sans mb-1"
             style={{ letterSpacing: "0.05em", marginLeft: "-5px" }}
           >
             {foodName}
           </h3>
           <p
-            className="text-xs text-gray-400 font-open-sans mb-1"
+            className="text-xs text-white font-open-sans mb-1"
             style={{ letterSpacing: "0.03em", marginLeft: "-5px" }}
           >
             Total Time: {timeTaken}
