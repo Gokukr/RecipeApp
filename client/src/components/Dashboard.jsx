@@ -76,7 +76,7 @@ export default function Dashboard() {
           </Container>
         ))
       ) : <RecipeContainer data={data}/>)}
-      <Footer />
+      
     </div>
   );
 }

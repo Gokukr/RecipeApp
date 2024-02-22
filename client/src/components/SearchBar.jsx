@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
-const SearchBar = ({onSearch, allRecipe, placeholder = "What are you looking to cook today..."}) => {
+const SearchBar = ({
+  onSearch,
+  allRecipe,
+  placeholder = "What are you looking to cook today...",
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -28,13 +32,16 @@ const SearchBar = ({onSearch, allRecipe, placeholder = "What are you looking to 
   };
   const handleApplyFilters = () => {
     console.log("Selected Filters:", selectedFilters);
-    onSearch(searchTerm,selectedFilters);
-    (JSON.stringify(selectedFilters)==JSON.stringify({
-      cuisine: [],
-      mealType: [],
-      courseType: [],
-      rating: [],
-    }) && searchTerm === "" ) ? allRecipe(true) : allRecipe(false);
+    onSearch(searchTerm, selectedFilters);
+    JSON.stringify(selectedFilters) ==
+      JSON.stringify({
+        cuisine: [],
+        mealType: [],
+        courseType: [],
+        rating: [],
+      }) && searchTerm === ""
+      ? allRecipe(true)
+      : allRecipe(false);
     toggleSidebar();
   };
 
@@ -50,17 +57,20 @@ const SearchBar = ({onSearch, allRecipe, placeholder = "What are you looking to 
   };
 
   React.useEffect(() => {
-    onSearch(searchTerm,selectedFilters);
-  },[searchTerm]);
+    onSearch(searchTerm, selectedFilters);
+  }, [searchTerm]);
 
   React.useEffect(() => {
-    (JSON.stringify(selectedFilters)==JSON.stringify({
-      cuisine: [],
-      mealType: [],
-      courseType: [],
-      rating: [],
-    }) && searchTerm === "" ) ? allRecipe(true) : allRecipe(false);
-  },[searchTerm]);
+    JSON.stringify(selectedFilters) ==
+      JSON.stringify({
+        cuisine: [],
+        mealType: [],
+        courseType: [],
+        rating: [],
+      }) && searchTerm === ""
+      ? allRecipe(true)
+      : allRecipe(false);
+  }, [searchTerm]);
 
   return (
     <div
@@ -105,7 +115,7 @@ const SearchBar = ({onSearch, allRecipe, placeholder = "What are you looking to 
       </svg>
       {sidebarVisible && (
         <div
-          className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-y-auto"
+          className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-hidden overflow-y-auto"
           style={{ marginTop: "40px" }}
         >
           <div className="text-primary-300 p-4">
