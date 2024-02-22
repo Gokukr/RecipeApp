@@ -89,11 +89,11 @@ const Search = () => {
           </Link>
         </div>
       )}
-      <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">
-        <b>Explore</b>
+      {/* <div className="inline-block mq450:text-primary-300 mq750:text-7xl mt-8">
+        <b className="text-primary-300">Explore</b>
         <span>{` `}</span>
-        <b>{`variety of Cuisines `}</b>
-      </div>
+        <b className="text-primary-300">{`variety of Cuisines `}</b>
+      </div> */}
       <SearchBar onSearch={handleSearch} onFilter={handleFilter} />
       {searchUsed && (
         <Container>

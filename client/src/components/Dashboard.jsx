@@ -42,7 +42,7 @@ export default function Dashboard() {
   };
 
   const cuisines = [
-    { name: "north Indian", filter: "north Indian" },
+    { name: "North Indian", filter: "north Indian" },
     { name: "Continental", filter: "Continental" },
     { name: "Chinese", filter: "Chinese" },
     { name: "Japanese", filter: "Japanese" },
@@ -57,7 +57,7 @@ export default function Dashboard() {
         <p>Loading...</p>
       ) : (
         cuisines.map((cuisine) => (
-          <Container key={cuisine.name} cuisineName={`${cuisine.name} Cuisine`}>
+          <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
             {data
               .filter((item) => item.cuisine === cuisine.filter)
               .map((item, index) => (
@@ -67,6 +67,7 @@ export default function Dashboard() {
                   imageUrl={item.image}
                   timeTaken={`${item.total_time} mins`}
                   id={item.id}
+                  rating={`${item.rating}⭐`}
                 />
               ))}
           </Container>
