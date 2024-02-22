@@ -5,6 +5,7 @@ import Header from "./Header";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "./Footer";
 
 const UpdateRecipe = () => {
   const location = useLocation();
@@ -34,7 +35,8 @@ const UpdateRecipe = () => {
     <div>
       <Header />
       <ToastContainer />
-      <ManageRecipes handleSubmit={updateRecipe} recipe={recipe} back="/" />
+      <ManageRecipes handleSubmit={updateRecipe} recipe={recipe} />
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Header from "./Header";
 import Search from "./Search";
 import Footer from "./Footer";
@@ -18,8 +18,8 @@ export default function Dashboard() {
   const [user_id, Setuser_id] = useState("");
   const [showAll, setShowAll] = useState(true);
   const Navigate = useNavigate();
-  const [verify, setVerify] = useState(false); 
-  const [loading, setLoading] = useState(true); 
+  const [verify, setVerify] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -29,29 +29,30 @@ export default function Dashboard() {
     setTtoken(token);
     Setuser_id(id);
 
-    axios.get('http://localhost:1200/api/is-verify', {
-      headers: {
-        'Content-Type': 'application/json',
-        'token': token
-      }
-    })
-    .then(response => {
-      console.log(response.data);
-      setVerify(response.data);
-      setLoading(false); 
-    })
-    .catch(error => {
-      console.error(error);
-      setLoading(false);
-      Navigate("/"); 
-    });
-  }, []); 
+    axios
+      .get("http://localhost:1200/api/is-verify", {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setVerify(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+        Navigate("/");
+      });
+  }, []);
 
   useEffect(() => {
     if (verify) {
-      fetchData(); 
+      fetchData();
     }
-  }, [verify]); 
+  }, [verify]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -71,7 +72,7 @@ export default function Dashboard() {
   };
 
   const cuisines = [
-    { name: "North Indian", filter: "north Indian" },
+    { name: "North Indian", filter: "North Indian" },
     { name: "Continental", filter: "Continental" },
     { name: "Chinese", filter: "Chinese" },
     { name: "Japanese", filter: "Japanese" },
@@ -80,11 +81,11 @@ export default function Dashboard() {
   return (
     <div>
       <Header />
-      <Search allRecipe={setShowAll} setData={setData}/>
+      <Search allRecipe={setShowAll} setData={setData} />
 
       {isLoading ? (
         <p>Loading...</p>
-      ) : (showAll ? (
+      ) : showAll ? (
         cuisines.map((cuisine) => (
           <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
             {data
@@ -101,8 +102,10 @@ export default function Dashboard() {
               ))}
           </Container>
         ))
-      ) : <RecipeContainer data={data}/>)}
-      
+      ) : (
+        <RecipeContainer data={data} />
+      )}
+      <Footer />
     </div>
   );
 }

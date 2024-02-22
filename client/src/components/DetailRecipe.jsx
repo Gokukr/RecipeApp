@@ -39,14 +39,14 @@ function Detailrecipe() {
     setShowDeleteModal(true);
   };
 
-  const [fav, setfav]=useState(false);
+  const [fav, setfav] = useState(false);
   useEffect(() => {
-    
-      axios.get(`http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`)
+    axios
+      .get(`http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`)
       .then((response) => {
         setfav(response.data.fav);
       });
-  },[userId,recipeId]);
+  }, [userId, recipeId]);
   console.log(fav);
   const handleAddToFavourites = () => {
     // const userId='cded7396-c732-11ee-993a-505a65b0ab55';
@@ -77,20 +77,21 @@ function Detailrecipe() {
                 <h2 class="font-bold p-5 text-[20px]">{recipe.title}</h2>
                 <p class="font-bold p-5 text-[20px]">{recipe.description}</p>
                 <p class="rounded-lg px-5 py-3 font-bold text-[20px]">
-                Rating: {recipe.rating}
+                  Rating: {recipe.rating}
                 </p>
               </div>
               <button
-              onClick={handleAddToFavourites}
-              className="bg-transparent text-white ml-5 font-medium px-5  mb-24 pb-20"
-            >
-              <svg  width="18" height="18" viewBox="0 0 16 16" fill="#ffffff">
-              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
-              stroke="black"
-              fill={fav ? "#ffffff" :"#FF0000"}     
-              />
-            </svg>
-            </button>
+                onClick={handleAddToFavourites}
+                className="bg-transparent text-white ml-5 font-medium px-5  mb-24 pb-20"
+              >
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="#ffffff">
+                  <path
+                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
+                    stroke="black"
+                    fill={fav ? "#ffffff" : "#FF0000"}
+                  />
+                </svg>
+              </button>
             </div>
             {userRole === "admin" && (
               <div className="flex justify-end gap-4 mt-4">
@@ -111,12 +112,11 @@ function Detailrecipe() {
             )}
 
             {}
-            
-            
+
             <div class="flex justify-between bg-gray-100 ml-5 mt-5 font-medium px-4 py-2 rounded-md border-solid border-2 border-gray-500">
               <div class=" text-black pl-40 w-full">
                 <h3>Servings</h3>
-                <p>{recipe.servings}</p>             
+                <p>{recipe.servings}</p>
               </div>
               <div class="text-black pl-40 w-full">
                 <h3>Preparation Time</h3>
@@ -130,7 +130,7 @@ function Detailrecipe() {
             <div class="flex justify-between bg-gray-100 ml-5 mt-5 font-medium px-4 py-2 rounded-md border-solid border-2 border-gray-500">
               <div class=" text-black pl-40 w-full">
                 <h3>Cuisine</h3>
-                <p>{recipe.cuisine}</p>             
+                <p>{recipe.cuisine}</p>
               </div>
               <div class="text-black pl-40 w-full">
                 <h3>Meal_type</h3>
@@ -142,35 +142,26 @@ function Detailrecipe() {
               </div>
             </div>
             <div class="ml-5 mt-4 rounded-lg bg-gray-100 px-5 py-3 text-black font-bold border-solid border-2 border-gray-500">
-              <h3>
-                Ingredients
-                </h3>
+              <h3>Ingredients</h3>
               <ol class="ml-5 mt-4 rounded-lg bg-gray-100 px-5 py-3 font-medium ">
                 {Array.isArray(recipe.ingredients) ? (
                   recipe.ingredients.map((ingredient, index) => (
-                    <li>
-                      {ingredient}
-                    </li>
-                  ))
-                  ) : (
-                    <li>No ingredients available</li>
-                    )}
-              </ol>
-            </div>
-            <div class="ml-5 mt-4 rounded-lg bg-gray-100 px-5 py-3 text-black font-bold border-solid border-2 border-gray-500">
-
-              <h3>
-                Instructions
-                </h3>
-              <ol class="ml-5 mt-4 rounded-lg bg-gray-100 px-5 py-3 font-medium">
-                {Array.isArray(recipe.instructions) ? (
-                  recipe.ingredients.map((instruction, index) => (
-                    <li>
-                      {instruction}
-                    </li>
+                    <li>{ingredient}</li>
                   ))
                 ) : (
                   <li>No ingredients available</li>
+                )}
+              </ol>
+            </div>
+            <div class="ml-5 mt-4 rounded-lg bg-gray-100 px-5 py-3 text-black font-bold border-solid border-2 border-gray-500">
+              <h3>Instructions</h3>
+              <ol class="ml-5 mt-4 rounded-lg bg-gray-100 px-5 py-3 font-medium">
+                {Array.isArray(recipe.instructions) ? (
+                  recipe.instructions.map((instruction, index) => (
+                    <li>{instruction}</li>
+                  ))
+                ) : (
+                  <li>No instructions available</li>
                 )}
               </ol>
             </div>
