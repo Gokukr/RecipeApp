@@ -7,7 +7,7 @@ const SearchBar = () => {
     cuisine: [],
     mealType: [],
     courseType: [],
-    rating: [],
+    rating: "",
   });
 
   const handleChange = (event) => {
@@ -374,7 +374,7 @@ const SearchBar = () => {
                     id="rating1"
                     name="rating1"
                     value="4"
-                    checked={selectedFilters.courseType.includes("4")}
+                    checked={selectedFilters.rating.includes("4")}
                     onChange={() => handleFilterChange("rating", "4")}
                   />
                   <label
@@ -391,7 +391,7 @@ const SearchBar = () => {
                     id="rating2"
                     name="rating2"
                     value="3"
-                    checked={selectedFilters.courseType.includes("3")}
+                    checked={selectedFilters.rating.includes("3")}
                     onChange={() => handleFilterChange("rating", "3")}
                   />
                   <label
