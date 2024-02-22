@@ -18,8 +18,8 @@ export default function Dashboard() {
   const [user_id, Setuser_id] = useState("");
   const [showAll, setShowAll] = useState(true);
   const Navigate = useNavigate();
-  const [verify, setVerify] = useState(false); // Assuming verify is initially false
-  const [loading, setLoading] = useState(true); // Loading state to handle HTTP request
+  const [verify, setVerify] = useState(false); 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const token = Cookies.get("token");
