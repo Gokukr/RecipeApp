@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchBar = ({onSearch, allRecipe}) => {
+const SearchBar = ({onSearch, allRecipe, placeholder = "What are you looking to cook today..."}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -70,7 +70,7 @@ const SearchBar = ({onSearch, allRecipe}) => {
       <div className="relative">
         <input
           type="text"
-          placeholder="What are you looking to cook today..."
+          placeholder={placeholder}
           value={searchTerm}
           onChange={handleChange}
           className="w-96 px-15 py-2 rounded-lg text-primary-300 bg-textbg focus:outline-none ml-[-20px] border-none drop-shadow-xl shadow-primary-300/50"

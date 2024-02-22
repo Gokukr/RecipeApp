@@ -7,9 +7,9 @@ import SearchBar from "./SearchBar";
 // import applyFilters from "./Filter";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import RecipeContainer from "./RecipeContainer";
+// import RecipeContainer from "./RecipeContainer";
 
-const Search = ({allRecipe, setData}) => {
+const Search = ({allRecipe, setData = (a) => a}) => {
   const [role, setRole] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   // const [filterOptions, setFilterOptions] = useState({
