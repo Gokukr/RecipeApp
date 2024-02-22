@@ -40,7 +40,7 @@ function SavedRecipe() {
           {/* <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">
             <h1>Saved Recipes</h1>
           </div> */}
-          <SearchBar onSearch={setItems} allRecipe={setShowAll} placeholder={"Search Saved Recipes..."}/>
+          <SearchBar onSearch={setItems} allRecipe={setShowAll} placeholder={"Search aved Recipes..."}/>
         </div>
         <RecipeContainer
           data = {recipes}
