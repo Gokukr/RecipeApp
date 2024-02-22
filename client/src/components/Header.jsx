@@ -42,8 +42,8 @@ const Header = memo(() => {
         </h2>
       </div>
       <div className="w-[550px] flex flex-col items-start justify-start pt-[5px] px-0 pb-0 box-border max-w-full text-5xl font-open-sans mq1050:w-0">
-        <div className="self-stretch flex flex-row items-start justify-start gap-[20px] mq1050:hidden">
-          <div 
+        <div className="self-stretch flex flex-row items-start justify-end  mq1050:hidden">
+          <div
             onClick={handleHomeClick}
             className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
@@ -82,7 +82,7 @@ const Header = memo(() => {
             /> */}
           {/* </div> */}
           <img
-            className="h-9 w-10 relative min-h-[36px] ml-[-2 rem]"
+            className="h-9 w-10 relative min-h-[36px]  "
             loading="eager"
             alt=""
             src={user}

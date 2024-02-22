@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 // import RecipeContainer from "./RecipeContainer";
 
-const Search = ({allRecipe, setData = (a) => a}) => {
+const Search = ({ allRecipe, setData = (a) => a }) => {
   const [role, setRole] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   // const [filterOptions, setFilterOptions] = useState({
@@ -32,26 +32,37 @@ const Search = ({allRecipe, setData = (a) => a}) => {
     }
   };
 
-  const handleSearch = async (query = "" ,filters = {
-    cuisine: [],
-    mealType: [],
-    courseType: [],
-    rating: [],
-  }) => {
+  const handleSearch = async (
+    query = "",
+    filters = {
+      cuisine: [],
+      mealType: [],
+      courseType: [],
+      rating: [],
+    }
+  ) => {
     try {
-      const queryString = (filter,arr) => arr.map(item => `${filter}=${item}`).join('&');
-      const res = await axios.get(`http://localhost:1200/api/recipes/all?searchText=${query}&${queryString('rating',filters.rating)}&${queryString('mealType',filters.mealType)}&${queryString('course',filters.courseType)}&${queryString('cuisine',filters.cuisine)}`);
-        // debugger;
-        setSearchResults(res.data.rows);
-        // JSON.stringify(res.data.rows) === JSON.stringify(b) ? allRecipe(false) : allRecipe(true);
-        // debugger;
-        setData(res.data.rows);
-      // return res.rows;        
+      const queryString = (filter, arr) =>
+        arr.map((item) => `${filter}=${item}`).join("&");
+      const res = await axios.get(
+        `http://localhost:1200/api/recipes/all?searchText=${query}&${queryString(
+          "rating",
+          filters.rating
+        )}&${queryString("mealType", filters.mealType)}&${queryString(
+          "course",
+          filters.courseType
+        )}&${queryString("cuisine", filters.cuisine)}`
+      );
+      // debugger;
+      setSearchResults(res.data.rows);
+      // JSON.stringify(res.data.rows) === JSON.stringify(b) ? allRecipe(false) : allRecipe(true);
+      // debugger;
+      setData(res.data.rows);
+      // return res.rows;
     } catch (error) {
       console.log(error);
     }
 
-    
     // if (query.trim() !== "") {
     //   setSearchUsed(true);
     //   try {
@@ -104,7 +115,7 @@ const Search = ({allRecipe, setData = (a) => a}) => {
       {role === "admin" && (
         <div className="absolute top-0 right-0 mr-4 mt-4">
           <Link to="/add-recipe">
-            <button className="bg-darkslategray-100 hover:darkslategray-80 text-white font-bold py-2 px-4 rounded">
+            <button className="bg-primary-300 hover:darkslategray-80 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 ">
               Add Recipe
             </button>
           </Link>
@@ -115,7 +126,7 @@ const Search = ({allRecipe, setData = (a) => a}) => {
         <span>{` `}</span>
         <b className="text-primary-300">{`variety of Cuisines `}</b>
       </div> */}
-      <SearchBar onSearch={handleSearch} allRecipe={allRecipe}/>
+      <SearchBar onSearch={handleSearch} allRecipe={allRecipe} />
 
       {/* <RecipeContainer data={searchResults}/> */}
       {/* {searchUsed && (
