@@ -10,13 +10,7 @@ import UserProfile from "./components/user-profile.js";
 import Detailrecipe from "./components/DetailRecipe.jsx";
 import SavedRecipe from "./components/SavedRecipe.jsx";
 import AddRecipe from "./components/AddRecipe.jsx";
-<<<<<<< HEAD
 import UpdateRecipe from "./components/UpdateRecipe.jsx";
-=======
-import ForgetPassword from "./components/ForgetPassword.jsx";
-
-import UpdateRecipe from "./components/UpdateRecipe.jsx"
->>>>>>> 3af1c7fd7843e7da0691608ed0867b16159dfc9f
 function App() {
   return (
     <div>
@@ -34,7 +28,6 @@ function App() {
           <Route path="/api/:userId/saved-recipes" element={<SavedRecipe />} />
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/edit-recipe" element={<UpdateRecipe />} />
-          <Route path="/forget" element={<ForgetPassword/>}/>
         </Routes>
       </BrowserRouter>
     </div>
