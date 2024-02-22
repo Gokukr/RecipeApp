@@ -8,6 +8,7 @@ const allRecipes = require("../middleware/allRecipes");
 const mailservice = require("../services/registrationservices");
 const getSavedRecipes = require('../middleware/getSavedRecipe');
 const saveRecipe = require('../middleware/savedRecipe');
+const randomize = require('randomatic');
 
 router.get("/recipes/all", async (req,res) => {
   try {
@@ -226,6 +227,63 @@ router.get("/user-profile/:id", (req, res) => {
 //     res.status(500).json({ error: "internal server error" });
 //   }
 // });
+
+
+router.post("/OtpVerify",async(req,res)=>
+{
+    try
+    {
+        const {Email} = req.body
+        const check = await db.query("SELECT * FROM user_data WHERE email = $1", [Email])
+        if(check.rows.length>0)
+        {
+             otp = randomize('0',4)
+             mailservice.sendmail(Email, "Here the OTP to verify the Account", `${otp}`);
+             const SendOtp = {
+                otp
+             }
+             res.json(SendOtp);  
+        }
+        else
+        {
+            return res.status(401).json(`user not exist`)   
+
+        }
+    }
+    catch(err)
+    {
+      console.log(err.message);
+      res.status(500).send("Server Error");
+    }
+})
+
+router.post("/ChangePassword",async(req,res)=>
+{
+    try{
+             const {email,Password,repassword} = req.body;
+             if(password==repassword)
+             {  
+                const saltRounds = 10;
+                const salt = await bcrypt.genSalt(saltRounds);
+                const bcryptPassword = await bcrypt.hash(Password, salt);
+                const status = await db.query("update user_data set password = $1 where email = $2",[bcryptPassword,email])                
+                mailservice.sendmail(email, "Password as been Updated", `Thank You`);
+                const verify = true
+                res.json({verify})
+             }
+             else
+             {
+                return res.status(401).send("Password Mismatch");
+            }
+    }
+    catch(err)
+    {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+
+    }
+})
+
 
 router.get("/getdata", async (req, res) => {
   try {
