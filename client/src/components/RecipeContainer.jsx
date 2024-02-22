@@ -4,7 +4,7 @@ import NoRecipeFound from "./NoRecipeFound";
 
 
 export default function RecipeContainer({data}){
-
+  // debugger;
   if(data === undefined || data.length === 0) return(<NoRecipeFound />);
 
   return(<div className="flex flex-wrap justify-left gap-14 mx-16 p-12">

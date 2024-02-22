@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchBar = () => {
+const SearchBar = ({onSearch, allRecipe}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -28,7 +28,13 @@ const SearchBar = () => {
   };
   const handleApplyFilters = () => {
     console.log("Selected Filters:", selectedFilters);
-
+    onSearch(searchTerm,selectedFilters);
+    (JSON.stringify(selectedFilters)==JSON.stringify({
+      cuisine: [],
+      mealType: [],
+      courseType: [],
+      rating: [],
+    }) && searchTerm === "" ) ? allRecipe(true) : allRecipe(false);
     toggleSidebar();
   };
 
@@ -42,6 +48,20 @@ const SearchBar = () => {
     // Close the sidebar
     toggleSidebar();
   };
+
+  React.useEffect(() => {
+    onSearch(searchTerm,selectedFilters);
+  },[searchTerm]);
+
+  React.useEffect(() => {
+    (JSON.stringify(selectedFilters)==JSON.stringify({
+      cuisine: [],
+      mealType: [],
+      courseType: [],
+      rating: [],
+    }) && searchTerm === "" ) ? allRecipe(true) : allRecipe(false);
+  },[searchTerm]);
+
   return (
     <div
       className="flex justify-end items-center mt-4 mb-4 mr-4"

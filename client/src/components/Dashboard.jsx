@@ -3,9 +3,10 @@ import Header from "./Header";
 import Search from "./Search";
 import Footer from "./Footer";
 import Card from "./Card";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import Container from "./Container";
 import Cookies from "js-cookie";
+import RecipeContainer from "./RecipeContainer";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -13,6 +14,7 @@ export default function Dashboard() {
   const [Ttoken, setTtoken] = useState("");
   const [role, setRole] = useState("");
   const [user_id, Setuser_id] = useState("");
+  const [showAll, setShowAll] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -33,6 +35,7 @@ export default function Dashboard() {
     try {
       const response = await fetch("http://localhost:1200/api/getdata");
       const responseData = await response.json();
+      // debugger;
       setData(responseData);
       setIsLoading(false);
     } catch (error) {
@@ -51,11 +54,11 @@ export default function Dashboard() {
   return (
     <div>
       <Header />
-      <Search />
+      <Search allRecipe={setShowAll} setData={setData}/>
 
       {isLoading ? (
         <p>Loading...</p>
-      ) : (
+      ) : (showAll ? (
         cuisines.map((cuisine) => (
           <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
             {data
@@ -72,7 +75,7 @@ export default function Dashboard() {
               ))}
           </Container>
         ))
-      )}
+      ) : <RecipeContainer data={data}/>)}
       <Footer />
     </div>
   );
