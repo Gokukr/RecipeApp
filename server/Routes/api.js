@@ -294,4 +294,17 @@ router.get("/getdata", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+
+
+
+router.get("/is-verify",Authorize,async (req,res)=>
+{
+   try {
+        res.json(true);
+   } catch (err) {
+    res.status(500).send("Server Error");
+   }
+});
+
 module.exports = router;

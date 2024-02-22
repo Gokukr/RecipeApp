@@ -235,7 +235,7 @@ const FormSubmit = async(e) =>
               className="block  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">{' '}Forget password</Link>
             </div>
             <div className="flex justify-center">
-              <button className="w-full bg-[#2c3e50] text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Sign in</button>
+              <button className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Sign in</button>
             </div>
             </form>
             <div className='text-center text-gray-400'>
@@ -314,7 +314,7 @@ const FormSubmit = async(e) =>
                     <span className='mb-2 text-md'>Email</span>
                     <input type="email" name="email" id="email" className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required />
                     </div>
-                    <button type="submit" className="w-full bg-[#2c3e50] text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2" onClick={FormSubmit}>Get OTP</button>
+                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2" onClick={FormSubmit}>Get OTP</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                     </div>
                 </form>
@@ -370,7 +370,7 @@ const FormSubmit = async(e) =>
                     <span className='mb-2 text-md'>OTP</span>
                     <input type="text" name="otp" id="otp" className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"   value={otp} onChange={(e)=>setotp(e.target.value)} required />
                     </div>
-                    <button type="submit" className="w-full bg-[#2c3e50] text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2" onClick={OTPSubmit}>Get OTP</button>
+                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2" onClick={OTPSubmit}>Get OTP</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                     </div>
                 </form>
@@ -426,7 +426,7 @@ const FormSubmit = async(e) =>
                     <span className='mb-2 text-md'>Re-Enter Password</span>
                     <input type="password"  className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={repassword}onChange={(e)=>setrePassword(e.target.value)} required />
                     </div>
-                    <button type="submit" className="w-full bg-[#2c3e50] text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Change Password</button>
+                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Change Password</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                     </div>
                 </form>

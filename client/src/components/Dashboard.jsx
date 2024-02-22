@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import Header from "./Header";
 import Search from "./Search";
 import Footer from "./Footer";
@@ -7,6 +8,7 @@ import Card from "./Card";
 import Container from "./Container";
 import Cookies from "js-cookie";
 import RecipeContainer from "./RecipeContainer";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -15,21 +17,45 @@ export default function Dashboard() {
   const [role, setRole] = useState("");
   const [user_id, Setuser_id] = useState("");
   const [showAll, setShowAll] = useState(true);
+  const Navigate = useNavigate();
+  const [verify, setVerify] = useState(false); // Assuming verify is initially false
+  const [loading, setLoading] = useState(true); // Loading state to handle HTTP request
 
   useEffect(() => {
-    fetchData();
-  }, []);
-  useEffect(() => {
-    // Retrieve token from cookie when the component mounts
     const token = Cookies.get("token");
     const type = Cookies.get("role");
     const id = Cookies.get("user_id");
-    // Update the state with the retrieved token
     setRole(type);
     setTtoken(token);
     Setuser_id(id);
-  }, []);
-  //console.log(user_id);
+
+    axios.get('http://localhost:1200/api/is-verify', {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token
+      }
+    })
+    .then(response => {
+      console.log(response.data);
+      setVerify(response.data);
+      setLoading(false); 
+    })
+    .catch(error => {
+      console.error(error);
+      setLoading(false);
+      Navigate("/"); 
+    });
+  }, []); 
+
+  useEffect(() => {
+    if (verify) {
+      fetchData(); 
+    }
+  }, [verify]); 
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const fetchData = async () => {
     try {
