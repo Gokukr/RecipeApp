@@ -12,7 +12,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "client/src/components/card")));
 app.use("/api", require("./Routes/api"));
 app.use("/api/manage", require("./Routes/ManageRecipe"));
-app.use("/api/detail", require("./Routes/detail-recipe"));
+app.use("/api/detail", require("./Routes/DetailRecipe"));
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
