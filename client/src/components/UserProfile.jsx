@@ -3,9 +3,11 @@ import axios from "axios";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "./ChangePassword.jsx";
 
 function UserProfile(userId) {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   userId = Cookies.get("user_id");
   const [role, setRole] = useState('');
@@ -28,6 +30,7 @@ function UserProfile(userId) {
   }, [userId]);
   const handleJumpToSavedRecipes = () => {
     console.log('saved recipes');
+    navigate("/saved-recipe");
     
   };
   const [showModal, setShowModal] = useState(false);
@@ -43,9 +46,11 @@ function UserProfile(userId) {
               <div>
               <div className="profile-card bg-[#2c3e50] flex justify-between px-10 pt-16 pb-52">
                 <span class=" text-white text-[50px]">Hello !! {user.name}</span>
-                <div className="profile-buttons flex gap-4 ml-auto mr-5">
+                <div className="profile-buttons flex gap-4 ml-auto mr-5 py-2">
                     
-                    <button onClick={handleOpenModal} className="text-base bg-blue-500 text-white px-4 py-1 rounded-md ml-4">Change Password</button>
+                    <button onClick={handleOpenModal} className="text-base bg-blue-500 text-white px-4 py-1 rounded-md ml-4">
+                      Change Password
+                    </button>
                     {showModal && 
                     <ChangePasswordModal
                       show={showModal}
