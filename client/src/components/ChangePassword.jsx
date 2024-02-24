@@ -19,6 +19,7 @@ const ChangePasswordModal = ({ show }) => {
   const handleChange3 = (event) => setConfirmPassword(event.target.value);
   const handleChangePassword = () => {
     if(oldPassword === '' || newPassword === '' || confirmPassword === ''){
+      notify("Fields Empty !!");
       window.location.reload();
     }
     else if(newPassword !== confirmPassword){
