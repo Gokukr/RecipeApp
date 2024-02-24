@@ -13,7 +13,6 @@ const UpdateRecipe = () => {
 
   const Navigate = useNavigate();
   useEffect(() => {
-    // Check if recipe exists, if not, navigate to dashboard
     if (!recipe) {
       Navigate("/dashboard");
     }
