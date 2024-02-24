@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import ManageRecipes from "./ManageRecipes";
 import Header from "./Header";
+import Footer from "./Footer";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Footer from "./Footer";
-
 const UpdateRecipe = () => {
   const location = useLocation();
-  const recipe = location.state.recipe;
+  const recipe = location.state ? location.state.recipe : null;
 
   const Navigate = useNavigate();
-  const id = recipe.id;
+  useEffect(() => {
+    // Check if recipe exists, if not, navigate to dashboard
+    if (!recipe) {
+      Navigate("/dashboard");
+    }
+  }, [Navigate, recipe]);
+
+  const id = recipe?.id;
 
   const updateRecipe = async (recipe) => {
     const notify = (message) => toast(message);

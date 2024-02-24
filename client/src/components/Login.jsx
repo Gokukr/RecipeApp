@@ -178,7 +178,7 @@ export default function Login() {
             <div className="flex flex-col justify-center p-12 md:px-14 md:py-8">
               <span className="mb-1 text-2xl text-center font-bold">Login</span>
               <span className="font-light text-gray-400 mb-5 text-center">
-                Welcome Back! please enter your details
+                Welcome Back! Please enter your details
               </span>
               <form className="mt-4 space-y-4" onSubmit={onSubmitForm}>
                 <div className="py-0.5">
@@ -211,7 +211,6 @@ export default function Login() {
                     <input
                       type="checkbox"
                       className="ring-1 ring-inset ring-gray-300 mr-2"
-                      required
                     />
                     <span className="text-md">Remember me</span>
                   </div>

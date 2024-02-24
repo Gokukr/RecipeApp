@@ -131,8 +131,8 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
   };
   return (
     <div className="bg-bg py-20">
-      <div className="xs:mx-10 mx-28 font-sans bg-white drop-shadow-2xl tracking-wider sm:tracking-normal">
-        <form onSubmit={handleFormSubmit} className=" xs:p-10 p-20 mr-5">
+      <div className="lg:mx-32 md:mx-28 sm:mx-20 xs:mx-10 font-sans bg-white drop-shadow-2xl tracking-wider sm:tracking-normal">
+        <form onSubmit={handleFormSubmit} className=" xs:p-10 lg:p-20 mr-5">
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <div className="grid xs:grid-cols-1 lg:grid-cols-6 gap-x-12 gap-y-8 md:grid-cols-1 md:gap-7 sm:grid-cols-1">
