@@ -66,10 +66,10 @@ function UserProfile(userId) {
                 <div class="user-profile-body flex mt-[-50px]">
                 <div class="card-profile w-[30%] ml-6 mt--2 bg-white rounded-lg border-solid border-black border-2 flex flex-col justify-center items-center">
                     {(gender === 'Male' || gender === 'm') && (
-                      <img src="http://127.0.0.1:8080\male-avatar.png" alt="user" class="rounded-full h-[200px] w-[200px] "></img>
+                      <img src="./assets/male-avatar.png" alt="user" class="rounded-full h-[200px] w-[200px] "></img>
                     )}
                     {(gender === 'Female' || gender === 'f') && (
-                      <img src="http://127.0.0.1:8080\Female-Avatar.png" alt="user" class="rounded-full h-[200px] w-[200px] "></img>
+                      <img src="./assets/Female-Avatar.png" alt="user" class="rounded-full h-[200px] w-[200px] "></img>
                     )}
                     <h3 class="pt-4 ">{user.name}</h3>
                     <h3 class="pt-4 ">{user.address}</h3>
