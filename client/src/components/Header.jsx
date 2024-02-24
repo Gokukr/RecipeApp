@@ -21,7 +21,7 @@ const Header = memo(() => {
 
   return (
     <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
-      <div className="self-stretch w-[269px] flex flex-row items-start justify-start gap-[9px]">
+      <div className="self-stretch w-[269px] flex flex-row items-start justify-end gap-[9px]">
         <div className="flex flex-col items-start justify-start pt-1.5 px-0 pb-0">
           <img
             className="w-9 h-9 relative object-cover z-[1]"

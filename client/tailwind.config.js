@@ -41,6 +41,20 @@ module.exports = {
       inherit: "inherit",
     },
 
+    screens: {
+      mq975: {
+        raw: "screen and (max-width: 975px)",
+      },
+      mq950: {
+        raw: "screen and (max-width: 950px)",
+      },
+      mq700: {
+        raw: "screen and (max-width: 700px)",
+      },
+      mq450: {
+        raw: "screen and (max-width: 450px)",
+      },
+    },
   },
   corePlugins: {
     preflight: false,

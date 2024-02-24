@@ -5,7 +5,7 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
   // console.log(id);
 
   return (
-    <Link to={`/user/detail-recipe/${id}`}>
+    <Link className="no-underline" to={`/user/detail-recipe/${id}`}>
       {/* {name} */}
 
       <div className="w-72 h-56 bg-primary-300 drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4">
