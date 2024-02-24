@@ -6,7 +6,7 @@ import Dashboard from "./components/Dashboard.jsx";
 import Dash from "./components/dashboard.js";
 import Footer from "./components/Footer.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UserProfile from "./components/user-profile.js";
+import UserProfile from "./components/UserProfile.jsx";
 import DetailRecipe from "./components/DetailRecipe.jsx";
 import SavedRecipe from "./components/SavedRecipe.jsx";
 import AddRecipe from "./components/AddRecipe.jsx";
