@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import DeleteRecipe from "./DeleteRecipe";
-function Detailrecipe() {
+function DetailRecipe() {
   const navigate = useNavigate();
   const { recipeId } = useParams();
   const userId = Cookies.get("user_id");
@@ -254,4 +254,4 @@ function Detailrecipe() {
   );
 }
 
-export default Detailrecipe;
+export default DetailRecipe;
