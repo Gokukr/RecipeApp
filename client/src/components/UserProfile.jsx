@@ -41,7 +41,7 @@ function UserProfile(userId) {
   return (
     <>
       <Header />
-      <div className="user-profile-out">          
+      <div className="user-profile-out bg-white">          
             {user ? (
               <div>
               <div className="profile-card bg-[#2c3e50] flex justify-between px-10 pt-16 pb-52">
@@ -112,8 +112,8 @@ function UserProfile(userId) {
             ) : (
               <p>Loading...</p>
             )}
-          </div>
       <Footer />
+          </div>
     </>
   );
 }
