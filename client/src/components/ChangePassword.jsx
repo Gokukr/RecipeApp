@@ -18,7 +18,10 @@ const ChangePasswordModal = ({ show }) => {
   const handleChange2 = (event) => setNewPassword(event.target.value);
   const handleChange3 = (event) => setConfirmPassword(event.target.value);
   const handleChangePassword = () => {
-    if(newPassword !== confirmPassword){
+    if(oldPassword === '' || newPassword === '' || confirmPassword === ''){
+      window.location.reload();
+    }
+    else if(newPassword !== confirmPassword){
       notify("Password Mismatch");
     }
     else{
