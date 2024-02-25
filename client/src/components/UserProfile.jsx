@@ -29,9 +29,9 @@ function UserProfile(userId) {
         setCount(response.data.count);
       });
   }, [userId]);
-  const handleJumpToSavedRecipes = () => {
-    console.log("saved recipes");
-    navigate("/saved-recipe");
+  const handleUpdateProfile = () => {
+    console.log("Updating Profile");
+    navigate("/UpdateProfile");
   };
   const [showModal, setShowModal] = useState(false);
 
@@ -61,9 +61,9 @@ function UserProfile(userId) {
                 )}
                 <button
                   className="text-base pl-1 bg-orange-500 text-white rounded-md"
-                  onClick={handleJumpToSavedRecipes}
+                  onClick={handleUpdateProfile}
                 >
-                  Saved Recipes
+                 Edit Profile
                 </button>
               </div>
             </div>
