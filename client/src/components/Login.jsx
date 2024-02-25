@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Background from "../assets/Design2.png";
-import hatimage from "../assets/hat.png"; 
+import hatimage from "../assets/icon.jpeg"; 
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -198,7 +198,7 @@ const FormSubmit = async(e) =>
       <div className='flex items-center justify-center'>
         <div className='relative flex flex-col m-6 space-y-8 bg-[#F9F9F9] shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
           <div className='flex flex-col justify-center p-12 md:px-14 md:py-8'>
-            <span className='mb-1 text-2xl text-center font-bold'>Login</span>
+            <span className='mb-1 text-5xl text-center font-bold'>Login</span>
             <span className='font-light text-gray-400 mb-5 text-center'>Welcome Back! please enter your details</span>
             <form className="mt-4 space-y-4" onSubmit={onSubmitForm}>
             <div className='py-0.5'>
@@ -246,34 +246,29 @@ const FormSubmit = async(e) =>
           <div className='relative'>
             <div alt="Background" className='w-[400px] h-full hidden rounded-r-2xl md:block object-cover bg-[#F9F9F9]' />
             <div className='absolute hidden bottom-10 right-0 p-6 md:block'>
-              <span className='text-black text-xl'>
-                <div className="flex items-center">
-                  <img
-                    className="w-9 h-9 relative object-cover z-[1]"
-                    loading="eager"
-                    alt=""
-                    src={hatimage}
-                  />
-                  <h2 className="m-0 relative text-inherit tracking-[0.06em] font-normal font-inherit z-[1]">
-                    Cook buddy
-                  </h2>
-                </div>
-                <ul>
-                  <li>Search for recipes by name, ingredients, or categories</li>
-                  <li>Browse a vast collection of recipes from various cuisines.</li>
-                  <li>Save favorite recipes for quick access.</li>
-                  <li>Step-by-step instructions with images for each recipe.</li>
-                  <li>User ratings and reviews for recipes.</li>
-                  <li>Clean and visually appealing design.</li>
-                </ul>
+              <span className='text-black text-xl'> 
+              <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
+  <li style={{ marginBottom: '10px' }}>
+    <img
+      className="relative z-[1]"
+      loading="eager"
+      alt=""
+      src={hatimage}
+      style={{ width: '200px', height: '50px' }}
+    />
+  </li>
+  <li style={{ marginBottom: '10px' }}>Search for recipes by name, ingredients, or categories</li>
+  <li style={{ marginBottom: '10px' }}>Browse a vast collection of recipes from various cuisines.</li>
+  <li style={{ marginBottom: '10px' }}>Save favorite recipes for quick access.</li>
+  <li style={{ marginBottom: '10px' }}>Step-by-step instructions with images for each recipe.</li>
+  <li style={{ marginBottom: '10px' }}>User ratings and reviews for recipes.</li>
+  <li style={{ marginBottom: '10px' }}>Clean and visually appealing design.</li>
+</ul>
+     
               </span>
-
-            </div>
-            
-          </div>
-         
+            </div>         
+          </div>      
         </div>
-      
       </div>
       )}
       {isModalOpen && (
@@ -312,9 +307,9 @@ const FormSubmit = async(e) =>
                 <form class="space-y-4" onSubmit={FormSubmit}>
                     <div>
                     <span className='mb-2 text-md'>Email</span>
-                    <input type="email" name="email" id="email" className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required />
+                    <input type="email" name="email" id="email" className="block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required/>
                     </div>
-                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2" onClick={FormSubmit}>Get OTP</button>
+                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-2 rounded-lg mb-2 hover:border-gray-300 mt-2" >Get OTP</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                     </div>
                 </form>
@@ -364,13 +359,13 @@ const FormSubmit = async(e) =>
                 <form class="space-y-4" onSubmit={OTPSubmit}>
                     <div>
                     <span className='mb-2 text-md'>Email</span>
-                    <input type="email" name="email" id="email" className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required />
+                    <input type="email" name="email" id="email" className="block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required />
                     </div>
                     <div>
                     <span className='mb-2 text-md'>OTP</span>
-                    <input type="text" name="otp" id="otp" className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"   value={otp} onChange={(e)=>setotp(e.target.value)} required />
+                    <input type="text" name="otp" id="otp" className="block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"   value={otp} onChange={(e)=>setotp(e.target.value)} required />
                     </div>
-                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2" onClick={OTPSubmit}>Get OTP</button>
+                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Verify OTP</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                     </div>
                 </form>
@@ -420,13 +415,13 @@ const FormSubmit = async(e) =>
                 <form class="space-y-4" onSubmit={onPasswordForm}>
                     <div>
                     <span className='mb-2 text-md'>Password</span>
-                    <input type="password" className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Password} onChange={(e)=>setPassword(e.target.value)} required />
+                    <input type="password" className="block w-full rounded-md border-0 px-0 text-gray-900 pl-0.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Password} onChange={(e)=>setPassword(e.target.value)} required />
                     </div>
                     <div>
                     <span className='mb-2 text-md'>Re-Enter Password</span>
-                    <input type="password"  className="block w-full rounded-md border-0 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={repassword}onChange={(e)=>setrePassword(e.target.value)} required />
+                    <input type="password"  className="block w-full rounded-md border-0 px-0 text-gray-900 pl-0.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={repassword}onChange={(e)=>setrePassword(e.target.value)} required />
                     </div>
-                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Change Password</button>
+                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-5 rounded-lg mb-2 hover:border-gray-300 mt-2">Change Password</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                     </div>
                 </form>
