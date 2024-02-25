@@ -264,7 +264,6 @@ const FormSubmit = async(e) =>
   <li style={{ marginBottom: '10px' }}>User ratings and reviews for recipes.</li>
   <li style={{ marginBottom: '10px' }}>Clean and visually appealing design.</li>
 </ul>
-     
               </span>
             </div>         
           </div>      
@@ -291,8 +290,7 @@ const FormSubmit = async(e) =>
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 14 14"
-                  >
+                    viewBox="0 0 14 14" >
                     <path
                       stroke="currentColor"
                       strokeLinecap="round"
@@ -329,7 +327,6 @@ const FormSubmit = async(e) =>
         >
           <div className="relative p-4 w-full max-w-md">
             <div className="relative bg-[#F9F9F9] rounded-lg shadow">
-              {/* Modal content */}
               <div className="p-4 md:p-5">
                 <button
                   onClick={OTPModal}
@@ -385,7 +382,6 @@ const FormSubmit = async(e) =>
         >
           <div className="relative p-4 w-full max-w-md">
             <div className="relative bg-[#F9F9F9] rounded-lg shadow">
-              {/* Modal content */}
               <div className="p-4 md:p-5">
                 <button
                   onClick={PasswordModel}
@@ -408,9 +404,6 @@ const FormSubmit = async(e) =>
                   </svg>
                   <span className="sr-only">Close modal</span>
                 </button>
-
-                {/* Modal body */}
-                {/* Your form content here */}
                 <div class="p-4 md:p-5">
                 <form class="space-y-4" onSubmit={onPasswordForm}>
                     <div>

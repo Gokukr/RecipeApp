@@ -4,6 +4,9 @@ import hatimage from "../assets/hat.png";
 import user from "../assets/Vector (1).png";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Header = memo(() => {
   const navigator = useNavigate();
@@ -18,12 +21,17 @@ const Header = memo(() => {
   function handleHomeClick() {
     navigator("/dashboard");
   }
+  const notify = (message) => toast(message);
   function handleLogout()
   {   
     Cookies.remove("token");
     Cookies.remove("role");
-    Cookies.remove("user_id");    
-      navigator("/")
+    Cookies.remove("user_id"); 
+      notify("Logout Successfully")
+      setTimeout(()=>
+      {
+        navigator("/")
+      },500)   
   }
   
   return (
@@ -67,6 +75,7 @@ const Header = memo(() => {
             <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
              Logout
             </b>
+            <ToastContainer className="text-lgi"/>
           </div>
 
           

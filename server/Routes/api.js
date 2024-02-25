@@ -261,7 +261,7 @@ router.post("/ChangePassword",async(req,res)=>
 {
     try{
              const {email,Password,repassword} = req.body;
-             if(password==repassword)
+             if(Password==repassword)
              {  
                 const saltRounds = 10;
                 const salt = await bcrypt.genSalt(saltRounds);

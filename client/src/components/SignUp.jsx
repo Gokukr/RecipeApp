@@ -130,39 +130,39 @@ export default function SignUp() {
           <span className='mb-2 rext-md'>Gender</span>
           <br></br>
           <label className="inline-flex items-center">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Male"
-                      checked={gender === "Male"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                    />
-                    <span className="ml-2">Male</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Female"
-                      checked={gender === "Female"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                    />
-                    <span className="ml-2">Female</span>
-                    </label>
-                    <label className="inline-flex items-center ml-6">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Others"
-                      checked={gender === "Others"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                    />
-                     <span className="ml-2">Others</span>
-                  </label>
-                   </div>
+              <input
+              type="radio"
+              name="gender"
+              value="Male"
+              checked={gender === "Male"}
+              onChange={(e) => setGender(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <span className="ml-2">Male</span>
+              </label>
+              <label className="inline-flex items-center ml-6">
+              <input
+              type="radio"
+              name="gender"
+              value="Female"
+              checked={gender === "Female"}
+              onChange={(e) => setGender(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <span className="ml-2">Female</span>
+              </label>
+              <label className="inline-flex items-center ml-6">
+              <input
+              type="radio"
+              name="gender"
+              value="Others"
+              checked={gender === "Others"}
+              onChange={(e) => setGender(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <span className="ml-2">Others</span>
+              </label>
+              </div>
           <div className='mt-1.5'>
               <span className='mb-2 rext-md'>Password</span>
               <input
@@ -188,17 +188,17 @@ export default function SignUp() {
               />
           </div>
           <div className='mt-1.5'>
-    <span className='mb-2 text-md'>Address</span>
-    <textarea
-        type='text'
-        className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pr-8 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-        name='address'
-        id="address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        required
-        />
-        </div>
+            <span className='mb-2 text-md'>Address</span>
+            <textarea
+            type='text'
+            className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pr-8 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+            name='address'
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            required
+            />
+          </div>
         <button className='w-full lg:w-auto bg-primary-100 text-white px-40 py-2 rounded-lg mb-2 
         hover:text-black hover:border-gray-300 mt-2 '>Sign Up
         </button>
@@ -213,23 +213,26 @@ export default function SignUp() {
               <div className='absolute hidden bottom-16 right-6 p-6 md:block'>
               <span className='text-black text-xl'>
               <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
-              <li style={{ marginBottom: '10px' }}>
+              <li className="mb-2.5">
               <img
                   className="relative z-[1]"
                   loading="eager"
                   alt=""
                   src={hatimage}
+                 
                   style={{ width: '200px', height: '50px' , marginBottom: '10px' }}
               />
               </li>
-              <li style={{ marginBottom: '10px' }}>Users can search for recipes based on various criteria such as ingredients, cuisine, dietary preference.</li>
-              <li style={{ marginBottom: '10px' }}>Search for recipes by name, ingredients, or categories.</li>
-              <li style={{ marginBottom: '10px' }}>Browse a vast collection of recipes from various cuisines.</li>
-              <li style={{ marginBottom: '10px' }}>Save favorite recipes for quick access.</li>
-              <li style={{ marginBottom: '10px' }}>The system can automatically generate a grocery list based on the ingredients required for those recipes.</li>
-              <li style={{ marginBottom: '10px' }}>Step-by-step instructions with images for each recipe.</li>
-              <li style={{ marginBottom: '10px' }}>User ratings and reviews for recipes.</li>
-              <li style={{ marginBottom: '25px' }}>Clean and visually appealing design.</li>
+              <li className="mb-3">Users can search for recipes based on various criteria such as ingredients, cuisine, dietary preference.</li>
+              <li className="mb-3">Search for recipes by name, ingredients, or categories.</li>
+              <li className="mb-3">Browse a vast collection of recipes from various cuisines.</li>
+              <li className="mb-3">Save favorite recipes for quick access.</li>
+              <li className="mb-3">The system can automatically generate a grocery list based on the ingredients required for those recipes.</li>
+              <li className="mb-3">Step-by-step instructions with images for each recipe.</li>
+              <li className="mb-3">User ratings and reviews for recipes.</li>
+              <li className="mb-3">Where Admin can only add recipe.</li>
+              
+              <li className="mb-5">Clean and visually appealing design.</li>
             </ul>
               </span>
            </div>
