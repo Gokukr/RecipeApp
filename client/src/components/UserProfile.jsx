@@ -148,6 +148,32 @@ function UserProfile(userId) {
                     Phone Number: {user.phone}
                   </p>
                 </div>
+                <div className="lg:flex md:flex lg:justify-around ">
+                  <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                      Number of Favorite Recipes
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {/* {Number of fav} */}
+                    </div>
+                  </div>
+                  <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                      Favorite cuisine
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {/* {Favorite cuisine} */}
+                    </div>
+                  </div>
+                  <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl">
+                      Favorite course
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {/* {Favorite course} */}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             {showEditDialog && (
