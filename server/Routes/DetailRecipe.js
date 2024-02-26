@@ -28,7 +28,8 @@ router.get("/user-profile/:id", (req, res) => {
             pass: user.password,
             fname: user.first_name,
             lname: user.last_name,
-            about: user.about
+            about: user.about,
+            address: user.address
           });
         }
       }
@@ -200,4 +201,43 @@ router.get("/recipes/:id", (req, res) => {
   );
 });
 
+router.put("/edit-profile", async (req, res) => {
+  try {
+    const {
+      id,
+      phone,
+      fName,
+      lName,
+      about,
+      gender,
+      address,
+    } = req.body;
+    const updatedProfile = await pool.query(
+
+      `UPDATE user_data
+      SET
+        first_name = $1,
+        last_name = $2,
+        address = $3,
+        gender = $4,
+          phone_number = $5,
+          about = $6
+      WHERE
+          id = $7
+      RETURNING *;
+      `,
+      [
+        fName,
+        lName,
+        address,
+        gender,
+        phone,
+        about,
+        id,
+      ]
+    ); res.json(updatedProfile.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 module.exports = router;

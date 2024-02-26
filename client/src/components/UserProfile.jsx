@@ -5,6 +5,7 @@ import Footer from "./Footer.jsx";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "./ChangePassword.jsx";
+import EditUserProfile from "./EditUserProfile.jsx";
 
 function UserProfile(userId) {
   const navigate = useNavigate();
@@ -14,63 +15,63 @@ function UserProfile(userId) {
   const [gender, setGender] = useState("");
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
-  useEffect(() =>
-  {
+  useEffect(() => {
     const token = Cookies.get("token");
     axios
-    .get("http://localhost:1200/api/is-verify", {
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-      setVerify(response.data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-      navigate("/");
-    });
-  },[])
+      .get("http://localhost:1200/api/is-verify", {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setVerify(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+        navigate("/");
+      });
+  }, []);
 
   useEffect(() => {
-    if(verify)
-    {
-    const url = `http://localhost:1200/api/detail/user-profile/${userId}`;
-    axios.get(url).then((response) => {
-      setUser(response.data);
-      setRole(response.data.role);
-      setGender(response.data.gender);
-    });
-  }
-  }, [userId,verify]);
+    if (verify) {
+      const url = `http://localhost:1200/api/detail/user-profile/${userId}`;
+      axios.get(url).then((response) => {
+        setUser(response.data);
+        setRole(response.data.role);
+        setGender(response.data.gender);
+      });
+    }
+  }, [userId, verify]);
 
   const [count, setCount] = useState(0);
   useEffect(() => {
-    if(verify)
-    {
-    axios
-      .get(`http://localhost:1200/api/detail/recipe-count/${userId}`)
-      .then((response) => {
-        setCount(response.data.count);
-      });
+    if (verify) {
+      axios
+        .get(`http://localhost:1200/api/detail/recipe-count/${userId}`)
+        .then((response) => {
+          setCount(response.data.count);
+        });
     }
-  }, [userId,verify]);
-  const handleUpdateProfile = () => {
-    console.log("Updating Profile");
-    navigate("/UpdateProfile");
-  };
+  }, [userId, verify]);
+
   const [showModal, setShowModal] = useState(false);
+  const [showEditDialog, setEditDialog] = useState(false);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
   if (loading) {
     return <div>Loading...</div>;
   }
+  const handleUpdateProfile = () => setEditDialog(true);
 
+  const handleCloseDialog = () => {
+    setEditDialog(false);
+    window.location.reload();
+  };
   return (
     <>
       <Header />
@@ -96,7 +97,7 @@ function UserProfile(userId) {
                   className="text-base pl-1 bg-orange-500 text-white rounded-md"
                   onClick={handleUpdateProfile}
                 >
-                 Edit Profile
+                  Edit Profile
                 </button>
               </div>
             </div>
@@ -120,34 +121,38 @@ function UserProfile(userId) {
                 <h3 class="pt-4 ">{user.name}</h3>
                 <h3 class="pt-4 ">{user.address}</h3>
               </div>
+              <div className="profile-details w-[70%] mx-6 mt--7 ">
+                <div className="bg-white rounded-lg border-solid border-black border-2 flex flex-col">
+                  {role === "admin" && (
+                    <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-2">
+                      Total Recipes Added: {count}
+                    </p>
+                  )}
 
-              <div className="profile-details w-[70%] mx-6 mt--7 bg-white rounded-lg border-solid border-black border-2 flex flex-col">
-                {role === "admin" && (
-                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-2">
-                    Total Recipes Added: {count}
+                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
+                    About: {user.about}
                   </p>
-                )}
-
-                <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
-                  About: {user.about}
-                </p>
-                <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6]  px-3 py-3 border-soild border-[#2c3e50] border-1">
-                  First Name: {user.fname}
-                </p>
-                <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
-                  Last Name: {user.lname}
-                </p>
-                <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
-                  Email: {user.email}
-                </p>
-                <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
-                  Gender: {user.gender}
-                </p>
-                <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
-                  Phone Number: {user.phone}
-                </p>
+                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6]  px-3 py-3 border-soild border-[#2c3e50] border-1">
+                    First Name: {user.fname}
+                  </p>
+                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
+                    Last Name: {user.lname}
+                  </p>
+                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
+                    Email: {user.email}
+                  </p>
+                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
+                    Gender: {user.gender}
+                  </p>
+                  <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
+                    Phone Number: {user.phone}
+                  </p>
+                </div>
               </div>
             </div>
+            {showEditDialog && (
+              <EditUserProfile user={user} onClose={handleCloseDialog} />
+            )}
           </div>
         ) : (
           <p>Loading...</p>
