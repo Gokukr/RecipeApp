@@ -111,11 +111,11 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
   // debugger;
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-darkslategray-100 font-open-sans relative">
+    <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans relative">
       {role === "admin" && (
         <div className="absolute top-0 right-0 mr-4 mt-4">
           <Link to="/add-recipe">
-            <button className="bg-primary-300 hover:darkslategray-80 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 ">
+            <button className="bg-primary-100 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 ">
               Add Recipe
             </button>
           </Link>

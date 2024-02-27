@@ -18,7 +18,14 @@ const Header = memo(() => {
   function handleHomeClick() {
     navigator("/dashboard");
   }
-
+  function handleLogout()
+  {   
+    Cookies.remove("token");
+    Cookies.remove("role");
+    Cookies.remove("user_id");    
+      navigator("/")
+  }
+  
   return (
     <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
       <div className="self-stretch w-[269px] flex flex-row items-start justify-end gap-[9px]">
@@ -38,20 +45,31 @@ const Header = memo(() => {
         <div className="self-stretch flex flex-row items-start justify-end  mq1050:hidden">
           <div
             onClick={handleHomeClick}
-            className="flex flex-col items-start justify-start py-0 pr-[18px] pl-0"
+            className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
-            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-11 hover:cursor-pointer">
+            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
               Home
             </b>
           </div>
           <div
-            onClick={handleFavClick}
-            className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[22px] pl-0"
+            onClick={handleFavClick} 
+            className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
-            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-12 mr-12 pr-6 hover:cursor-pointer">
+            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
               Favorites
             </b>
           </div>
+
+          <div
+            onClick={handleLogout} 
+            className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
+          >
+            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+             Logout
+            </b>
+          </div>
+
+          
           {/* <b className="h-[30px] flex-1 relative tracking-[0.03em] inline-block whitespace-nowrap z-[1]">
             About us
           </b> */}

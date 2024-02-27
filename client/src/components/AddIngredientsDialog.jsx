@@ -76,7 +76,7 @@ const AddIngredientsDialog = ({ existingIngredients, onClose }) => {
                 name="ingredientCategory"
                 id="ingredientCategory"
                 autoComplete="ingredientCategory"
-                className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 value={ingredientCategory}
                 onChange={(e) => setIngredientCategory(e.target.value)}
                 required
@@ -87,13 +87,13 @@ const AddIngredientsDialog = ({ existingIngredients, onClose }) => {
           <div className="flex justify-between">
             <button
               onClick={handleSubmit}
-              className="bg-whitesmoke text-darkslategray-300 px-4 py-2 rounded-md hover:bg-blue-600"
+              className="bg-whitesmoke text-primary-100 px-4 py-2 rounded-md"
             >
               Add
             </button>
             <button
               onClick={onClose}
-              className="bg-gray-300 text-darkslategray-300 px-4 py-2 rounded-md hover:bg-gray-400"
+              className="bg-gray-300 text-primary-100 px-4 py-2 rounded-md hover:bg-gray-400"
             >
               Cancel
             </button>

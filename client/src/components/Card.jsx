@@ -8,7 +8,7 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
     <Link className="no-underline" to={`/user/detail-recipe/${id}`}>
       {/* {name} */}
 
-      <div className="w-72 h-56 bg-primary-300 drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4">
+      <div className="w-72 h-56 bg-primary-100 drop-shadow-sm hover:drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4">
         <img
           src={imageUrl}
           alt={foodName}

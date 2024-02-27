@@ -1,9 +1,10 @@
 import axios from "axios";
 import ManageRecipes from "./ManageRecipes";
 import Header from "./Header";
+import Footer from "./Footer";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const AddRecipe = () => {
   const userId = Cookies.get("user_id");
@@ -17,6 +18,7 @@ const AddRecipe = () => {
         "http://localhost:1200/api/manage/add",
         newRecipe
       );
+      console.log(newRecipe);
       notify("Recipe added successfully!");
       setTimeout(() => {
         Navigate("/dashboard");
@@ -29,7 +31,9 @@ const AddRecipe = () => {
   return (
     <div>
       <Header />
-      <ManageRecipes handleSubmit={addRecipe} back="/dashboard" />
+      <ToastContainer />
+      <ManageRecipes handleSubmit={addRecipe} />
+      <Footer />
     </div>
   );
 };
