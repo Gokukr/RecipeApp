@@ -53,7 +53,6 @@ router.post("/add", async (req, res) => {
 // Update a recipe
 router.put("/update", async (req, res) => {
   try {
-    console.log(req.body);
     const {
       name,
       description,

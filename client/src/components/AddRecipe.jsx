@@ -1,4 +1,5 @@
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 import ManageRecipes from "./ManageRecipes";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -10,8 +11,33 @@ const AddRecipe = () => {
   const userId = Cookies.get("user_id");
   const notify = (message) => toast(message);
   const Navigate = useNavigate();
+  const [verify, setVerify] = useState(false);
+  const [loading, setLoading] = useState(true); 
+  useEffect(() =>
+  {
+    const token = Cookies.get("token");
+    axios
+    .get("http://localhost:1200/api/is-verify", {
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+      setVerify(response.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error(error);
+      setLoading(false);
+      Navigate("/");
+    });
+  },[])
 
   const addRecipe = async (recipe) => {
+    if(verify)
+    {
     const newRecipe = { ...recipe, userId };
     try {
       const response = await axios.post(
@@ -26,7 +52,11 @@ const AddRecipe = () => {
     } catch (error) {
       console.error("Error adding recipe:", error.message);
     }
+  }
   };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

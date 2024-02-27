@@ -1,22 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import RecipeContainer from "./RecipeContainer";
 import { searchSavedRecipe } from "../api";
 import SearchBar from "./SearchBar";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
+
 
 function SavedRecipe() {
   const { userId } = useParams();
-  const [recipes, setRecipes] = React.useState([]);
-  const [showAll, setShowAll] = React.useState(true);
-  const [searchText, setSearchText] = React.useState("");
-  const [filter, setFilter] = React.useState({
+  const [recipes, setRecipes] = useState([]);
+  const [showAll, setShowAll] = useState(true);
+  const [searchText, setSearchText] =useState("");
+  const [filter, setFilter] =useState({
     rating: [],
     mealType: [],
     course: [],
     cuisine: [],
   });
+  const [verify, setVerify] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() =>
+  {
+    const token = Cookies.get("token");
+    axios
+    .get("http://localhost:1200/api/is-verify", {
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+      setVerify(response.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error(error);
+      setLoading(false);
+      navigate("/");
+    });
+  },[])
 
   const getRecipes = async (id, text, filter) => {
     const res = await searchSavedRecipe(id, text, filter);
@@ -28,10 +58,14 @@ function SavedRecipe() {
     setFilter(filter);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if(verify) {
     getRecipes(userId, searchText, filter);
-  }, [userId, searchText, filter]);
-
+    }
+  }, [userId, searchText, filter,verify]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="App">
       <Header />

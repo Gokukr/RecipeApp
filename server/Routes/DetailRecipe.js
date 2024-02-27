@@ -26,6 +26,10 @@ router.get("/user-profile/:id", (req, res) => {
             role: user.role,
             phone: user.phone_number,
             pass: user.password,
+            fname: user.first_name,
+            lname: user.last_name,
+            about: user.about,
+            address: user.address
           });
         }
       }
@@ -36,18 +40,81 @@ router.get("/user-profile/:id", (req, res) => {
 router.get("/favourites/:userId/:recipeId", async (req, res) => {
   const userId = req.params.userId;
   const recipeId = req.params.recipeId;
-  pool.query(`select * from favorites where user_id = $1 and recipe_id = $2`,[userId, recipeId], (error, result) => {
-    if(error) {
+  pool.query(`select * from favorites where user_id = $1 and recipe_id = $2`, [userId, recipeId], (error, result) => {
+    if (error) {
       res.status(500).json({ error: "Internal error" });
     } else {
       if (result.rows.length === 0) {
-        res.json({ fav:false });
+        res.json({ fav: false });
       } else {
-        res.json({fav:true});
+        res.json({ fav: true });
       }
     }
   });
 });
+
+router.get("/favCount/:id", (req, res) => {
+  const userId = req.params.id;
+  pool.query(`select count(*) as count from favorites where user_id = $1`, [userId], (error, result) => {
+    if(error) {
+      res.status(500).json({error: "Error Fetching Count"});
+    } else {
+      if (result.rows.length === 0) {
+        res.json({ count:0, });
+      } else {
+        const counter= result.rows[0];
+        res.json({count:counter.count,});
+      }      
+    }
+  });
+});
+
+router.get("/likedCuisine/:id", (req, res) => {
+  const userId = req.params.id;
+  pool.query(`SELECT r.Cuisine AS Favorite_Cuisine, COUNT(*) AS Total_Count
+    FROM Favorites f
+    JOIN Recipe r ON f.Recipe_id = r.id
+    WHERE f.User_ID = $1
+    GROUP BY r.Cuisine
+    ORDER BY Total_Count DESC
+    LIMIT 1`, [userId], (error, result) => {
+    if(error) {
+      res.status(500).json({error: "Error Fetching Cuisine"});
+    } else {
+      if (result.rows.length === 0) {
+        res.json({ cuisine:"Nothing to show here" });
+      } else {
+        const counter= result.rows[0];
+        // console.log(counter);
+        res.json({cuisine: counter.favorite_cuisine});
+      }      
+    }
+  });
+});
+
+router.get("/favCourse/:id", (req, res) => {
+  const userId = req.params.id;
+  pool.query(`SELECT r.Course_type AS Favorite_Course, COUNT(*) AS Total_Count
+      FROM Favorites f
+      JOIN Recipe r ON f.Recipe_id = r.id
+      WHERE f.User_ID = $1
+      GROUP BY r.Course_type
+      ORDER BY Total_Count DESC
+      LIMIT 1`, [userId], (error, result) => {
+    if(error) {
+      res.status(500).json({error: "Error Fetching Course"});
+    } else {
+      if (result.rows.length === 0) {
+        res.json({ course:"Nothing to show here" });
+      } else {
+        const counter= result.rows[0];
+        res.json({course: counter.favorite_course});
+      }      
+    }
+  });
+});
+
+
 
 router.post("/favourites/:userId/:recipeId", async (req, res) => {
   const userId = req.params.userId;
@@ -80,24 +147,24 @@ router.get(`/Password/:oldPass/:userId`, (req, res) => {
   const pass = req.params.oldPass;
   const userId = req.params.userId;
   pool.query(`select * from user_data where id = $1`, [userId],
-  (error, result) => {
-    if(error){
-      res.status(500).json({error: " Error verifying password"});
-    } else {
-      const passwordStatus = bcrypt.compare(
-        pass,
-        result.rows[0].password
-      );
-      if (!passwordStatus) {
-        res.status(401).json("Password Not Correct");
-      }
-      else {
-        res.json({
-          msg: true,
-        });
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: " Error verifying password" });
+      } else {
+        const passwordStatus = bcrypt.compare(
+          pass,
+          result.rows[0].password
+        );
+        if (!passwordStatus) {
+          res.status(401).json("Password Not Correct");
+        }
+        else {
+          res.json({
+            msg: true,
+          });
+        }
       }
     }
-  }
   );
 });
 
@@ -105,25 +172,25 @@ router.put(`/changePassword/:newPass/:userId`, async (req, res) => {
   const password = req.params.newPass;
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
-  const newPassword =await bcrypt.hash(password, salt);
+  const newPassword = await bcrypt.hash(password, salt);
   const userId = req.params.userId;
   pool.query(`update user_data set password = $1 where id = $2`, [newPassword, userId],
-  (error, result) => {
-    if(error) {
-      res.status(500).json({error: " Error changing password"});
-    } else {
-      res.json({
-        msg: "Password Changed Successfully",
-      });
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: " Error changing password" });
+      } else {
+        res.json({
+          msg: "Password Changed Successfully",
+        });
+      }
     }
-  }
   );
 });
 
 router.get("/recipe-count/:id", (req, res) => {
   const userId = req.params.id;
   pool.query(`select count(*) from recipe where user_id = $1`, [userId], (error, result) => {
-    if(error) {
+    if (error) {
       console.error("Error fetching user-data:", error);
       res.status(500).json({ error: "Internal Server Error" });
     } else {
@@ -165,10 +232,11 @@ router.get("/recipes/:id", (req, res) => {
     (error, result) => {
       if (error) {
         console.error("Error fetching recipe:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        // res.status(500).json({ error: "Internal Server Error" });
       } else {
         if (result.rows.length === 0) {
-          res.status(404).json({ error: "Recipe not found" });
+          // res.status(404).json({ error: "Recipe not found" });
+          console.error(error);
         } else {
           const recipe = result.rows[0];
           //console.log(recipe);
@@ -196,4 +264,43 @@ router.get("/recipes/:id", (req, res) => {
   );
 });
 
+router.put("/edit-profile", async (req, res) => {
+  try {
+    const {
+      id,
+      phone,
+      fName,
+      lName,
+      about,
+      gender,
+      address,
+    } = req.body;
+    const updatedProfile = await pool.query(
+
+      `UPDATE user_data
+      SET
+        first_name = $1,
+        last_name = $2,
+        address = $3,
+        gender = $4,
+          phone_number = $5,
+          about = $6
+      WHERE
+          id = $7
+      RETURNING *;
+      `,
+      [
+        fName,
+        lName,
+        address,
+        gender,
+        phone,
+        about,
+        id,
+      ]
+    ); res.json(updatedProfile.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 module.exports = router;
