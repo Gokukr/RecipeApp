@@ -20,7 +20,7 @@ Create table Recipe(
 	Name varchar(255),
 	Description text,
 	Image varchar(255),
-	Rating numeric(5),
+	Rating numeric(4,2),
 	Ingredients varchar(255)[],
 	instructions TEXT[],
 	Preparation_time numeric(5),
