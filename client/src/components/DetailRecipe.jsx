@@ -186,7 +186,7 @@ function DetailRecipe() {
               <img
                 src={recipe.image}
                 alt="RecipeIMG"
-                class="w-[100%] rounded-xl"
+                class="w-[100%] h-[600px] rounded-xl"
               />
             </div>
 
