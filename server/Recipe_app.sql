@@ -73,3 +73,15 @@ Create table Favorites(
 	Notes text
 );
 select * from Favorites;
+
+
+create table Culinarian(
+	ID UUID primary key default uuid_generate_v4(),
+	User_ID UUID references user_data(id),
+	RequestDate timestamp,
+	Specialization varchar(255)[],
+	Bio text, 
+	Status varchar(255)
+);
+
+select * from Culinarian;
