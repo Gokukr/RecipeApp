@@ -6,51 +6,46 @@ const jwtgenerator = require("../JwtToken/jwtgenerator");
 const Authorize = require("../middleware/authorization");
 const allRecipes = require("../middleware/allRecipes");
 const mailservice = require("../services/registrationservices");
-const getSavedRecipes = require('../middleware/getSavedRecipe');
-const saveRecipe = require('../middleware/savedRecipe');
-const randomize = require('randomatic');
+const getSavedRecipes = require("../middleware/getSavedRecipe");
+const saveRecipe = require("../middleware/savedRecipe");
+const randomize = require("randomatic");
 
-router.get("/recipes/all", async (req,res) => {
+router.get("/recipes/all", async (req, res) => {
   try {
-    let result = await allRecipes(
-      req.query.searchText,
-        {
-          mealType:req.query.mealType,
-          course:req.query.course,
-          cuisine:req.query.cuisine,
-          rating:req.query.rating
-        }
-    );
+    let result = await allRecipes(req.query.searchText, {
+      mealType: req.query.mealType,
+      course: req.query.course,
+      cuisine: req.query.cuisine,
+      rating: req.query.rating,
+    });
     res.send(result);
-    
   } catch (error) {
-    console.log("error recieving reicpes ",error);
+    console.log("error recieving reicpes ", error);
     res.send("Server error");
-  }
-})
-
-router.get("/:userId/saved-recipes", async (req,res) => {
-  try {
-    let result = await getSavedRecipes(
-        req.params.userId,
-        req.query.searchText,
-        {
-          mealType:req.query.mealType,
-          course:req.query.course,
-          cuisine:req.query.cuisine,
-          rating:req.query.rating
-        }
-      );
-    res.send(result);
-    
-  } catch (error) {
-    res.send("Server error")
   }
 });
 
-router.post("/:userId/save-a-recipe", async (req,res) => {
+router.get("/:userId/saved-recipes", async (req, res) => {
+  try {
+    let result = await getSavedRecipes(
+      req.params.userId,
+      req.query.searchText,
+      {
+        mealType: req.query.mealType,
+        course: req.query.course,
+        cuisine: req.query.cuisine,
+        rating: req.query.rating,
+      }
+    );
+    res.send(result);
+  } catch (error) {
+    res.send("Server error");
+  }
+});
+
+router.post("/:userId/save-a-recipe", async (req, res) => {
   const result = await saveRecipe(
-    req.params.userId, 
+    req.params.userId,
     req.body.recipeId,
     req.body.date
   );
@@ -107,7 +102,7 @@ router.post("/register", async (req, res) => {
       mailservice.sendmail(
         email,
         "Thank You for Signing Up with us",
-        `${newUser.first_name} Thank You For your Registration with we keep data safe and Enjoy in the recipe management by Learning New recipes`
+        `${newUser.first_name} Thank you for your registration with us`
       );
       const status = true;
       res.json({ status });
@@ -228,62 +223,66 @@ router.get("/user-profile/:id", (req, res) => {
 //   }
 // });
 
-
-router.post("/OtpVerify",async(req,res)=>
-{
-    try
-    {
-        const {Email} = req.body
-        const check = await db.query("SELECT * FROM user_data WHERE email = $1", [Email])
-        if(check.rows.length>0)
-        {
-             otp = randomize('0',4)
-             mailservice.sendmail(Email, "Here the OTP to verify the Account", `${otp}`);
-             const SendOtp = {
-                otp
-             }
-             res.json(SendOtp);  
-        }
-        else
-        {
-            return res.status(401).json(`user not exist`)   
-
-        }
+router.post("/OtpVerify", async (req, res) => {
+  try {
+    const { Email } = req.body;
+    const check = await db.query("SELECT * FROM user_data WHERE email = $1", [
+      Email,
+    ]);
+    if (check.rows.length > 0) {
+      otp = randomize("0", 4);
+      mailservice.sendmail(
+        Email,
+        "Here the OTP to verify the Account",
+        `${otp}`
+      );
+      const SendOtp = {
+        otp,
+      };
+      res.json(SendOtp);
+    } else {
+      return res.status(401).json(`user not exist`);
     }
-    catch(err)
-    {
-      console.log(err.message);
-      res.status(500).send("Server Error");
-    }
-})
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
-router.post("/ChangePassword",async(req,res)=>
-{
-    try{
-             const {email,Password,repassword} = req.body;
-             if(Password==repassword)
-             {  
-                const saltRounds = 10;
-                const salt = await bcrypt.genSalt(saltRounds);
-                const bcryptPassword = await bcrypt.hash(Password, salt);
-                const status = await db.query("update user_data set password = $1 where email = $2",[bcryptPassword,email])                
-                mailservice.sendmail(email, "Password as been Updated", `Thank You`);
-                const verify = true
-                res.json({verify})
-             }
-             else
-             {
-                return res.status(401).send("Password Mismatch");
-            }
+router.post("/ChangePassword", async (req, res) => {
+  try {
+    const { email, Password, repassword } = req.body;
+    if (Password == repassword) {
+      const saltRounds = 10;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const bcryptPassword = await bcrypt.hash(Password, salt);
+      const status = await db.query(
+        "update user_data set password = $1 where email = $2",
+        [bcryptPassword, email]
+      );
+      mailservice.sendmail(email, "Password as been Updated", `Thank You`);
+      const verify = true;
+      res.json({ verify });
+    } else {
+      return res.status(401).send("Password Mismatch");
     }
-    catch(err)
-    {
-        console.log(err.message);
-        res.status(500).send("Server Error");
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
-    }
-})
-
+router.get("/culinarianAccepted", async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      `SELECT * FROM user_data WHERE role = 'culinarian'`
+    );
+    res.json(rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "server error" });
+  }
+});
 
 router.get("/getdata", async (req, res) => {
   try {
@@ -295,16 +294,59 @@ router.get("/getdata", async (req, res) => {
   }
 });
 
-
-
-
-router.get("/is-verify",Authorize,async (req,res)=>
-{
-   try {
-        res.json(true);
-   } catch (err) {
+router.get("/is-verify", Authorize, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (err) {
     res.status(500).send("Server Error");
-   }
+  }
+});
+
+router.post("/culinarian", async (req, res) => {
+  try {
+    let { user_id, selectedSpecializations, bio } = req.body;
+    const currentDate = new Date();
+    const existingUser = await db.query(
+      "SELECT * FROM culinarian WHERE user_id = $1",
+      [user_id]
+    );
+    if (existingUser.rows.length > 0) {
+      return res.json(false);
+    }
+    await db.query(
+      "INSERT INTO culinarian(user_id,requestdate,specialization,bio) values ($1,$2,$3,$4)",
+      [user_id, currentDate, selectedSpecializations, bio]
+    );
+    const request = await db.query(
+      "SELECT * FROM  culinarian WHERE user_id = $1",
+      [user_id]
+    );
+    res.json(true);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+router.post("/check-user", async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    if (!user_id) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    const queryResult = await db.query(
+      "SELECT * FROM culinarian WHERE user_id = $1",
+      [user_id]
+    );
+    if (queryResult.rows.length > 0) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 module.exports = router;

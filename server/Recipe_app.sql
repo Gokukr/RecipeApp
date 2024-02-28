@@ -12,6 +12,7 @@ Create table user_data(
 	gender varchar(10),
 	role varchar(20),
 	phone_number numeric(10),
+	about varchar(255),
 	password varchar(255)  
 );
 
@@ -81,7 +82,7 @@ create table Culinarian(
 	RequestDate timestamp default CURRENT_DATE,
 	Specialization varchar(255)[],
 	Bio text, 
-	Status varchar(255) DEFAULT pending
+	Status varchar(255) DEFAULT Pending
 );
 
 select * from Culinarian;

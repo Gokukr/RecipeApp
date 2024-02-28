@@ -31,7 +31,7 @@ const UpdateRecipe = () => {
       );
       notify("Recipe updated successfully!");
       setTimeout(() => {
-        Navigate("/dashboard");
+        Navigate(-1);
       }, 2000);
     } catch (error) {
       console.error("Error adding recipe:", error);

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const pool = require("../dbconfig");
+const bcrypt = require("bcrypt");
 
 router.get("/user-profile/:id", (req, res) => {
   const userId = req.params.id;
@@ -37,6 +38,23 @@ router.get("/user-profile/:id", (req, res) => {
   );
 });
 
+router.get("/User-role/:recipeId/:userId", (req, res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error : "Internal Error"});
+    } else {
+      if(result.rows.length === 0) {
+        res.json({role: "user"});
+      } else {
+        res.json({role: result.rows[0].role});
+      }
+    }
+  });
+});
+
 router.get("/favourites/:userId/:recipeId", async (req, res) => {
   const userId = req.params.userId;
   const recipeId = req.params.recipeId;
@@ -56,15 +74,15 @@ router.get("/favourites/:userId/:recipeId", async (req, res) => {
 router.get("/favCount/:id", (req, res) => {
   const userId = req.params.id;
   pool.query(`select count(*) as count from favorites where user_id = $1`, [userId], (error, result) => {
-    if(error) {
-      res.status(500).json({error: "Error Fetching Count"});
+    if (error) {
+      res.status(500).json({ error: "Error Fetching Count" });
     } else {
       if (result.rows.length === 0) {
-        res.json({ count:0, });
+        res.json({ count: 0, });
       } else {
-        const counter= result.rows[0];
-        res.json({count:counter.count,});
-      }      
+        const counter = result.rows[0];
+        res.json({ count: counter.count, });
+      }
     }
   });
 });
@@ -78,16 +96,16 @@ router.get("/likedCuisine/:id", (req, res) => {
     GROUP BY r.Cuisine
     ORDER BY Total_Count DESC
     LIMIT 1`, [userId], (error, result) => {
-    if(error) {
-      res.status(500).json({error: "Error Fetching Cuisine"});
+    if (error) {
+      res.status(500).json({ error: "Error Fetching Cuisine" });
     } else {
       if (result.rows.length === 0) {
-        res.json({ cuisine:"Nothing to show here" });
+        res.json({ cuisine: "Nothing to show here" });
       } else {
-        const counter= result.rows[0];
+        const counter = result.rows[0];
         // console.log(counter);
-        res.json({cuisine: counter.favorite_cuisine});
-      }      
+        res.json({ cuisine: counter.favorite_cuisine });
+      }
     }
   });
 });
@@ -101,49 +119,20 @@ router.get("/favCourse/:id", (req, res) => {
       GROUP BY r.Course_type
       ORDER BY Total_Count DESC
       LIMIT 1`, [userId], (error, result) => {
-    if(error) {
-      res.status(500).json({error: "Error Fetching Course"});
+    if (error) {
+      res.status(500).json({ error: "Error Fetching Course" });
     } else {
       if (result.rows.length === 0) {
-        res.json({ course:"Nothing to show here" });
+        res.json({ course: "Nothing to show here" });
       } else {
-        const counter= result.rows[0];
-        res.json({course: counter.favorite_course});
-      }      
+        const counter = result.rows[0];
+        res.json({ course: counter.favorite_course });
+      }
     }
   });
 });
 
-
-
-router.post("/favourites/:userId/:recipeId", async (req, res) => {
-  const userId = req.params.userId;
-  const recipeId = req.params.recipeId;
-
-  try {
-    const { rows } = await pool.query(
-      `SELECT * FROM favorites WHERE user_id = $1 AND recipe_id = $2`,
-      [userId, recipeId]
-    );
-
-    if (!rows.length) {
-      await pool.query(
-        `INSERT INTO favorites (user_id, recipe_id) VALUES ($1, $2)`,
-        [userId, recipeId]
-      );
-      res
-        .status(201)
-        .json({ message: "Recipe added to favourites successfully" });
-    } else {
-      res.status(409).json({ message: "Recipe already exists in favourites" });
-    }
-  } catch (error) {
-    console.error("Error adding recipe to favourites:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-router.get(`/Password/:oldPass/:userId`, (req, res) => {
+router.get(`/Password/:oldPass/:userId`, async (req, res) => {
   const pass = req.params.oldPass;
   const userId = req.params.userId;
   pool.query(`select * from user_data where id = $1`, [userId],
@@ -303,4 +292,36 @@ router.put("/edit-profile", async (req, res) => {
     console.error(err.message);
   }
 });
+
+router.get("/culinarian/:status", (req, res) => {
+  const stat = req.params.status;
+  pool.query(`
+  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `, [stat],
+  (error, result) => {
+    // console.log(result);
+    if(error) {
+      res.status(500).json({error: "Error Fetching Data"});
+    } else {
+      const hasData= result.rows.length > 0;
+      // console.log(hasData);
+      res.json({data:result.rows,
+                count: hasData,        
+      });
+    }
+  });
+});
+
+router.put("/culinarian/:status/:id", (req, res) => {
+  const stat = req.params.status;
+  const id = req.params.id;
+  pool.query(`update culinarian set status = $1 where id = $2`, [stat, id] ,
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error: "Cannot Update Status"});
+    } else {
+      res.json({result});
+    }
+  });
+});
+
 module.exports = router;

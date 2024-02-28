@@ -7,78 +7,47 @@ import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import DeleteRecipe from "./DeleteRecipe";
-function DetailRecipe() {
+
+function Detailrecipe() {
   const navigate = useNavigate();
   const { recipeId } = useParams();
   const userId = Cookies.get("user_id");
+  const role = Cookies.get("role");
   const [userRole, setUser] = useState(null);
   const [error, setError] = useState(false);
-  const [verify, setVerify] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-
-  useEffect(() =>
-  {
-    const token = Cookies.get("token");
-    axios
-    .get("http://localhost:1200/api/is-verify", {
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-      setVerify(response.data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-      navigate("/");
-    });
-  },[])
-
   useEffect(() => {
-    if(verify)
-    {
-    const url = `http://localhost:1200/api/detail/user-profile/${userId}`;
+    if(role === "user"){
+      setUser("user");
+    }else if(role === "admin"){
+      setUser("admin");
+    }
+    else {
+      const url = `http://localhost:1200/api/detail/User-role/${recipeId}/${userId}`;
     axios.get(url).then((response) => {
       setUser(response.data.role);
     });
-  }
-  }, [userId,verify]);
+    }
+    
+  },[role, userRole,recipeId,userId]);
   const [recipe, setRecipe] = useState(null);
   useEffect(() => {
-    if(verify)
-    {
-    const isValidUUID =
-      recipeId &&
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-        recipeId
-      );
-
-    if (!isValidUUID) {
-      navigate("/dashboard");
-      return;
-    } else {
-      axios
-        .get(`http://localhost:1200/api/detail/recipes/${recipeId}`)
-        .then((response) => {
-          setError(response.data.error);
-          if (error) {
-            navigate("/dashboard");
-          }
-          setRecipe(response.data);
-        })
-        .catch((error) => {
+    axios
+      .get(`http://localhost:1200/api/detail/recipes/${recipeId}`)
+      .then((response) => {
+        setError(response.data.error);
+        if(error){
           navigate("/dashboard");
-          console.error(error);
-        });
-    }
-  }
-  }, [recipeId, error, navigate,verify]);
+        }
+        setRecipe(response.data);
+      })
+      .catch(error => {
+        navigate("/dashboard");
+        console.error(error);
+      });
+      
+  }, [recipeId,error,navigate]);
 
+  
   const handleEdit = () => {
     navigate("/edit-recipe", { state: { recipe } });
   };
@@ -86,22 +55,19 @@ function DetailRecipe() {
   const handleDelete = () => {
     setShowDeleteModal(true);
   };
-
-  const [fav, setfav] = useState(false);
-  useEffect(() => {
-  if(verify) {
-    axios
-      .get(`http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`)
+  
+  const [fav, setfav]=useState(false);
+  useEffect(() => {    
+      axios.get(`http://localhost:1200/api/detail/favourites/${userId}/${recipeId}`)
       .then((response) => {
         setfav(response.data.fav);
       });
-    }
-  }, [userId, recipeId]);
-  console.log("value of fav is : ");
+  },[userId,recipeId]);
+  console.log("value of fav is : ")
   console.log(fav);
   const handleAddToFavourites = () => {
-    if(verify)
-    {
+    // const userId='cded7396-c732-11ee-993a-505a65b0ab55';
+    
     try {
       const res = axios.post(
         `http://localhost:1200/api/${userId}/save-a-recipe`,
@@ -112,85 +78,50 @@ function DetailRecipe() {
       console.error("Error checking or adding recipe to favourites:", error);
     }
     window.location.reload();
-    }
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div class="bg-white">
       <Header />
-      <div class=" mx-40 mb-10 sm:my-10 px-4 pb-6 rounded-xl bg-white font-sans">
+      <div class=" mx-40 mb-10 sm:my-10 px-4 pb-6 rounded-xl bg-white">
         {recipe ? (
           <div>
             <h2 class="font-bold ml-3 text-[60px]">{recipe.title}</h2>
-            <div className="rating-container flex justify-between">
-              <div className="pl-5 text-[20px] tracking-wide">
-                {Array.from(
-                  { length: Math.floor(recipe.rating) },
-                  (_, index) => (
-                    <svg
-                      key={index}
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-star-fill text-yellow-500 pl-2"
-                      viewBox="0 0 16 16"
-                      stroke="black"
-                      stroke-width="1"
-                    >
-                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                  )
-                )}
-                {Array.from(
-                  { length: 5 - Math.floor(recipe.rating) },
-                  (_, index) => (
-                    <svg
-                      key={index}
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-star-fill text-white pl-2"
-                      viewBox="0 0 16 16"
-                      stroke="black"
-                      stroke-width="1"
-                    >
-                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                  )
-                )}
-              </div>
-              <button
-                onClick={handleAddToFavourites}
-                className="button-fav bg-transparent"
-              >
-                <svg width="18" height="18" viewBox="0 0 512 512">
-                  <path
-                    d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
-                    stroke="black"
-                    stroke-width="20"
-                    fill={fav ? "#ff0000" : "#FFffff"}
-                  />
-                </svg>
-              </button>
+            <div className="rating-container flex justify-between mt-[-10px]">
+            <p class="rating-container-rating-tab  pl-5 text-[20px] font-bold tracking-wide">Rating: {recipe.rating}</p>
+            
+            <button
+              onClick={handleAddToFavourites}
+              className="button-fav bg-transparent">
+             
+            <svg width="25" height="19" viewBox="-14.15 -14.15 500.00 500.00" class="px-1 py-1">
+              <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
+                stroke="black"
+                stroke-width="20"
+                fill={fav ? "#ff0000" :"#FFffff"}
+              />
+            </svg>
+            </button>
             </div>
+            {/* <div>
+            <svg fill="#000000" height="64px" width="64px" version="1.1" id="Capa_1" viewBox="-14.15 -14.15 500.00 500.00" xml:space="preserve" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)" stroke="#000000" stroke-width="0.004717010000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.9434020000000001"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1 c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3 l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4 C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3 s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4 c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3 C444.801,187.101,434.001,213.101,414.401,232.701z"></path> </g> </g></svg>
+            </div> */}
             <hr class="h-0.5 bg-gray-300 ml-3"></hr>
             <div class="pl-5 text-black text-left">
-              <p class="font-bold text-[20px]">{recipe.description}</p>
-            </div>
-
+                
+                <p class="mb-10 text-[20px]">{recipe.description}</p>
+              </div>
+              
             {/* <hr class="h-1 bg-gray-300 mb-3 ml-3"></hr> */}
-            <div class="overflow-hidden position-relative ml-5">
+            <div class="overflow-hidden position-relative ml-5 width-full">
               <img
                 src={recipe.image}
                 alt="RecipeIMG"
-                class="w-[100%] h-[600px] rounded-xl"
+                class="w-full h-[600px] rounded-xl object-cover"
               />
             </div>
 
-            {userRole === "admin" && (
+            {userRole === "Admin" && (
               <div className="flex justify-end gap-4 mt-4">
                 <button
                   onClick={handleEdit}
@@ -206,61 +137,62 @@ function DetailRecipe() {
                   Delete
                 </button>
               </div>
+            )} 
+
+            {userRole === "Culinarian" && (
+              <div className="flex justify-end gap-4 mt-4">
+                <button
+                  onClick={handleEdit}
+                  className="bg-[#3498db] text-white ml-4 font-medium px-4 py-2 rounded-md hover:bg-blue-700"
+                >
+                  Edit
+                </button>
+              </div>
             )}
-            <div class="flex justify-between  text-center ml-5 mt-5 font-medium px-4 rounded-md ">
-              <div class=" text-black w-full">
+
+            <div className="px-4 flex justify-between gap-4 text-center ml-5 mt-5 font-medium">
+              <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-red-600">
                 <h3>Servings</h3>
                 <p>{recipe.servings}</p>
               </div>
-              <div class="text-black w-full">
+              <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-orange-600">
                 <h3>Preparation Time</h3>
                 <p>{recipe.preparationTime} MINS</p>
               </div>
-              <div class="text-black w-full">
+              <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-yellow-600">
                 <h3>Cooking Time</h3>
                 <p>{recipe.cookingTime} MINS</p>
               </div>
-              <div class=" text-black w-full">
+              <div className=" bg-white text-black w-full rounded-xl border border-text border-primary-100 shadow-4xl shadow-green-600">
                 <h3>Cuisine</h3>
                 <p>{recipe.cuisine}</p>
               </div>
-              <div class="text-black w-full">
+              <div className="bg-white text-black w-full rounded-xl border border-text border-primary-100 shadow-4xl shadow-sky-600">
                 <h3>Meal_type</h3>
                 <p>{recipe.meal_type}</p>
               </div>
-              <div class="text-black w-full">
+              <div className="bg-white text-black w-full rounded-xl border border-text border-primary-100 shadow-4xl shadow-violet-600">
                 <h3>Difficulty</h3>
                 <p>{recipe.difficulty}</p>
               </div>
             </div>
             {/* border-solid border-2 border-gray-500 */}
             <div class="ml-5 mt-4 rounded-lg px-5 py-3 text-black ">
+              
               <strong class="text-[30px]">Ingredients</strong>
-
+              
               <ul class="list list-disc px-0 list-inside">
                 {Array.isArray(recipe.ingredients) ? (
                   recipe.ingredients.map((ingredient, index) => (
                     <li class="flex items-center mb-2">
-                      <svg
-                        class="mt-1 mr-2"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                      >
-                        <circle
-                          cx="10"
-                          cy="10"
-                          r="4"
-                          stroke="black"
-                          stroke-width="1"
-                          fill="none"
-                        />
+                      <svg class="mt-1 mr-2" width="20" height="20" viewBox="0 0 20 20">
+                        <circle cx="10" cy="10" r="4" stroke="black" stroke-width="1" fill="none" />
                       </svg>
-                      <span class="pt-2 text-[18px]">{ingredient}</span>
+                      <span class="pt-2 text-[18px]">{ ingredient }</span>
                     </li>
                   ))
-                ) : (
-                  <li>No ingredients available</li>
+                  ) : (
+                    <li>No ingredients available</li>
                 )}
               </ul>
             </div>
@@ -269,10 +201,13 @@ function DetailRecipe() {
             {/* border-solid border-2 border-gray-500 */}
             <div class="ml-5 mt-4 rounded-lg px-5 py-3 text-black ">
               <div class="mb-2">
-                <strong class="text-[30px] ">Instructions</strong>
+              <strong class="text-[30px] ">
+                Instructions
+              </strong>
               </div>
-
+                
               <ul class="list list-disc px-0 list-inside">
+              
                 {Array.isArray(recipe.instructions) ? (
                   recipe.instructions.map((instruction, index) => (
                     <li class="flex flex-wrap flex-row my-2">
@@ -280,11 +215,9 @@ function DetailRecipe() {
                         <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1" fill="#FF642F" />
                       </svg> */}
                       <span class=" top-2 left-0 w-6 h-6  bg-orange-500 font-medium rounded-full text-white text-center flex justify-center items-center">
-                        {index + 1}
+                      {index + 1}
                       </span>
-                      <span class="pl-3 pb-2 w-[95%] text-[18px] flex flex-wrap break-words">
-                        {instruction}
-                      </span>
+                      <span class="pl-3 pb-2 w-[95%] text-[18px] flex flex-wrap break-words">{instruction }</span>
                     </li>
                   ))
                 ) : (
@@ -292,17 +225,17 @@ function DetailRecipe() {
                 )}
               </ul>
             </div>
-            <Rating recipeId={recipeId} />
           </div>
         ) : (
           <p class="ml-5 mt-4 rounded-lg bg-gray-100 w-[85%] px-10 py-4">
-            Recipe not found
+            Loading...
           </p>
         )}
+        <Rating recipeId={recipeId} />
       </div>
       <Footer />
     </div>
   );
 }
 
-export default DetailRecipe;
+export default Detailrecipe;
