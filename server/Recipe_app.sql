@@ -12,6 +12,7 @@ Create table user_data(
 	gender varchar(10),
 	role varchar(20),
 	phone_number numeric(10),
+	about varchar(255),
 	password varchar(255)  
 );
 
