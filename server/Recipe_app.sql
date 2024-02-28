@@ -78,7 +78,7 @@ select * from Favorites;
 create table Culinarian(
 	ID UUID primary key default uuid_generate_v4(),
 	User_ID UUID references user_data(id),
-	RequestDate timestamp,
+	RequestDate timestamp default CURRENT_DATE,
 	Specialization varchar(255)[],
 	Bio text, 
 	Status varchar(255) DEFAULT pending
