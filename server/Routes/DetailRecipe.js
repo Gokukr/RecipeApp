@@ -114,35 +114,6 @@ router.get("/favCourse/:id", (req, res) => {
   });
 });
 
-
-
-router.post("/favourites/:userId/:recipeId", async (req, res) => {
-  const userId = req.params.userId;
-  const recipeId = req.params.recipeId;
-
-  try {
-    const { rows } = await pool.query(
-      `SELECT * FROM favorites WHERE user_id = $1 AND recipe_id = $2`,
-      [userId, recipeId]
-    );
-
-    if (!rows.length) {
-      await pool.query(
-        `INSERT INTO favorites (user_id, recipe_id) VALUES ($1, $2)`,
-        [userId, recipeId]
-      );
-      res
-        .status(201)
-        .json({ message: "Recipe added to favourites successfully" });
-    } else {
-      res.status(409).json({ message: "Recipe already exists in favourites" });
-    }
-  } catch (error) {
-    console.error("Error adding recipe to favourites:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
 router.get(`/Password/:oldPass/:userId`, (req, res) => {
   const pass = req.params.oldPass;
   const userId = req.params.userId;
