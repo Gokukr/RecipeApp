@@ -8,14 +8,15 @@ import { searchSavedRecipe } from "../api";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
-
+import Card from "./Card";
+import Container from "./Container";
 
 function SavedRecipe() {
   const { userId } = useParams();
   const [recipes, setRecipes] = useState([]);
   const [showAll, setShowAll] = useState(true);
-  const [searchText, setSearchText] =useState("");
+  const [searchText, setSearchText] =useState("");  
+  const [isLoading, setLoading] = useState(true);
   const [filter, setFilter] =useState({
     rating: [],
     mealType: [],
@@ -23,7 +24,6 @@ function SavedRecipe() {
     cuisine: [],
   });
   const [verify, setVerify] = useState(false);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() =>
@@ -49,8 +49,14 @@ function SavedRecipe() {
   },[])
 
   const getRecipes = async (id, text, filter) => {
-    const res = await searchSavedRecipe(id, text, filter);
-    setRecipes(res.data.rows);
+    try {
+      setLoading(true);
+      const res = await searchSavedRecipe(id, text, filter);
+      setRecipes(res.data.rows);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   const setItems = (txt, filter) => {
@@ -58,29 +64,57 @@ function SavedRecipe() {
     setFilter(filter);
   };
 
+  const cuisines = [
+    { name: "North Indian", filter: "North Indian" },
+    { name: "Continental", filter: "Continental" },
+    { name: "Chinese", filter: "Chinese" },
+    { name: "Japanese", filter: "Japanese" },
+    { name: "Italian", filter: "Italian" },
+  ];
+
   useEffect(() => {
     if(verify) {
-    getRecipes(userId, searchText, filter);
+      getRecipes(userId, searchText, filter);
+      debugger;
     }
   }, [userId, searchText, filter,verify]);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
   return (
     <div className="App">
       <Header />
       <div>
         <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans">
-          {/* <div className="inline-block mq450:text-lgi mq750:text-7xl mt-8">
-            <h1>Saved Recipes</h1>
-          </div> */}
           <SearchBar
             onSearch={setItems}
             allRecipe={setShowAll}
-            placeholder={"Search saved Recipes..."}
+            placeholder={"Search favorite recipes..."}
           />
         </div>
-        <RecipeContainer data={recipes} />
+        {isLoading? 
+          <p>Loading</p>:showAll ? (
+            cuisines
+              .filter((cuisine) =>
+                recipes.some((item) => item.cuisine === cuisine.filter)
+              )
+              .map((cuisine) => (
+                <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
+                  {recipes
+                    .filter((item) => item.cuisine === cuisine.filter)
+                    .map((item, index) => (
+                      <Card
+                        key={index}
+                        foodName={item.name}
+                        imageUrl={item.image}
+                        timeTaken={`${item.total_time} mins`}
+                        id={item.id}
+                        rating={`${item.rating}⭐`}
+                      />
+                    ))}
+                </Container>
+              ))
+          ) :
+          <RecipeContainer data={recipes} 
+        />}
       </div>
       <Footer />
     </div>
