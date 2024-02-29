@@ -10,6 +10,7 @@ import DetailRecipe from "./components/DetailRecipe.jsx";
 import SavedRecipe from "./components/SavedRecipe.jsx";
 import AddRecipe from "./components/AddRecipe.jsx";
 import UpdateRecipe from "./components/UpdateRecipe.jsx";
+import CulinarianRequests from "./components/CulinarianRequests.jsx";
 function App() {
   return (
     <div>

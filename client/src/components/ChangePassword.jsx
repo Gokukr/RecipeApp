@@ -49,6 +49,7 @@ const ChangePasswordModal = ({ show }) => {
   const cancelDelete = () => {
     window.location.reload();
   };
+  
   return (
     <div>
       <ToastContainer />

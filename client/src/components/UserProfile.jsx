@@ -5,6 +5,7 @@ import Footer from "./Footer.jsx";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "./ChangePassword.jsx";
+import CulinarianRequests from "./CulinarianRequests.jsx";
 
 function UserProfile(userId) {
   const navigate = useNavigate();
@@ -14,6 +15,10 @@ function UserProfile(userId) {
   const [gender, setGender] = useState("");
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [request,setRequest] = useState("Request to Culirian")
+  const [disabled, setDisabled] = useState(false);
+  const [type,setType] = useState("user")
+
   useEffect(() =>
   {
     const token = Cookies.get("token");
@@ -35,7 +40,47 @@ function UserProfile(userId) {
       navigate("/");
     });
   },[])
+  useEffect(() => {
+    const type = Cookies.get("role");
+    if(!(type==="admin"))
+    {
+    const fetchData = async () => {
+      try {
+        const user_id = Cookies.get("user_id");
+        const body = { user_id };
+        const response = await fetch("http://localhost:1200/api/check-user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+      
+          const data = await response.json();
+          if (data.exists) {
+            setRequest("Request is pending");
+            setDisabled(true);
+          }
+          else
+          {
+            setRequest("Request to Culirian")
+            setDisabled(false);
+          }
+        
+      } catch (error) {
+        console.error('Error:', error.message);
+        // Handle errors if needed
+      }
+    };
 
+    fetchData(); 
+  }
+  else
+  {
+    setType("admin");
+  }
+
+  }, []);
   useEffect(() => {
     if(verify)
     {
@@ -64,9 +109,12 @@ function UserProfile(userId) {
     navigate("/UpdateProfile");
   };
   const [showModal, setShowModal] = useState(false);
-
+  const [CulinarianResquest,setCulinarianRequest] = useState(false);
+  const CulirianOpenModel = ()=>setCulinarianRequest(true);
+  const CulirianCloseModel = () => setCulinarianRequest(false);
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -80,9 +128,26 @@ function UserProfile(userId) {
             <div className="profile-card bg-[#2c3e50] flex justify-between px-10 pt-16 pb-52">
               <span class=" text-white text-[50px]">Hello !! {user.name}</span>
               <div className="profile-buttons flex gap-4 ml-auto mr-5 py-2">
+              {type === "user" && (
+                             <button
+                            disabled={disabled}
+                            className="text-base bg-red-500 text-white rounded-md"
+                            onClick={CulirianOpenModel}
+                              >
+                                {request}
+                              </button>
+                            )}
+
+                { CulinarianResquest && (
+                   <CulinarianRequests
+                   show={CulinarianResquest}
+                   handleClose={CulirianCloseModel}
+                   />
+                ) 
+                }
                 <button
                   onClick={handleOpenModal}
-                  className="text-base bg-blue-500 text-white px-4 py-1 rounded-md ml-4"
+                  className="text-base bg-blue-500 text-white px-4 py-1 rounded-md ml-2"
                 >
                   Change Password
                 </button>

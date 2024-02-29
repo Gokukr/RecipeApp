@@ -107,7 +107,7 @@ router.post("/register", async (req, res) => {
       mailservice.sendmail(
         email,
         "Thank You for Signing Up with us",
-        `${newUser.first_name} Thank You For your Registration with we keep data safe and Enjoy in the recipe management by Learning New recipes`
+        `${newUser.first_name} Thank you for your registration with us`
       );
       const status = true;
       res.json({ status });
@@ -306,5 +306,56 @@ router.get("/is-verify",Authorize,async (req,res)=>
     res.status(500).send("Server Error");
    }
 });
+
+
+router.post("/culinarian",async(req,res)=>
+{
+  try{
+      let {user_id,selectedSpecializations,bio} = req.body;
+      const currentDate = new Date();
+      const existingUser = await db.query("SELECT * FROM culinarian WHERE user_id = $1", [user_id]);
+      if (existingUser.rows.length > 0) {
+         return res.json(false);
+      }
+      await db.query('INSERT INTO culinarian(user_id,requestdate,specialization,bio) values ($1,$2,$3,$4)',
+      [
+         user_id,
+         currentDate,
+         selectedSpecializations,
+         bio,
+      ]
+      );
+      const request = await db.query(
+        "SELECT * FROM  culinarian WHERE user_id = $1",
+        [user_id]
+      );
+    res.json(true);
+  }
+  catch(err)
+  {
+     console.log(err.message);   
+  }
+})
+
+
+router.post('/check-user', async (req, res) => {
+  try {
+      const { user_id } = req.body;
+      if (!user_id) {
+          return res.status(400).json({ error: 'User ID is required' });
+      }
+
+      const queryResult = await db.query('SELECT * FROM culinarian WHERE user_id = $1', [user_id]);
+      if (queryResult.rows.length > 0) {
+          res.json({ exists: true });
+      } else {
+          res.json({ exists: false });
+      }
+  } catch (error) {
+      console.error('Error:', error.message);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;

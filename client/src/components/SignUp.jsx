@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Background from "../assets/Design2.png"; 
+import Background from "../assets/Registration.png"; 
 import hatimage from "../assets/icon.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -63,25 +63,24 @@ export default function SignUp() {
 
   return (
     <div style={{
-      backgroundImage: `url(${Background})`,
-      backgroundSize: "cover",
+    
       backgroundPosition: "center",
       minHeight: "100vh", // Ensure the background covers the entire viewport height
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-    }}>
+    }} className="bg-white">
        <ToastContainer />
   <div className='flex items-center justify-center min-h-screen bg-grey-100'>
   <div className='relative flex flex-col m-6 space-y-8 bg-[#F9F9F9] shadow-2xl  rounded-2xl md:flex-row md:space-y-0' >
       <div className='flex flex-col justify-center md:px-14 md:py-8 p-10'>
           <span className='mb-1 text-xl text-center font-bold'>Sign Up</span>
           <form onSubmit={FormSubmit} method="POST">
-          <div className='mt-1.5'>
+          <div className='mt-4'>
           <span className='mb-2 rext-md'>FirstName</span>
               <input
               type='text'
-              className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               name='firstName'
               id="FirstName"
               value={firstname}
@@ -89,11 +88,11 @@ export default function SignUp() {
               required
               />
           </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
               <span className='mb-2 rext-md'>LastName</span>
               <input
               type='text'
-              className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               name='lastname'
               id="LastName"
               value={lastname}
@@ -101,11 +100,11 @@ export default function SignUp() {
               required
               />
           </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
               <span className='mb-2 rext-md'>Email</span>
               <input
               type='email'
-              className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               name='email'
               id="email"
               value={email}
@@ -113,11 +112,11 @@ export default function SignUp() {
               required
               />
           </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
               <span className='mb-2 rext-md'>Phone</span>
               <input
               type='tel'
-              className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               name='phone'
               id="phone"
               value={phonenumber}
@@ -126,7 +125,7 @@ export default function SignUp() {
               required
               />
           </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
           <span className='mb-2 rext-md'>Gender</span>
           <br></br>
           <label className="inline-flex items-center">
@@ -163,11 +162,11 @@ export default function SignUp() {
               <span className="ml-2">Others</span>
               </label>
               </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
               <span className='mb-2 rext-md'>Password</span>
               <input
               type='password'
-              className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               name='password'
               id="password"
               value={password}
@@ -175,11 +174,11 @@ export default function SignUp() {
               required
               />
           </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
               <span className='mb-2 rext-md'>Re-Enter Password</span>
               <input
               type='password'
-              className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
               name='repassword'
               id="repassword"
               value={repassword}
@@ -187,11 +186,11 @@ export default function SignUp() {
               required
               />
           </div>
-          <div className='mt-1.5'>
+          <div className='mt-4'>
             <span className='mb-2 text-md'>Address</span>
             <textarea
             type='text'
-            className='block w-full rounded-md border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pr-8 focus:ring-2 pl-0.5 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+            className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pr-8 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
             name='address'
             id="address"
             value={address}
@@ -209,8 +208,8 @@ export default function SignUp() {
           </div>
               </div>
               <div className='relative'>
-              <div alt="Img" className='w-[400px] h-full hidden ronded-r-2xl md:block object-cover '/>
-              <div className='absolute hidden bottom-16 right-6 p-6 md:block'>
+              <img src="" alt="Img" className='w-[400px] h-full hidden ronded-r-2xl md:block object-cover '/>
+              {/* <div className='absolute hidden bottom-16 right-6 p-6 md:block'>
               <span className='text-black text-xl'>
               <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
               <li className="mb-2.5">
@@ -235,7 +234,7 @@ export default function SignUp() {
               <li className="mb-5">Clean and visually appealing design.</li>
             </ul>
               </span>
-           </div>
+           </div> */}
       </div>
   </div>
 </div>
