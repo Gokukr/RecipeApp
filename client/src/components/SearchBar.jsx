@@ -12,6 +12,7 @@ const SearchBar = ({
     mealType: [],
     courseType: [],
     rating: [],
+    culinarian: "",
   });
 
   const handleChange = (event) => {
@@ -30,6 +31,12 @@ const SearchBar = ({
         : [...selectedFilters[filterType], value],
     });
   };
+  const handleCulinarianChange = (event) => {
+    setSelectedFilters({
+      ...selectedFilters,
+      culinarian: event.target.value,
+    });
+  };
   const handleApplyFilters = () => {
     console.log("Selected Filters:", selectedFilters);
     onSearch(searchTerm, selectedFilters);
@@ -39,6 +46,7 @@ const SearchBar = ({
         mealType: [],
         courseType: [],
         rating: [],
+        culinarian: "",
       }) && searchTerm === ""
       ? allRecipe(true)
       : allRecipe(false);
@@ -51,10 +59,17 @@ const SearchBar = ({
       mealType: [],
       courseType: [],
       rating: [],
+      culinarian: "",
     });
     // Close the sidebar
     toggleSidebar();
   };
+  // const handleCulinarianChange = (event) => {
+  //   setSelectedFilters({
+  //     ...selectedFilters,
+  //     culinarian: event.target.value,
+  //   });
+  // };
 
   React.useEffect(() => {
     onSearch(searchTerm, selectedFilters);
@@ -67,6 +82,7 @@ const SearchBar = ({
         mealType: [],
         courseType: [],
         rating: [],
+        culinarian: "",
       }) && searchTerm === ""
       ? allRecipe(true)
       : allRecipe(false);
@@ -102,7 +118,7 @@ const SearchBar = ({
       {/* Filter Icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md"
+        className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md hover:cursor-pointer drop-shadow-xl"
         viewBox="0 0 20 20"
         fill="currentColor"
         onClick={toggleSidebar}
@@ -122,158 +138,157 @@ const SearchBar = ({
             <h4 className="text-lg font-semibold font-open-sans">Filters</h4>
             {/* Cuisine */}
             <div className="mb-4">
-              <h6 className="text-sm font-semibold mb-1 ml-0 mr-12 mt-[-2rem] flex flex-start">
+              <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-2rem] flex flex-start">
                 Cuisine
               </h6>
 
-              <ul className="list-none pl-0 ">
-                <div className="grid grid-cols-2 mt-[-2rem]">
-                  <li>
-                    <input
-                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg cursor-pointer hover:cursor-pointer"
-                      type="checkbox"
-                      id="cuisine1"
-                      name="cuisine1"
-                      value="Italian"
-                      checked={selectedFilters.cuisine.includes("Italian")}
-                      onChange={() => handleFilterChange("cuisine", "Italian")}
-                    />
-                    <label
-                      htmlFor="cuisine1"
-                      className="text-base cursor-pointer hover:cursor-pointer "
-                    >
+              <ul className="list-none pl-0  ">
+                <div className="grid grid-cols-2 mt-[-2rem] items-start">
+                  <div
+                    className={`flex items-center mb-3 w-10 pl-4 ${
+                      selectedFilters.cuisine.includes("Italian")
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() => handleFilterChange("cuisine", "Italian")}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
                       Italian
                     </label>
-                  </li>
-                  <li>
-                    <input
-                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                      type="checkbox"
-                      id="cuisine2"
-                      name="cuisine2"
-                      value="Mexican"
-                      checked={selectedFilters.cuisine.includes("Mexican")}
-                      onChange={() => handleFilterChange("cuisine", "Mexican")}
-                    />
-                    <label
-                      htmlFor="cuisine2"
-                      className="text-base cursor-pointer hover:cursor-pointer"
-                    >
+                  </div>
+
+                  <div
+                    className={`flex items-center mb-3 w-1/2 pl-4 ${
+                      selectedFilters.cuisine.includes("Mexican")
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() => handleFilterChange("cuisine", "Mexican")}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
                       Mexican
                     </label>
-                  </li>
-                  <li>
-                    <input
-                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                      type="checkbox"
-                      id="cuisine3"
-                      name="cuisine3"
-                      value="Continental"
-                      checked={selectedFilters.cuisine.includes("Continental")}
-                      onChange={() =>
-                        handleFilterChange("cuisine", "Continental")
-                      }
-                    />
-                    <label
-                      htmlFor="cuisine3"
-                      className="text-base cursor-pointer hover:cursor-pointer"
-                    >
+                  </div>
+                  <div
+                    className={`flex items-center mb-3 w-3/5 pl-4 ${
+                      selectedFilters.cuisine.includes("Continental")
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() => handleFilterChange("cuisine", "Continental")}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
                       Continental
                     </label>
-                  </li>
-                  <li>
-                    <input
-                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                      type="checkbox"
-                      id="cuisine4"
-                      name="cuisine4"
-                      value="Chinese"
-                      checked={selectedFilters.cuisine.includes("Chinese")}
-                      onChange={() => handleFilterChange("cuisine", "Chinese")}
-                    />
-                    <label
-                      htmlFor="cuisine4"
-                      className="text-base cursor-pointer hover:cursor-pointer"
-                    >
+                  </div>
+                  <div
+                    className={`flex items-center mb-3 w-1/2 pl-4 ${
+                      selectedFilters.cuisine.includes("Chinese")
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() => handleFilterChange("cuisine", "Chinese")}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
                       Chinese
                     </label>
-                  </li>
-                  <li>
-                    <input
-                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                      type="checkbox"
-                      id="cuisine5"
-                      name="cuisine5"
-                      value="Japanese"
-                      checked={selectedFilters.cuisine.includes("Japanese")}
-                      onChange={() => handleFilterChange("cuisine", "Japanese")}
-                    />
-                    <label
-                      htmlFor="cuisine5"
-                      className="text-base cursor-pointer hover:cursor-pointer"
-                    >
+                  </div>
+                  <div
+                    className={`flex items-center mb-3 w-1/2 pl-4 ${
+                      selectedFilters.cuisine.includes("Japanese")
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() => handleFilterChange("cuisine", "Japanese")}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
                       Japanese
                     </label>
-                  </li>
-                  <li>
-                    <input
-                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                      type="checkbox"
-                      id="cuisine6"
-                      name="cuisine6"
-                      value="North Indian"
-                      checked={selectedFilters.cuisine.includes("North Indian")}
-                      onChange={() =>
-                        handleFilterChange("cuisine", "North Indian")
-                      }
-                    />
-                    <label
-                      htmlFor="cuisine6"
-                      className="text-base text-primary-300 cursor-pointer hover:cursor-pointer"
-                    >
+                  </div>
+                  <div
+                    className={`flex items-center mb-3 w-relative pl-4 ${
+                      selectedFilters.cuisine.includes("North Indian")
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() =>
+                      handleFilterChange("cuisine", "North Indian")
+                    }
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
                       North Indian
                     </label>
-                  </li>
+                  </div>
                 </div>
               </ul>
             </div>
             {/* Meal Type */}
             <div className="mb-4">
-              <h6 className="text-sm font-semibold mb-1 ml-0 mr-12 mt-[-1rem] flex flex-start">
+              <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-1rem] flex flex-start">
                 Meal Type
               </h6>
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="mealType1"
-                    name="mealType1"
-                    value="Veg"
-                    checked={selectedFilters.mealType.includes("Veg")}
-                    onChange={() => handleFilterChange("mealType", "Veg")}
-                  />
-                  <label
-                    htmlFor="mealType1"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/4 pl-4 ${
+                    selectedFilters.mealType.includes("Veg")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("mealType", "Veg")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Veg
                   </label>
                 </div>
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="mealType2"
-                    name="mealType2"
-                    value="Non-veg"
-                    checked={selectedFilters.mealType.includes("Non-veg")}
-                    onChange={() => handleFilterChange("mealType", "Non-veg")}
-                  />
-                  <label
-                    htmlFor="mealType2"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                    selectedFilters.mealType.includes("Non-veg")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("mealType", "Non-veg")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Non-veg
                   </label>
                 </div>
@@ -281,123 +296,121 @@ const SearchBar = ({
             </div>
             {/* Course Type */}
             <div className="mb-4">
-              <h6 className="text-sm font-semibold mb-1 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
+              <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
                 Course Type
               </h6>
               <div className="grid grid-cols-2">
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="courseType1"
-                    name="courseType1"
-                    value="Starter"
-                    checked={selectedFilters.courseType.includes("Starter")}
-                    onChange={() => handleFilterChange("courseType", "Starter")}
-                  />
-                  <label
-                    htmlFor="courseType1"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                    selectedFilters.courseType.includes("Starter")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("courseType", "Starter")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Starter
                   </label>
                 </div>
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="courseType2"
-                    name="courseType2"
-                    value="Main Course"
-                    checked={selectedFilters.courseType.includes("Main Course")}
-                    onChange={() =>
-                      handleFilterChange("courseType", "Main Course")
-                    }
-                  />
-                  <label
-                    htmlFor="courseType2"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
-                    Main Course
+                <div
+                  className={`flex items-center mb-3 w-4/5 pl-4 ${
+                    selectedFilters.courseType.includes("Main course")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() =>
+                    handleFilterChange("courseType", "Main course")
+                  }
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
+                    Main course
                   </label>
                 </div>
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="courseType3"
-                    name="courseType3"
-                    value="Dinner"
-                    checked={selectedFilters.courseType.includes("Dinner")}
-                    onChange={() => handleFilterChange("courseType", "Dinner")}
-                  />
-                  <label
-                    htmlFor="courseType3"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                    selectedFilters.courseType.includes("Dinner")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("courseType", "Dinner")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Dinner
                   </label>
                 </div>
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="courseType4"
-                    name="courseType4"
-                    value="Snack"
-                    checked={selectedFilters.courseType.includes("Snack")}
-                    onChange={() => handleFilterChange("courseType", "Snack")}
-                  />
-                  <label
-                    htmlFor="courseType4"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                    selectedFilters.courseType.includes("Snack")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("courseType", "Snack")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Snack
                   </label>
                 </div>
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="courseType5"
-                    name="courseType5"
-                    value="Breakfast"
-                    checked={selectedFilters.courseType.includes("Breakfast")}
-                    onChange={() =>
-                      handleFilterChange("courseType", "Breakfast")
-                    }
-                  />
-                  <label
-                    htmlFor="courseType5"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                    selectedFilters.courseType.includes("Breakfast")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("courseType", "Breakfast")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Breakfast
                   </label>
                 </div>
-                <div>
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="courseType6"
-                    name="courseType6"
-                    value="Dessert"
-                    checked={selectedFilters.courseType.includes("Dessert")}
-                    onChange={() => handleFilterChange("courseType", "Dessert")}
-                  />
-                  <label
-                    htmlFor="courseType6"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
+                <div
+                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                    selectedFilters.courseType.includes("Dessert")
+                      ? "bg-gray-200 "
+                      : ""
+                  }`}
+                  onClick={() => handleFilterChange("courseType", "Dessert")}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 0.5rem",
+                  }}
+                >
+                  <label className="text-base cursor-pointer hover:cursor-pointer">
                     Dessert
                   </label>
                 </div>
               </div>
               {/* Rating */}
-              <div>
+              <div className="mt-4">
                 <h6 className="text-sm font-semibold mb-1 ml-0 mr-12 flex flex-start mt-[1rem]">
                   Rating
                 </h6>
-                <div>
+                <div className="flex items-center  ml-9 mb-3">
                   <input
                     className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
                     type="checkbox"
@@ -414,7 +427,7 @@ const SearchBar = ({
                     4⭐ & above
                   </label>
                 </div>
-                <div>
+                <div className="flex items-center ml-9">
                   <input
                     className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
                     type="checkbox"
@@ -433,6 +446,20 @@ const SearchBar = ({
                 </div>
 
                 {/* Add more rating options */}
+              </div>
+              <div className="mt-4">
+                <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
+                  Culinarian
+                </h6>
+                <select
+                  value={selectedFilters.culinarian}
+                  onChange={handleCulinarianChange}
+                  className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
+                >
+                  <option value="">Select culinarian</option>
+                  <option value="chef1">gokul</option>
+                  <option value="chef2">Krishnan</option>
+                </select>
               </div>
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">
