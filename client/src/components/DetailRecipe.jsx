@@ -130,28 +130,29 @@ function Detailrecipe() {
                 </button>
               </div>
             )}         
-            <div class="flex justify-between  text-center ml-5 mt-5 font-medium px-4 gap-4">
-              <div class=" text-black w-full rounded-xl border-2 border-solid border-black bg-gradient-to-r from-[#ffffff] to-[#2c3e50]">
+
+            <div className="px-4 flex justify-between gap-4 text-center ml-5 mt-5 font-medium">
+              <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-red-600">
                 <h3>Servings</h3>
-                <p>{recipe.servings}</p>             
+                <p>{recipe.servings}</p>
               </div>
-              <div class="text-black w-full rounded-xl border-2 border-solid border-black bg-gradient-to-r from-[#ffffff] to-[#2c3e50]">
+              <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-orange-600">
                 <h3>Preparation Time</h3>
                 <p>{recipe.preparationTime} MINS</p>
               </div>
-              <div class="text-black w-full rounded-xl border-2 border-solid border-black bg-gradient-to-r from-[#ffffff] to-[#2c3e50]">
+              <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-yellow-600">
                 <h3>Cooking Time</h3>
                 <p>{recipe.cookingTime} MINS</p>
               </div>
-              <div class=" text-black w-full rounded-xl border-2 border-solid border-black bg-gradient-to-r from-[#ffffff] to-[#2c3e50]">
+              <div className=" bg-white text-black w-full rounded-xl border border-text border-primary-100 shadow-4xl shadow-green-600">
                 <h3>Cuisine</h3>
-                <p>{recipe.cuisine}</p>             
+                <p>{recipe.cuisine}</p>
               </div>
-              <div class="text-black w-full rounded-xl border-2 border-solid border-black bg-gradient-to-r from-[#ffffff] to-[#2c3e50]">
+              <div className="bg-white text-black w-full rounded-xl border border-text border-primary-100 shadow-4xl shadow-sky-600">
                 <h3>Meal_type</h3>
                 <p>{recipe.meal_type}</p>
               </div>
-              <div class="text-black w-full rounded-xl border-2 border-solid border-black bg-gradient-to-r from-[#ffffff] to-[#2c3e50]">
+              <div className="bg-white text-black w-full rounded-xl border border-text border-primary-100 shadow-4xl shadow-violet-600">
                 <h3>Difficulty</h3>
                 <p>{recipe.difficulty}</p>
               </div>
