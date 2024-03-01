@@ -82,7 +82,7 @@ create table Culinarian(
 	RequestDate timestamp default CURRENT_DATE,
 	Specialization varchar(255)[],
 	Bio text, 
-	Status varchar(255) DEFAULT pending
+	Status varchar(255) DEFAULT Pending
 );
 
 select * from Culinarian;
