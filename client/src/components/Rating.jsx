@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
 // import { response } from 'express';
 
 function Rating({ recipeId }) {
+  const notify = (message) => toast(message);
   const [selectedRating, setSelectedRating] = useState(0); // Adjust based on user's previous rating
 
   const handleRatingChange = (newRating) => {
@@ -36,10 +38,12 @@ function Rating({ recipeId }) {
     // const total=3;
     // console.log(total);
     const newRating = (Rate+selectedRating)/(total);
+    // const newRating=2.8;
     // console.log(newRating);
     axios.put(`http://localhost:1200/api/detail/recipe/update/${recipeId}/${newRating}/${total}`)
       .then(() => {
         console.log('Review Submitted');
+        notify("Ratings Submitted. Thanks for Rating!");
       })
       .catch((error) => {
         console.error('Error in submitting review', error);
@@ -49,8 +53,10 @@ function Rating({ recipeId }) {
   const ratingStars = [1, 2, 3, 4, 5];
 
   return (
+    <>
+    <ToastContainer />
     <div className="flex flex-col items-center">
-      <h3 className="mt-8 mb-2 text-lg font-medium">Rate this Recipe</h3>
+      <h3 className="mt-8 mb-2 text-lg font-bold ">Rate this Recipe</h3>
       <div className="flex space-x-1">
         {ratingStars.map((rating) => (
           <span
@@ -58,26 +64,24 @@ function Rating({ recipeId }) {
           onClick={() => handleRatingChange(rating)}
           className="cursor-pointer text-3xl hover:text-yellow-200"
         >
-          <svg width="30" height="30">
-            <circle
-              cx="15"
-              cy="15"
-              r="10"
-              fill={rating <= selectedRating ? "#FFFF00" : "#ffffff"}
-            />
-          </svg>
+        <svg width = "30" height = "30" stroke="black"
+          stroke-width="1">
+        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+        fill={rating <= selectedRating ? "#FFFF00" : "#ffffff"} />
+         </svg>
         </span>
         
         ))}
       </div>
-      <p className="mt-5 text-sm">Selected Rating: {selectedRating}</p>
+      {/* <p className="mt-5 text-sm">Selected Rating: {selectedRating}</p> */}
       <button
         onClick={submitRating}
-        className="mt-4 bg-blue-500 text-white font-medium px-4 py-2 rounded-md hover:bg-blue-700"
+        className="mt-4 bg-[#3498db] text-white font-medium px-4 py-2 rounded-md hover:bg-blue-700"
       >
         Submit Rating
       </button>
     </div>
+    </>
   );
 }
 

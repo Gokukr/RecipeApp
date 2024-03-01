@@ -77,7 +77,7 @@ function SavedRecipe() {
           <SearchBar
             onSearch={setItems}
             allRecipe={setShowAll}
-            placeholder={"Search aved Recipes..."}
+            placeholder={"Search saved Recipes..."}
           />
         </div>
         <RecipeContainer data={recipes} />

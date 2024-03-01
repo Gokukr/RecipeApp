@@ -86,25 +86,30 @@ export default function Dashboard() {
       {isLoading ? (
         <p>Loading...</p>
       ) : showAll ? (
-        cuisines.map((cuisine) => (
-          <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
-            {data
-              .filter((item) => item.cuisine === cuisine.filter)
-              .map((item, index) => (
-                <Card
-                  key={index}
-                  foodName={item.name}
-                  imageUrl={item.image}
-                  timeTaken={`${item.total_time} mins`}
-                  id={item.id}
-                  rating={`${item.rating}⭐`}
-                />
-              ))}
-          </Container>
-        ))
+        cuisines
+          .filter((cuisine) =>
+            data.some((item) => item.cuisine === cuisine.filter)
+          )
+          .map((cuisine) => (
+            <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
+              {data
+                .filter((item) => item.cuisine === cuisine.filter)
+                .map((item, index) => (
+                  <Card
+                    key={index}
+                    foodName={item.name}
+                    imageUrl={item.image}
+                    timeTaken={`${item.total_time} mins`}
+                    id={item.id}
+                    rating={`${item.rating}⭐`}
+                  />
+                ))}
+            </Container>
+          ))
       ) : (
         <RecipeContainer data={data} />
       )}
+
       <Footer />
     </div>
   );

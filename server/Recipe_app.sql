@@ -12,6 +12,7 @@ Create table user_data(
 	gender varchar(10),
 	role varchar(20),
 	phone_number numeric(10),
+	about varchar(255),
 	password varchar(255)  
 );
 
@@ -20,7 +21,7 @@ Create table Recipe(
 	Name varchar(255),
 	Description text,
 	Image varchar(255),
-	Rating numeric(5),
+	Rating numeric(4,2),
 	Ingredients varchar(255)[],
 	instructions TEXT[],
 	Preparation_time numeric(5),
@@ -73,3 +74,15 @@ Create table Favorites(
 	Notes text
 );
 select * from Favorites;
+
+
+create table Culinarian(
+	ID UUID primary key default uuid_generate_v4(),
+	User_ID UUID references user_data(id),
+	RequestDate timestamp default CURRENT_DATE,
+	Specialization varchar(255)[],
+	Bio text, 
+	Status varchar(255) DEFAULT pending
+);
+
+select * from Culinarian;

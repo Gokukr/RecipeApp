@@ -6,6 +6,7 @@ const pool = new Pool({
   host: "localhost",
   database: "recipe_app",
   password: "123456",
+
   port: 5432,
 });
 

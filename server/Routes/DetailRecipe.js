@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const pool = require("../dbconfig");
+const bcrypt = require("bcrypt");
 
 router.get("/user-profile/:id", (req, res) => {
   const userId = req.params.id;
@@ -28,7 +29,8 @@ router.get("/user-profile/:id", (req, res) => {
             pass: user.password,
             fname: user.first_name,
             lname: user.last_name,
-            about: user.about
+            about: user.about,
+            address: user.address
           });
         }
       }
@@ -52,34 +54,68 @@ router.get("/favourites/:userId/:recipeId", async (req, res) => {
   });
 });
 
-router.post("/favourites/:userId/:recipeId", async (req, res) => {
-  const userId = req.params.userId;
-  const recipeId = req.params.recipeId;
-
-  try {
-    const { rows } = await pool.query(
-      `SELECT * FROM favorites WHERE user_id = $1 AND recipe_id = $2`,
-      [userId, recipeId]
-    );
-
-    if (!rows.length) {
-      await pool.query(
-        `INSERT INTO favorites (user_id, recipe_id) VALUES ($1, $2)`,
-        [userId, recipeId]
-      );
-      res
-        .status(201)
-        .json({ message: "Recipe added to favourites successfully" });
+router.get("/favCount/:id", (req, res) => {
+  const userId = req.params.id;
+  pool.query(`select count(*) as count from favorites where user_id = $1`, [userId], (error, result) => {
+    if (error) {
+      res.status(500).json({ error: "Error Fetching Count" });
     } else {
-      res.status(409).json({ message: "Recipe already exists in favourites" });
+      if (result.rows.length === 0) {
+        res.json({ count: 0, });
+      } else {
+        const counter = result.rows[0];
+        res.json({ count: counter.count, });
+      }
     }
-  } catch (error) {
-    console.error("Error adding recipe to favourites:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+  });
 });
 
-router.get(`/Password/:oldPass/:userId`, (req, res) => {
+router.get("/likedCuisine/:id", (req, res) => {
+  const userId = req.params.id;
+  pool.query(`SELECT r.Cuisine AS Favorite_Cuisine, COUNT(*) AS Total_Count
+    FROM Favorites f
+    JOIN Recipe r ON f.Recipe_id = r.id
+    WHERE f.User_ID = $1
+    GROUP BY r.Cuisine
+    ORDER BY Total_Count DESC
+    LIMIT 1`, [userId], (error, result) => {
+    if (error) {
+      res.status(500).json({ error: "Error Fetching Cuisine" });
+    } else {
+      if (result.rows.length === 0) {
+        res.json({ cuisine: "Nothing to show here" });
+      } else {
+        const counter = result.rows[0];
+        // console.log(counter);
+        res.json({ cuisine: counter.favorite_cuisine });
+      }
+    }
+  });
+});
+
+router.get("/favCourse/:id", (req, res) => {
+  const userId = req.params.id;
+  pool.query(`SELECT r.Course_type AS Favorite_Course, COUNT(*) AS Total_Count
+      FROM Favorites f
+      JOIN Recipe r ON f.Recipe_id = r.id
+      WHERE f.User_ID = $1
+      GROUP BY r.Course_type
+      ORDER BY Total_Count DESC
+      LIMIT 1`, [userId], (error, result) => {
+    if (error) {
+      res.status(500).json({ error: "Error Fetching Course" });
+    } else {
+      if (result.rows.length === 0) {
+        res.json({ course: "Nothing to show here" });
+      } else {
+        const counter = result.rows[0];
+        res.json({ course: counter.favorite_course });
+      }
+    }
+  });
+});
+
+router.get(`/Password/:oldPass/:userId`, async (req, res) => {
   const pass = req.params.oldPass;
   const userId = req.params.userId;
   pool.query(`select * from user_data where id = $1`, [userId],
@@ -200,4 +236,43 @@ router.get("/recipes/:id", (req, res) => {
   );
 });
 
+router.put("/edit-profile", async (req, res) => {
+  try {
+    const {
+      id,
+      phone,
+      fName,
+      lName,
+      about,
+      gender,
+      address,
+    } = req.body;
+    const updatedProfile = await pool.query(
+
+      `UPDATE user_data
+      SET
+        first_name = $1,
+        last_name = $2,
+        address = $3,
+        gender = $4,
+          phone_number = $5,
+          about = $6
+      WHERE
+          id = $7
+      RETURNING *;
+      `,
+      [
+        fName,
+        lName,
+        address,
+        gender,
+        phone,
+        about,
+        id,
+      ]
+    ); res.json(updatedProfile.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 module.exports = router;
