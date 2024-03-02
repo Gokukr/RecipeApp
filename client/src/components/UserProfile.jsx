@@ -104,6 +104,32 @@ function UserProfile(userId) {
       });
     }
   }, [userId,verify]);
+  
+    const [favRecipeCount, setFavRecipeCount] = useState(0);
+  useEffect(() => {
+    axios.get(`http://localhost:1200/api/detail/favCount/${userId}`)
+    .then((response) => {
+      setFavRecipeCount(response.data.count);
+    });
+  });
+
+  
+
+  const [LikedCuisine, setLikedCuisine] = useState("");
+  useEffect(() => {
+    axios.get(`http://localhost:1200/api/detail/likedCuisine/${userId}`)
+    .then((response) => {
+      setLikedCuisine(response.data.cuisine);
+    });
+  });
+
+  const [favCourse, setFavCourse] = useState("");
+  useEffect(() => {
+    axios.get(`http://localhost:1200/api/detail/favCourse/${userId}`)
+    .then((response) => {
+      setFavCourse(response.data.course);
+    });
+  });
   const handleUpdateProfile = () => {
     console.log("Updating Profile");
     navigate("/UpdateProfile");
@@ -211,6 +237,32 @@ function UserProfile(userId) {
                 <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
                   Phone Number: {user.phone}
                 </p>
+                <div className="lg:flex md:flex lg:justify-around ">
+                  <div className="bg-[#2c3e50] m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                      Number of Favorite Recipes
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {favRecipeCount}
+                    </div>
+                  </div>
+                  <div className="bg-[#2c3e50] m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                      Favorite cuisine
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {LikedCuisine}
+                    </div>
+                  </div>
+                  <div className="bg-[#2c3e50] m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl">
+                      Favorite course
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {favCourse}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
