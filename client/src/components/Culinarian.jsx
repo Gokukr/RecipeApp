@@ -14,7 +14,7 @@ function Culinarian() {
     function handleClick(selectedLabel) {
         setSelectedStatus(selectedLabel);
     }
-    console.log(culinaryData);
+    // console.log(culinaryData);
 
     useEffect(() => {
         axios.get(`http://localhost:1200/api/detail/culinarian/${selectedStatus}`)
@@ -153,7 +153,7 @@ function Culinarian() {
 
             {(hasData === false) && 
                 <div class="no-data w-full text-black flex flex-col justify-center items-center gap-5 py-10">
-                    <img src="http://127.0.0.1:8080/No_data.png" alt='no-data'></img>
+                    <img src="./assets/No_data.png" alt='no-data'></img>
                     <h2 class="no-data-h2 text-[30px]">Check Other Tabs</h2>
                 </div>
             }
