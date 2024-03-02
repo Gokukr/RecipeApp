@@ -183,33 +183,48 @@ function UserProfile(userId) {
                     handleClose={handleCloseModal}
                   />
                 )}
-                <button
+                {/*<button
                   className="text-base pl-1 bg-orange-500 text-white rounded-md"
                   onClick={handleUpdateProfile}
                 >
                  Edit Profile
-                </button>
+                </button> */}
               </div>
             </div>
 
-            <div class="user-profile-body flex mt-[-50px]">
-              <div class="card-profile w-[30%] ml-6 mt--2 bg-white rounded-lg border-solid border-black border-2 flex flex-col justify-center items-center">
-                {(gender === "Male" || gender === "m") && (
-                  <img
-                    src="./assets/male-avatar.png"
-                    alt="user"
-                    class="rounded-full h-[200px] w-[200px] "
-                  ></img>
-                )}
-                {(gender === "Female" || gender === "f") && (
-                  <img
-                    src="./assets/Female-Avatar.png"
-                    alt="user"
-                    class="rounded-full h-[200px] w-[200px] "
-                  ></img>
-                )}
-                <h3 class="pt-4 ">{user.name}</h3>
-                <h3 class="pt-4 ">{user.address}</h3>
+            <div class="user-profile-body flex mt-[-50px] mb-5">
+              
+              <div class="card-profile w-[30%] ml-6 mt--2 bg-white rounded-lg border-solid border-black border-2 flex flex-col justify-around ">
+                <div class="profile-edit-profile flex justify-center items-center mt-[-100px] px-0">
+                <h2>Profile</h2>
+                <button
+                  className="text-base pl-5 pt-1.5 text-black bg-transparent rounded-md"
+                  onClick={handleUpdateProfile}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                </button>
+                </div>
+                <div class="flex flex-col justify-center items-center">
+                  {(gender === "Male" || gender === "m") && (
+                    <img
+                      src="./assets/male-avatar.png"
+                      alt="user"
+                      class="rounded-full h-[200px] w-[200px] "
+                    ></img>
+                  )}
+                  {(gender === "Female" || gender === "f") && (
+                    <img
+                      src="./assets/Female-Avatar.png"
+                      alt="user"
+                      class="rounded-full h-[200px] w-[200px] "
+                    ></img>
+                  )}
+                  <h3 class="pt-4 ">{user.name}</h3>
+                  <h3 class="pt-4 ">{user.address}</h3>
+                </div>
               </div>
 
               <div className="profile-details w-[70%] mx-6 mt--7 bg-white rounded-lg border-solid border-black border-2 flex flex-col">
