@@ -16,19 +16,19 @@ function Detailrecipe() {
   const [userRole, setUser] = useState(null);
   const [error, setError] = useState(false);
   useEffect(() => {
-    if(role === "Admin"){
-      console.log(role);
-      setUser(role);
-      console.log(userRole);
+    if(role === "user"){
+      setUser("user");
+    }else if(role === "admin"){
+      setUser("admin");
     }
     else {
-      const url = `http://localhost:1200/api/detail/User-role/${recipeId}`;
+      const url = `http://localhost:1200/api/detail/User-role/${recipeId}/${userId}`;
     axios.get(url).then((response) => {
       setUser(response.data.role);
     });
     }
     
-  },[role, userRole,recipeId]);
+  },[role, userRole,recipeId,userId]);
   const [recipe, setRecipe] = useState(null);
   useEffect(() => {
     axios
