@@ -7,21 +7,29 @@ import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import DeleteRecipe from "./DeleteRecipe";
+
 function Detailrecipe() {
   const navigate = useNavigate();
   const { recipeId } = useParams();
   const userId = Cookies.get("user_id");
+  const role = Cookies.get("role");
   const [userRole, setUser] = useState(null);
   const [error, setError] = useState(false);
-  // userId = 'cded7396-c732-11ee-993a-505a65b0ab55';
   useEffect(() => {
-    const url = `http://localhost:1200/api/detail/user-profile/${userId}`;
+    if(role === "Admin"){
+      console.log(role);
+      setUser(role);
+      console.log(userRole);
+    }
+    else {
+      const url = `http://localhost:1200/api/detail/User-role/${recipeId}`;
     axios.get(url).then((response) => {
       setUser(response.data.role);
     });
-  }, [userId]);
+    }
+    
+  },[role, userRole,recipeId]);
   const [recipe, setRecipe] = useState(null);
-  // recipeId='8b66b170-321d-4b45-8e6d-1cb53221fa11';
   useEffect(() => {
     axios
       .get(`http://localhost:1200/api/detail/recipes/${recipeId}`)
@@ -113,7 +121,7 @@ function Detailrecipe() {
               />
             </div>
 
-            {userRole === "admin" && (
+            {userRole === "Admin" && (
               <div className="flex justify-end gap-4 mt-4">
                 <button
                   onClick={handleEdit}
@@ -129,7 +137,18 @@ function Detailrecipe() {
                   Delete
                 </button>
               </div>
-            )}         
+            )} 
+
+            {userRole === "Culinarian" && (
+              <div className="flex justify-end gap-4 mt-4">
+                <button
+                  onClick={handleEdit}
+                  className="bg-[#3498db] text-white ml-4 font-medium px-4 py-2 rounded-md hover:bg-blue-700"
+                >
+                  Edit
+                </button>
+              </div>
+            )}
 
             <div className="px-4 flex justify-between gap-4 text-center ml-5 mt-5 font-medium">
               <div className="bg-white text-black w-full rounded-2xl border border-text border-primary-100 shadow-4xl shadow-red-600">
