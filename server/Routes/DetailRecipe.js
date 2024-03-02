@@ -38,15 +38,19 @@ router.get("/user-profile/:id", (req, res) => {
   );
 });
 
-router.get("/User-role/:recipeId", (req, res) => {
+router.get("/User-role/:recipeId/:userId", (req, res) => {
   const recipeId = req.params.recipeId;
-
-  pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1`, [recipeId],
+  const userId = req.params.userId;
+  pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
   (error, result) => {
     if(error) {
       res.status(500).json({error : "Internal Error"});
     } else {
-      res.json({role: result.rows[0].role});
+      if(result.rows.length === 0) {
+        res.json({role: "user"});
+      } else {
+        res.json({role: result.rows[0].role});
+      }
     }
   });
 });
