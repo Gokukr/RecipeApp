@@ -9,6 +9,17 @@ const mailservice = require("../services/registrationservices");
 const getSavedRecipes = require("../middleware/getSavedRecipe");
 const saveRecipe = require("../middleware/savedRecipe");
 const randomize = require("randomatic");
+const getRecipeRequests = require("../middleware/recipeRequest");
+
+router.get("/recipe-req", async (req,res) => {
+  try {
+    const result = await getRecipeRequests();
+    res.send(result);
+  } catch (error) {
+    console.log("error recieving reicpes ", error);
+    res.send("Unable to get recipe requests");    
+  }
+})
 
 router.get("/recipes/all", async (req, res) => {
   try {
@@ -17,6 +28,7 @@ router.get("/recipes/all", async (req, res) => {
       course: req.query.course,
       cuisine: req.query.cuisine,
       rating: req.query.rating,
+      culinarian: req.query.culName,
     });
     res.send(result);
   } catch (error) {
