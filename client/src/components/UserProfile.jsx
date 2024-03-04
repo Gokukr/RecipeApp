@@ -107,6 +107,32 @@ function UserProfile(userId) {
       });
     }
   }, [userId,verify]);
+  
+    const [favRecipeCount, setFavRecipeCount] = useState(0);
+  useEffect(() => {
+    axios.get(`http://localhost:1200/api/detail/favCount/${userId}`)
+    .then((response) => {
+      setFavRecipeCount(response.data.count);
+    });
+  });
+
+  
+
+  const [LikedCuisine, setLikedCuisine] = useState("");
+  useEffect(() => {
+    axios.get(`http://localhost:1200/api/detail/likedCuisine/${userId}`)
+    .then((response) => {
+      setLikedCuisine(response.data.cuisine);
+    });
+  });
+
+  const [favCourse, setFavCourse] = useState("");
+  useEffect(() => {
+    axios.get(`http://localhost:1200/api/detail/favCourse/${userId}`)
+    .then((response) => {
+      setFavCourse(response.data.course);
+    });
+  });
   const handleUpdateProfile = () => {
     console.log("Updating Profile");
     navigate("/UpdateProfile");
@@ -160,33 +186,48 @@ function UserProfile(userId) {
                     handleClose={handleCloseModal}
                   />
                 )}
-                <button
+                {/*<button
                   className="text-base pl-1 bg-orange-500 text-white rounded-md"
                   onClick={handleUpdateProfile}
                 >
                  Edit Profile
-                </button>
+                </button> */}
               </div>
             </div>
 
-            <div class="user-profile-body flex mt-[-50px]">
-              <div class="card-profile w-[30%] ml-6 mt--2 bg-white rounded-lg border-solid border-black border-2 flex flex-col justify-center items-center">
-                {(gender === "Male" || gender === "m") && (
-                  <img
-                    src="./assets/male-avatar.png"
-                    alt="user"
-                    class="rounded-full h-[200px] w-[200px] "
-                  ></img>
-                )}
-                {(gender === "Female" || gender === "f") && (
-                  <img
-                    src="./assets/Female-Avatar.png"
-                    alt="user"
-                    class="rounded-full h-[200px] w-[200px] "
-                  ></img>
-                )}
-                <h3 class="pt-4 ">{user.name}</h3>
-                <h3 class="pt-4 ">{user.address}</h3>
+            <div class="user-profile-body flex mt-[-50px] mb-5">
+              
+              <div class="card-profile w-[30%] ml-6 mt--2 bg-white rounded-lg border-solid border-black border-2 flex flex-col justify-around ">
+                <div class="profile-edit-profile flex justify-center items-center mt-[-100px] px-0">
+                <h2>Profile</h2>
+                <button
+                  className="text-base pl-5 pt-1.5 text-black bg-transparent rounded-md"
+                  onClick={handleUpdateProfile}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                </button>
+                </div>
+                <div class="flex flex-col justify-center items-center">
+                  {(gender === "Male" || gender === "m") && (
+                    <img
+                      src="./assets/male-avatar.png"
+                      alt="user"
+                      class="rounded-full h-[200px] w-[200px] "
+                    ></img>
+                  )}
+                  {(gender === "Female" || gender === "f") && (
+                    <img
+                      src="./assets/Female-Avatar.png"
+                      alt="user"
+                      class="rounded-full h-[200px] w-[200px] "
+                    ></img>
+                  )}
+                  <h3 class="pt-4 ">{user.name}</h3>
+                  <h3 class="pt-4 ">{user.address}</h3>
+                </div>
               </div>
 
               <div className="profile-details w-[70%] mx-6 mt--7 bg-white rounded-lg border-solid border-black border-2 flex flex-col">
@@ -214,6 +255,32 @@ function UserProfile(userId) {
                 <p class="mx-4 mt-4  rounded-lg bg-[#f6f6f6] px-3 py-3 border-soild border-[#2c3e50] border-1">
                   Phone Number: {user.phone}
                 </p>
+                <div className="lg:flex md:flex lg:justify-around ">
+                  <div className="bg-[#2c3e50] m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                      Number of Favorite Recipes
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {favRecipeCount}
+                    </div>
+                  </div>
+                  <div className="bg-[#2c3e50] m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                      Favorite cuisine
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {LikedCuisine}
+                    </div>
+                  </div>
+                  <div className="bg-[#2c3e50] m-5 w-52 h-48 rounded-2xl relative">
+                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl">
+                      Favorite course
+                    </p>
+                    <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-4">
+                      {favCourse}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

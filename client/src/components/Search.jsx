@@ -39,20 +39,19 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
       mealType: [],
       courseType: [],
       rating: [],
+      culinarian: "",
     }
   ) => {
     try {
       const queryString = (filter, arr) =>
         arr.map((item) => `${filter}=${item}`).join("&");
-      const res = await axios.get(
-        `http://localhost:1200/api/recipes/all?searchText=${query}&${queryString(
-          "rating",
-          filters.rating
-        )}&${queryString("mealType", filters.mealType)}&${queryString(
-          "course",
-          filters.courseType
-        )}&${queryString("cuisine", filters.cuisine)}`
-      );
+      const qry = `http://localhost:1200/api/recipes/all?searchText=${query
+        }&${queryString("rating",filters.rating)
+        }&${queryString("mealType", filters.mealType)
+        }&${queryString("course",filters.courseType)
+        }&${queryString("cuisine", filters.cuisine)
+        }&culName=${filters.culinarian}`;
+      const res = await axios.get(qry);
       // debugger;
       setSearchResults(res.data.rows);
       // JSON.stringify(res.data.rows) === JSON.stringify(b) ? allRecipe(false) : allRecipe(true);

@@ -3,7 +3,7 @@ const pool = require("../dbconfig");
 async function getSavedRecipes(userId, searchText = "", filter) {
   const filterQryConstruct = (filter, value) => ` and r.${filter} = '${value}'`;
   const ratingQry = (value) => `and r.rating >= ${value}`;
-  const qry = `select r.id, r.image, r.total_time, r.name 
+  const qry = `select r.id, r.image, r.total_time, r.name, r.cuisine
       from recipe r JOIN favorites f ON r.id = f.recipe_id 
       where f.user_id = '${userId}'
         and r.name ilike '%${searchText}%' 

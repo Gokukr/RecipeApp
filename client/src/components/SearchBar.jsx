@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const SearchBar = ({
   onSearch,
@@ -14,6 +14,26 @@ const SearchBar = ({
     rating: [],
     culinarian: "",
   });
+  const [culinarians, setCulinarians] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCulinarians();
+  }, []);
+
+  const fetchCulinarians = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:1200/api/culinarianAccepted"
+      );
+      const data = await response.json();
+      setCulinarians(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching culinarians:", error);
+      setLoading(false);
+    }
+  };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -451,15 +471,22 @@ const SearchBar = ({
                 <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
                   Culinarian
                 </h6>
-                <select
-                  value={selectedFilters.culinarian}
-                  onChange={handleCulinarianChange}
-                  className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
-                >
-                  <option value="">Select culinarian</option>
-                  <option value="chef1">gokul</option>
-                  <option value="chef2">Krishnan</option>
-                </select>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <select
+                    value={selectedFilters.culinarian}
+                    onChange={handleCulinarianChange}
+                    className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
+                  >
+                    <option value="">Select culinarian</option>
+                    {culinarians.map((culinarian) => (
+                      <option key={culinarian.id} value={culinarian.first_name}>
+                        {culinarian.first_name}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">

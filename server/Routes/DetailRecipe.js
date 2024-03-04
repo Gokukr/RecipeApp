@@ -38,6 +38,23 @@ router.get("/user-profile/:id", (req, res) => {
   );
 });
 
+router.get("/User-role/:recipeId/:userId", (req, res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error : "Internal Error"});
+    } else {
+      if(result.rows.length === 0) {
+        res.json({role: "user"});
+      } else {
+        res.json({role: result.rows[0].role});
+      }
+    }
+  });
+});
+
 router.get("/favourites/:userId/:recipeId", async (req, res) => {
   const userId = req.params.userId;
   const recipeId = req.params.recipeId;
@@ -275,4 +292,36 @@ router.put("/edit-profile", async (req, res) => {
     console.error(err.message);
   }
 });
+
+router.get("/culinarian/:status", (req, res) => {
+  const stat = req.params.status;
+  pool.query(`
+  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `, [stat],
+  (error, result) => {
+    // console.log(result);
+    if(error) {
+      res.status(500).json({error: "Error Fetching Data"});
+    } else {
+      const hasData= result.rows.length > 0;
+      // console.log(hasData);
+      res.json({data:result.rows,
+                count: hasData,        
+      });
+    }
+  });
+});
+
+router.put("/culinarian/:status/:id", (req, res) => {
+  const stat = req.params.status;
+  const id = req.params.id;
+  pool.query(`update culinarian set status = $1 where id = $2`, [stat, id] ,
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error: "Cannot Update Status"});
+    } else {
+      res.json({result});
+    }
+  });
+});
+
 module.exports = router;
