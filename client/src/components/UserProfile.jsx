@@ -18,6 +18,8 @@ function UserProfile(userId) {
   const [request,setRequest] = useState("Request to Culirian")
   const [disabled, setDisabled] = useState(false);
   const [type,setType] = useState("user")
+  const [bgColor, setBgColor] = useState("bg-green-500");
+
 
   useEffect(() =>
   {
@@ -58,6 +60,7 @@ function UserProfile(userId) {
       
           const data = await response.json();
           if (data.exists) {
+            setBgColor("bg-red-500")
             setRequest("Request is pending");
             setDisabled(true);
           }
@@ -131,7 +134,7 @@ function UserProfile(userId) {
               {type === "user" && (
                              <button
                             disabled={disabled}
-                            className="text-base bg-red-500 text-white rounded-md"
+                            className={`text-base ${bgColor} text-white rounded-md`}
                             onClick={CulirianOpenModel}
                               >
                                 {request}
