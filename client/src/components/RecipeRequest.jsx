@@ -3,7 +3,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 const RecipeRequest = () => {
-
   const acceptRecipe = () => {
     try {
       // api
@@ -18,40 +17,47 @@ const RecipeRequest = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  const RequestCard = ({image, culName, recipeName, cuisine, totalTime }) => (
-    <div className="h-48 bg-primary-100 drop-shadow-sm hover:drop-shadow-2xl rounded-lg overflow-hidden item-center flex mr-4">
-      <div  className="w-72 h-36 p-6 overflow-hidden">
-      <div className="text-white">{recipeName}</div>
-        <img src={image} className="w-full h-full rounded-lg object-cover"/>
+  const RequestCard = ({ image, culName, recipeName, cuisine, totalTime }) => (
+    <div className="flex items-center w-8/12 bg-white hover:drop-shadow-2xl relative rounded-md">
+      <div className="h-40 p-4 rounded-lg overflow-hidden flex flex-col mr-4 rounded-md">
+        <img src={image} className="h-full w-48 rounded-md" alt="Recipe" />
       </div>
-      <div className="text-white">
-        {culName}
+      <div className="p-10 text-xl font-semibold text-gray-900">{culName}</div>
+      <div className="p-10">
+        <div className="p-2 text-xl font-bold text-gray-900">
+          Recipe Name: {recipeName}
+        </div>
+        <div className="p-2 text-base text-gray-700">Cuisine: {cuisine}</div>
+        <div className="p-2 text-base text-gray-700">
+          Total Time: {totalTime} hours
+        </div>
       </div>
-      <div>
-        <button onClick={acceptRecipe} className="text-base bg-blue-500 text-white px-4 py-1 rounded-md ml-4">
+      <div className="ml-auto">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4">
           Accept
         </button>
-        <button onClick={rejectRecipe} className="text-base pl-1 bg-orange-500 text-white rounded-md">
+        <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8">
           Reject
         </button>
       </div>
     </div>
   );
-  return(
+
+  return (
     <div>
-      <Header/>
-        <div className="p-16">
-          <RequestCard
-            image="https://static.toiimg.com/photo/52467119.cms"
-            culName="Kishore"
-            recipeName="Noodles"
-            cuisine="Chinese"
-            totalTime={2}
-          />
-        </div>
-      <Footer/>
+      <Header />
+      <div className="flex items-center w-screen justify-center py-16">
+        <RequestCard
+          image="https://static.toiimg.com/photo/52467119.cms"
+          culName="Kishore"
+          recipeName="Noodles"
+          cuisine="Chinese"
+          totalTime={2}
+        />
+      </div>
+      <Footer />
     </div>
   );
 };
