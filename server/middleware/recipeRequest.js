@@ -1,7 +1,15 @@
-const pool = require('../dbconfig');
+const pool = require("../dbconfig");
 
 const getRecipeRequests = () => {
-  return pool.query("select * from recipe");
-}
+  return pool.query("select * from recipe where status = 'Pending'");
+};
 
-module.exports = getRecipeRequests;
+const handleRecipeRequest = (id, status) => {
+  pool.query("UPDATE recipe SET status=$1 WHERE id=$2", [status, id]);
+  return "Updated successfully";
+};
+
+module.exports = {
+  getRecipeRequests,
+  handleRecipeRequest,
+};
