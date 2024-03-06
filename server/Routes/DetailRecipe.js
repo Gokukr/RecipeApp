@@ -42,17 +42,17 @@ router.get("/User-role/:recipeId/:userId", (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
   pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
-  (error, result) => {
-    if(error) {
-      res.status(500).json({error : "Internal Error"});
-    } else {
-      if(result.rows.length === 0) {
-        res.json({role: "user"});
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "Internal Error" });
       } else {
-        res.json({role: result.rows[0].role});
+        if (result.rows.length === 0) {
+          res.json({ role: "user" });
+        } else {
+          res.json({ role: result.rows[0].role });
+        }
       }
-    }
-  });
+    });
 });
 
 router.get("/favourites/:userId/:recipeId", async (req, res) => {
@@ -256,7 +256,7 @@ router.get("/recipes/:id", (req, res) => {
 router.put("/edit-profile", async (req, res) => {
   try {
     const {
-      id,
+      userId,
       phone,
       fName,
       lName,
@@ -285,7 +285,7 @@ router.put("/edit-profile", async (req, res) => {
         gender,
         phone,
         about,
-        id,
+        userId,
       ]
     ); res.json(updatedProfile.rows[0]);
   } catch (err) {
@@ -297,31 +297,78 @@ router.get("/culinarian/:status", (req, res) => {
   const stat = req.params.status;
   pool.query(`
   select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `, [stat],
-  (error, result) => {
-    // console.log(result);
-    if(error) {
-      res.status(500).json({error: "Error Fetching Data"});
-    } else {
-      const hasData= result.rows.length > 0;
-      // console.log(hasData);
-      res.json({data:result.rows,
-                count: hasData,        
-      });
-    }
-  });
+    (error, result) => {
+      // console.log(result);
+      if (error) {
+        res.status(500).json({ error: "Error Fetching Data" });
+      } else {
+        const hasData = result.rows.length > 0;
+        // console.log(hasData);
+        res.json({
+          data: result.rows,
+          count: hasData,
+        });
+      }
+    });
 });
 
 router.put("/culinarian/:status/:id", (req, res) => {
   const stat = req.params.status;
   const id = req.params.id;
-  pool.query(`update culinarian set status = $1 where id = $2`, [stat, id] ,
-  (error, result) => {
-    if(error) {
-      res.status(500).json({error: "Cannot Update Status"});
-    } else {
-      res.json({result});
-    }
-  });
+  pool.query(`update culinarian set status = $1 where id = $2`, [stat, id],
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "Cannot Update Status" });
+      } else {
+        res.json({ result });
+      }
+    });
 });
+
+router.get(`/ratings/:recipeId/:userId`, (req, res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  pool.query(`select rating from ratings where recipe_id = $1 and user_id = $2`, [recipeId, userId],
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "cannot fetch data" });
+      } else {
+        const hasData = result.rows.length > 0;
+        let count;
+        if (hasData === true) count = result.rows[0].rating;
+        else count = 0;
+        res.json({ rating: count });
+      }
+    });
+});
+
+router.post(`/ratings/post/:recipeId/:userId/:rating`, (req, res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  const Rating = req.params.rating;
+  pool.query(`insert into ratings(user_id, recipe_id, rating) values ($1, $2, $3)`, [userId, recipeId, Rating],
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "cannot update ratings" });
+      } else {
+        res.json("Success");
+      }
+    });
+});
+
+router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  const newRating = req.params.newRating;
+  pool.query(`update ratings set rating = $3 where recipe_id = $1 and user_id = $2`, [recipeId, userId, newRating],
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "cannot update ratings" });
+      } else {
+        res.json("Success");
+      }
+    });
+});
+
 
 module.exports = router;

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Background from "../assets/Design2.png";
 import hatimage from "../assets/icon.jpeg"; 
 import Limage from '../assets/login.png'
+import b1 from '../assets/b1.png'
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
