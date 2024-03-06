@@ -24,4 +24,3 @@
 
 # server dependencies
 /server/node_modules
-dbconfig.js
