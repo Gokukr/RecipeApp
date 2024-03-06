@@ -341,6 +341,20 @@ router.get(`/ratings/:recipeId/:userId`, (req, res) => {
   });
 });
 
+router.post(`/ratings/post/:recipeId/:userId/:rating` ,( req , res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  const Rating = req.params.rating;
+  pool.query(`insert into ratings(user_id, recipe_id, rating) values ($1, $2, $3)`, [userId, recipeId, Rating], 
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error : "cannot update ratings"});
+    } else {
+      res.json("Success");
+    }
+  });
+});
+
 router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
