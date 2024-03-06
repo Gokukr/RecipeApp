@@ -13,6 +13,7 @@ export default function SignUp() {
   const [phonenumber, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
+  const [dob, setDob] = useState('');
   const [password, setPassword] = useState("");
   const [repassword, setrePassword] = useState("");
   // const [checkuser, setcheckuser] = useState("");
@@ -21,46 +22,66 @@ export default function SignUp() {
 
   const FormSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const body = {
-        firstname,
-        lastname,
-        email,
-        address,
-        gender,
-        phonenumber,
-        password,
-        repassword,
-      };
-      const response = await fetch("http://localhost:1200/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      if (response.status === 401) {
-        const errorMessage = await response.text();
-        // Call notify when there's an error
-        notify(errorMessage);
-      } else {
-        notify("Successfull Registered");
-        setTimeout(() => {
-          Navigate("/");
-        }, 500);
-      }
-    } catch (err) {
-      console.log(err.message);
+    const selectedDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - selectedDate.getFullYear();
+    const monthDifference = today.getMonth() - selectedDate.getMonth();
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < selectedDate.getDate())
+    ) {
+      age--;
     }
-    setFirstname("");
-    setLastname("");
-    setEmail("");
-    setGender("");
-    setPassword("");
-    setrePassword("");
-    setPhone("");
-    setAddress("");
+
+    
+    if (age < 18) {
+      notify("You must be at least 18 years old");
+    } else {
+      try {
+        const body = {
+          firstname,
+          lastname,
+          email,
+          address,
+          gender,
+          dob,
+          phonenumber,
+          password,
+          repassword,
+        };
+        const response = await fetch("http://localhost:1200/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+        if (response.status === 401) {
+          const errorMessage = await response.text();
+          // Call notify when there's an error
+          notify(errorMessage);
+        } else {
+          notify("Successfully Registered");
+          setTimeout(() => {
+            Navigate("/");
+          }, 500);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+  
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setGender("");
+      setPassword("");
+      setrePassword("");
+      setPhone("");
+      setAddress("");
+    }
   };
+  
+
 
   return (
     <div style={{
@@ -163,6 +184,18 @@ export default function SignUp() {
               </label>
             </div>
           </div>
+          <div className='mt-3'>
+          <span className='mb-2 text-md'>Date of Birth</span>
+          <input
+              type='date'
+              className='block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 pr-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              name='dob'
+              id="dob"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              required
+          />
+           </div>
           <div className='mt-3'>
               <span className='mb-2 rext-md'>Password</span>
               <input
