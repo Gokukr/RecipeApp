@@ -141,6 +141,15 @@ function Rating({ recipeId }) {
       .catch((error) => {
         console.error('Error in submitting review', error);
       });
+
+      axios.post(`http://localhost:1200/api/detail/ratings/post/${recipeId}/${userId}/${selectedRating}`)
+      .then(() => {
+        console.log("submitted");
+      })
+      .catch((error) => {
+        console.log(error);
+        window.location.reload();
+      });
     }
 
     else {
