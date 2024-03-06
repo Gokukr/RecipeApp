@@ -92,27 +92,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from 'js-cookie';
-import { response } from 'express';
-// import { response } from 'express';
 
 function Rating({ recipeId }) {
   const notify = (message) => toast(message);
-  const [selectedRating, setSelectedRating] = useState(0); // Adjust based on user's previous rating
-  const [lastRating, setLastRating] = useState(0);
+  const [selectedRating, setSelectedRating] = useState(Number); // Adjust based on user's previous rating
+  const [lastRating, setLastRating] = useState(Number);
   const userId = Cookies.get("user_id");
   useEffect(() => {
     axios.get(`http://localhost:1200/api/detail/ratings/${recipeId}/${userId}`)
     .then((response) => {
-      setLastRating(response.data.count.rating);
+      setLastRating(response.data.rating);
     });
   },[recipeId,userId]);
+  console.log(lastRating);
 
   const handleRatingChange = (newRating) => {
     setSelectedRating(newRating);
   };
   const [initialAverageRating, setRating]=useState(0);
   const [total_ratings, setTotal]=useState(0);
-  console.log(recipeId);
+  // console.log(recipeId);
   useEffect(() => {
     axios.get(`http://localhost:1200/api/detail/recipes/${recipeId}`)
     .then((response) => {
@@ -156,6 +155,14 @@ function Rating({ recipeId }) {
       .catch((error) => {
         console.error('Error in submitting review', error);
       });
+
+      axios.put(`http://localhost:1200/api/detail/ratings/update/${recipeId}/${userId}/${newRating}`)
+      .then(() => {
+        console.log("Ratings Updated");
+      })
+      .catch((error) => {
+        console.error("Error");
+      });
     }
   };
 
@@ -195,4 +202,3 @@ function Rating({ recipeId }) {
 }
 
 export default Rating;
-
