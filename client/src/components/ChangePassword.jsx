@@ -72,7 +72,7 @@ const ChangePasswordModal = ({ handleClose }) => {
             <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left flex flex-col justify-center items-center">
+{/*                   <div className="mt-3 text-center sm:mt-0 sm:text-left flex flex-col justify-center items-center">
                     <form>
                       <h3
                         className="text-[18px] font-semibold leading-6 text-gray-900 "
@@ -82,7 +82,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                       </h3>
 
                       <div className="password-container flex flex-col justify-center items-center w-[470px] my-2 ">
-                        {/* <label for="old-password">Old Password:</label> */}
+                         <label for="old-password">Old Password:</label> 
                         <input
                           type="password"
                           id="old-password"
@@ -92,7 +92,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           className="my-2 rounded-lg border border-gray-300 p-2 w-[80%]"
                           onChange={handleChange1}
                         />
-                        {/* <label for="new-password">New Password:</label> */}
+                       <label for="new-password">New Password:</label> 
                         <input
                           type="password"
                           id="new-password"
@@ -102,7 +102,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           className="my-2 rounded-lg border border-gray-300 p-2 w-[80%]"
                           onChange={handleChange2}
                         />
-                        {/* <label for="confirm-password">Confirm New Password:</label> */}
+                        <label for="confirm-password">Confirm New Password:</label> 
                         <input
                           type="password"
                           id="confirm-password"
@@ -112,6 +112,52 @@ const ChangePasswordModal = ({ handleClose }) => {
                           className="my-2 rounded-lg border border-gray-300 p-2 w-[80%]"
                           onChange={handleChange3}
                         />
+                      </div>
+                    </form>
+                  </div> */}
+                  <div className="mt-3 text-center sm:mt-0 sm:text-left flex flex-col w-full">
+                    <form>
+                      <h3
+                        className="text-[25px] font-semibold leading-6 text-gray-900 "
+                        id="modal-title"
+                      >
+                        Change Password
+                      </h3>
+
+                      <div className="password-container flex flex-col justify-start my-2 w-full space-y-4 ">
+                        <div className="py-0.5">
+                        <span className='mb-2 text-md'>Old Password:</span>
+                        <input
+                          type="password"
+                          id="old-password"
+                          name="old_password"
+                          required
+                          className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={handleChange1}
+                        />
+                        </div>
+                        <div className="py-0.5">
+                        <span className='mb-2 text-md'>New Password</span>
+                        <input
+                          type="password"
+                          id="new-password"
+                          name="new_password"
+                          required
+                          className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={handleChange2}
+                        />
+                        </div>
+                        <div className="py-0.5">
+                        <span className='mb-2 text-md'>Confirm New Password</span>
+                        <input
+                          type="password"
+                          id="confirm-password"
+                          name="confirm_password"
+                          required
+                          className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={handleChange3}
+                        />
+                        </div>
                       </div>
                     </form>
                   </div>
