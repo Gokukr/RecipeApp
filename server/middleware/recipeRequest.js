@@ -1,7 +1,9 @@
 const pool = require("../dbconfig");
 
 const getRecipeRequests = () => {
-  return pool.query("select * from recipe where status = 'Pending'");
+  return pool.query(
+    "select r.id,u.first_name,u.last_name,r.name,r.cuisine,r.total_time,r.image,r.meal_type from recipe r join user_data u on r.user_id = u.id where status = 'Pending'"
+  );
 };
 
 const handleRecipeRequest = (id, status) => {

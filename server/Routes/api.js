@@ -14,7 +14,7 @@ const {
   handleRecipeRequest,
 } = require("../middleware/recipeRequest");
 
-router.get("/recipe-req", async (req, res) => {
+router.get("/recipe-requests", async (req, res) => {
   try {
     const result = await getRecipeRequests();
     res.send(result);
@@ -24,7 +24,7 @@ router.get("/recipe-req", async (req, res) => {
   }
 });
 
-router.post("/recipe-req/:recipeId", async (req, res) => {
+router.post("/recipe-response/:recipeId", async (req, res) => {
   try {
     const result = handleRecipeRequest(
       req.params.recipeId,
