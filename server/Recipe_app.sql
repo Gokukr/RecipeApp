@@ -88,3 +88,13 @@ create table Culinarian(
 );
 
 select * from Culinarian;
+
+
+create table Ratings(
+	ID UUID primary key default uuid_generate_v4(),
+	User_ID UUID references user_data(id),
+	Recipe_id UUID references recipe(id),
+	Rating numeric(2)
+);
+
+select * from Ratings;
