@@ -10,11 +10,13 @@ Create table user_data(
 	email varchar(255),
 	address varchar(255),
 	gender varchar(10),
+	dob DATE,
 	role varchar(20),
 	phone_number numeric(10),
 	about varchar(255),
 	password varchar(255)  
 );
+ALTER TABLE user_data ADD COLUMN dob DATE;
 
 Create table Recipe(
 	id UUID primary key default uuid_generate_v4(),
