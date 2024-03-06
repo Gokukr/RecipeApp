@@ -25,6 +25,10 @@ module.exports = {
       borderRadius: {
         "3xs": "10px",
       },
+      boxShadow: {
+        '3xl': '-2px 3px 13px 4px rgba(189, 204, 219, 0.5)',
+        '4xl': '0 1px 8px 1px rgba(189, 204, 219, 0.5)'
+      }
     },
     fontSize: {
       "5xl": "24px",
