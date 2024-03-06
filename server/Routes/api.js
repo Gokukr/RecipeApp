@@ -124,8 +124,8 @@ router.post("/register", async (req, res) => {
       // console.log(newUser);
       mailservice.sendmail(
         email,
-        "Thank You for Signing Up with us",
-        `${newUser.first_name} Thank you for your registration with us`
+        "Cook Buddy",
+        `${newUser.first_name} Thank you for registration with us`
       );
       const status = true;
       res.json({ status });
@@ -275,6 +275,9 @@ router.post("/OtpVerify", async (req, res) => {
 router.post("/ChangePassword", async (req, res) => {
   try {
     const { email, Password, repassword } = req.body;
+    if (!isStrongPassword(Password)) {
+      return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
+     }
     if (Password == repassword) {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
@@ -283,7 +286,7 @@ router.post("/ChangePassword", async (req, res) => {
         "update user_data set password = $1 where email = $2",
         [bcryptPassword, email]
       );
-      mailservice.sendmail(email, "Password as been Updated", `Thank You`);
+      mailservice.sendmail(email, "Password as been changed", `Thank You`);
       const verify = true;
       res.json({ verify });
     } else {

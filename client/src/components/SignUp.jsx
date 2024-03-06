@@ -95,7 +95,7 @@ export default function SignUp() {
   <div className='flex items-center justify-center min-h-screen bg-grey-100'>
   <div className='relative flex flex-col m-6 space-y-8 bg-[#F9F9F9] shadow-2xl  rounded-2xl md:flex-row md:space-y-0' >
       <div className='flex flex-col justify-center md:px-14 md:py-8 p-10'>
-          <span className='mb-2 text-xl text-center font-bold'>Sign Up</span>
+          <span className='mb-2 text-5xl text-center font-bold'>Sign Up</span>
           <form onSubmit={FormSubmit} method="POST">
           <div className='mt-3'>
           <span className='mb-2 rext-md'>FirstName</span>
