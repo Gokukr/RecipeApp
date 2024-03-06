@@ -97,6 +97,7 @@ function Rating({ recipeId }) {
   const notify = (message) => toast(message);
   const [selectedRating, setSelectedRating] = useState(Number); // Adjust based on user's previous rating
   const [lastRating, setLastRating] = useState(Number);
+  const [load, setLoad] = useState(true);
   const userId = Cookies.get("user_id");
   useEffect(() => {
     axios.get(`http://localhost:1200/api/detail/ratings/${recipeId}/${userId}`)
@@ -108,6 +109,7 @@ function Rating({ recipeId }) {
 
   const handleRatingChange = (newRating) => {
     setSelectedRating(newRating);
+    setLoad(false);
   };
   const [initialAverageRating, setRating]=useState(0);
   const [total_ratings, setTotal]=useState(0);
@@ -192,7 +194,7 @@ function Rating({ recipeId }) {
         <svg width = "30" height = "30" stroke="black"
           stroke-width="1" viewBox='-2 0 20 20'>
         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-        fill={(rating <= selectedRating) || (rating<= lastRating) ? "rgb(234 179 8)" : "#ffffff"} />
+        fill={(rating <= selectedRating) || ((rating<= lastRating) && (load === true)) ? "rgb(234 179 8)" : "#ffffff"} />
          </svg>
         </span>
         
