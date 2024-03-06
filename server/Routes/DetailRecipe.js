@@ -324,4 +324,21 @@ router.put("/culinarian/:status/:id", (req, res) => {
   });
 });
 
+router.get(`/ratings/:recipeId/:userId`, (req, res) => {
+  const recipeId = req.params.recipeId;
+  const userId = req.params.userId;
+  pool.query(`select rating from ratings where recipe_id = $1 and user_id = $2`, [recipeId, userId], 
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error : "cannot fetch data"});
+    } else {
+      const hasData= result.rows.length > 0;
+      let count;
+      if(hasData) count = result.rows[0];
+      else count = 0;
+      res.json({rating: count});
+    }
+  });
+});
+
 module.exports = router;
