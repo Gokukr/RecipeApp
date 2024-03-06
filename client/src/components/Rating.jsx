@@ -103,7 +103,7 @@ function Rating({ recipeId }) {
   useEffect(() => {
     axios.get(`http://localhost:1200/api/detail/ratings/${recipeId}/${userId}`)
     .then((response) => {
-      setLastRating(response.data.rating);
+      setLastRating(response.data.count.rating);
     });
   },[recipeId,userId]);
 
