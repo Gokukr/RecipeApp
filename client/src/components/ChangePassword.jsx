@@ -89,7 +89,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           id="old-password"
                           name="old_password"
                           required
-                          className="block w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block mt-1 w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChange1}
                         />
                         </div>
@@ -100,7 +100,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           id="new-password"
                           name="new_password"
                           required
-                          className="block w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block mt-1 w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChange2}
                         />
                         </div>
@@ -111,7 +111,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           id="confirm-password"
                           name="confirm_password"
                           required
-                          className="block w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block mt-1 w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChange3}
                         />
                         </div>
