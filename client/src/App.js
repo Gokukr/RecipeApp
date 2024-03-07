@@ -2,6 +2,7 @@ import React from "react";
 import Login from "./components/Login.jsx";
 import SignUp from "./components/SignUp.jsx";
 import "./index.css";
+import "./styles.css";
 import Dashboard from "./components/Dashboard.jsx";
 // import Footer from "./components/Footer.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -21,7 +22,7 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user" element={<UserProfile />} />
-          <Route path="/recipe-request" element={<RecipeRequest/>}/>
+          <Route path="/recipe-request" element={<RecipeRequest />} />
           <Route
             path="user/detail-recipe/:recipeId"
             element={<DetailRecipe />}
