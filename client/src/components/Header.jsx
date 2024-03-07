@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Header = memo(() => {
   const navigator = useNavigate();
   const userId = Cookies.get("user_id");
+  const userRole = Cookies.get("role");
 
   function handleProfileclick() {
     navigator("/user");
@@ -59,6 +60,16 @@ const Header = memo(() => {
               Home
             </b>
           </div>
+          {((userRole === 'Admin') || (userRole === 'admin')) && (
+            <div
+            onClick={handleReqClick}
+            className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
+          >
+            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
+              Requests
+            </b>
+          </div>
+          )}
           <div
             onClick={handleFavClick} 
             className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
