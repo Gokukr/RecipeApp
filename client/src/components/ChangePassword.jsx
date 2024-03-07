@@ -130,7 +130,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                 </button>
                 <button
                   type="button"
-                  className="mt-3 w-full rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-bg sm:mt-0 sm:w-auto"
+                  className="mt-3 w-full rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-bg sm:mt-0 sm:w-auto"
                   onClick={cancelDelete}
                 >
                   Cancel
