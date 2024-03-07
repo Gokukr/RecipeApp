@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 const Search = ({ allRecipe, setData = (a) => a }) => {
   const [role, setRole] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [isHovered, setIsHovered] = useState(false);
+
   // const [filterOptions, setFilterOptions] = useState({
   //   cuisine: [],
   //   mealType: [],
@@ -45,12 +47,15 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
     try {
       const queryString = (filter, arr) =>
         arr.map((item) => `${filter}=${item}`).join("&");
-      const qry = `http://localhost:1200/api/recipes/all?searchText=${query
-        }&${queryString("rating",filters.rating)
-        }&${queryString("mealType", filters.mealType)
-        }&${queryString("course",filters.courseType)
-        }&${queryString("cuisine", filters.cuisine)
-        }&culName=${filters.culinarian}`;
+      const qry = `http://localhost:1200/api/recipes/all?searchText=${query}&${queryString(
+        "rating",
+        filters.rating
+      )}&${queryString("mealType", filters.mealType)}&${queryString(
+        "course",
+        filters.courseType
+      )}&${queryString("cuisine", filters.cuisine)}&culName=${
+        filters.culinarian
+      }`;
       const res = await axios.get(qry);
       // debugger;
       setSearchResults(res.data.rows);
@@ -96,6 +101,13 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
   // const handleFilterClick = () => {
   //   setShowFilterDialog(true);
   // };
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   useEffect(() => {
     fetchData();
@@ -113,11 +125,21 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
     <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans relative">
       {role === "admin" && (
         <div className="absolute top-0 right-0 mr-4 mt-4">
-          <Link to="/add-recipe">
-            <button className="bg-primary-100 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 ">
-              Add Recipe
-            </button>
-          </Link>
+          <div
+            style={{ position: "fixed", bottom: "50px", right: "20px" }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Link to="/add-recipe">
+              <button className="bg-primary-100 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 text-xl">
+                {isHovered ? (
+                  "Add Recipe"
+                ) : (
+                  <span style={{ fontSize: "30px" }}>+</span>
+                )}
+              </button>
+            </Link>
+          </div>
         </div>
       )}
       {/* <div className="inline-block mq450:text-primary-300 mq750:text-7xl mt-8">

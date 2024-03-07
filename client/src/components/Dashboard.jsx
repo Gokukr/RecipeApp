@@ -4,11 +4,11 @@ import Header from "./Header";
 import Search from "./Search";
 import Footer from "./Footer";
 import Card from "./Card";
-// import SearchBar from "./SearchBar";
 import Container from "./Container";
 import Cookies from "js-cookie";
 import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -54,19 +54,14 @@ export default function Dashboard() {
     }
   }, [verify]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:1200/api/getdata");
       const responseData = await response.json();
-      // debugger;
       setData(responseData);
-      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -78,13 +73,18 @@ export default function Dashboard() {
     { name: "Japanese", filter: "Japanese" },
     { name: "Italian", filter: "Italian" },
   ];
+
   return (
-    <div>
+    <div className="dashboard-container">
       <Header />
       <Search allRecipe={setShowAll} setData={setData} />
 
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="loader-container">
+          <div className="loader">
+            <ClipLoader size={50} color={"#123abc"} loading={loading} />
+          </div>
+        </div>
       ) : showAll ? (
         cuisines
           .filter((cuisine) =>

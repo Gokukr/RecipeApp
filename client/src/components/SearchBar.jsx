@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { FaBell } from "react-icons/fa";
+import Notification from "./Notification";
 
 const SearchBar = ({
   onSearch,
@@ -16,6 +18,7 @@ const SearchBar = ({
   });
   const [culinarians, setCulinarians] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notificationVisible, setNotificationVisible] = useState(false); // Step 1: State for notification visibility
 
   useEffect(() => {
     fetchCulinarians();
@@ -90,6 +93,18 @@ const SearchBar = ({
   //     culinarian: event.target.value,
   //   });
   // };
+  const toggleNotification = () => {
+    setNotificationVisible(!notificationVisible);
+  };
+  const handleResetFilters = () => {
+    setSelectedFilters({
+      cuisine: [],
+      mealType: [],
+      courseType: [],
+      rating: [],
+      culinarian: "",
+    });
+  };
 
   React.useEffect(() => {
     onSearch(searchTerm, selectedFilters);
@@ -138,7 +153,7 @@ const SearchBar = ({
       {/* Filter Icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md hover:cursor-pointer drop-shadow-xl"
+        className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md drop-shadow-2xl hover:cursor-pointer"
         viewBox="0 0 20 20"
         fill="currentColor"
         onClick={toggleSidebar}
@@ -149,13 +164,36 @@ const SearchBar = ({
           clipRule="evenodd"
         />
       </svg>
+      <div
+        className="h-8 w-8 ml-6 mt-2 flex items-center justify-center text-white bg-primary-300 rounded-md hover:cursor-pointer"
+        style={{ fontSize: "0.8rem" }}
+        onClick={toggleNotification}
+      >
+        <FaBell />
+      </div>
+      {notificationVisible && (
+        <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
+          <Notification />
+        </div>
+      )}
       {sidebarVisible && (
         <div
           className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-hidden overflow-y-auto"
           style={{ marginTop: "40px" }}
         >
-          <div className="text-primary-300 p-4">
-            <h4 className="text-lg font-semibold font-open-sans">Filters</h4>
+          <div className="text-primary-300 p-4  ">
+            <div className="flex items-center gap-20">
+              <h4 className="text-lg font-semibold font-open-sans flex items-start">
+                Filters
+              </h4>
+              <button
+                className="px-3 py-2 bg-gray-300 text-primary-300 rounded-md hover:bg-primary-600 focus:outline-none ml-2"
+                onClick={handleResetFilters}
+              >
+                Reset
+              </button>
+            </div>
+
             {/* Cuisine */}
             <div className="mb-4">
               <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-2rem] flex flex-start">
@@ -165,7 +203,7 @@ const SearchBar = ({
               <ul className="list-none pl-0  ">
                 <div className="grid grid-cols-2 mt-[-2rem] items-start">
                   <div
-                    className={`flex items-center mb-3 w-10 pl-4 ${
+                    className={`flex items-center mb-3 w-1/3 pl-4 ${
                       selectedFilters.cuisine.includes("Italian")
                         ? "bg-gray-200 "
                         : ""
@@ -195,7 +233,7 @@ const SearchBar = ({
                       padding: "0.5rem 0.5rem",
                     }}
                   >
-                    <label className="text-base cursor-pointer hover:cursor-pointer">
+                    <label className="text-base pl-1 cursor-pointer hover:cursor-pointer">
                       Mexican
                     </label>
                   </div>
@@ -212,7 +250,7 @@ const SearchBar = ({
                       padding: "0.5rem 0.5rem",
                     }}
                   >
-                    <label className="text-base cursor-pointer hover:cursor-pointer">
+                    <label className="text-base  flex items-center justify-center cursor-pointer hover:cursor-pointer">
                       Continental
                     </label>
                   </div>
@@ -229,7 +267,7 @@ const SearchBar = ({
                       padding: "0.5rem 0.5rem",
                     }}
                   >
-                    <label className="text-base cursor-pointer hover:cursor-pointer">
+                    <label className="text-base flex items-center justify-center cursor-pointer hover:cursor-pointer">
                       Chinese
                     </label>
                   </div>
@@ -251,7 +289,7 @@ const SearchBar = ({
                     </label>
                   </div>
                   <div
-                    className={`flex items-center mb-3 w-relative pl-4 ${
+                    className={`flex items-center mb-3 w-3/4 pl-4 ${
                       selectedFilters.cuisine.includes("North Indian")
                         ? "bg-gray-200 "
                         : ""
@@ -321,7 +359,7 @@ const SearchBar = ({
               </h6>
               <div className="grid grid-cols-2">
                 <div
-                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                  className={`flex items-center mb-3 w-2/5 pl-4 ${
                     selectedFilters.courseType.includes("Starter")
                       ? "bg-gray-200 "
                       : ""
@@ -352,7 +390,7 @@ const SearchBar = ({
                     padding: "0.5rem 0.5rem",
                   }}
                 >
-                  <label className="text-base cursor-pointer hover:cursor-pointer">
+                  <label className="text-base pl-2 cursor-pointer hover:cursor-pointer">
                     Main course
                   </label>
                 </div>
@@ -369,7 +407,7 @@ const SearchBar = ({
                     padding: "0.5rem 0.5rem",
                   }}
                 >
-                  <label className="text-base cursor-pointer hover:cursor-pointer">
+                  <label className="text-base pl-2 cursor-pointer hover:cursor-pointer">
                     Dinner
                   </label>
                 </div>
@@ -386,7 +424,7 @@ const SearchBar = ({
                     padding: "0.5rem 0.5rem",
                   }}
                 >
-                  <label className="text-base cursor-pointer hover:cursor-pointer">
+                  <label className="text-base pl-2 cursor-pointer hover:cursor-pointer">
                     Snack
                   </label>
                 </div>
@@ -420,7 +458,7 @@ const SearchBar = ({
                     padding: "0.5rem 0.5rem",
                   }}
                 >
-                  <label className="text-base cursor-pointer hover:cursor-pointer">
+                  <label className="text-base pl-1 cursor-pointer hover:cursor-pointer">
                     Dessert
                   </label>
                 </div>
@@ -491,16 +529,16 @@ const SearchBar = ({
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">
               <button
-                className="px-4 py-2 mr-2 bg-gray-300 text-primary-300 rounded-md hover:bg-primary-600 focus:outline-none"
-                onClick={handleCancelFilters}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-2 bg-primary-300 text-gray-300 rounded-md hover:bg-gray-500 focus:outline-none"
+                className="px-4 py-2 mr-2 bg-gray-300 text-black rounded-md hover:bg-primary-600 focus:outline-none"
                 onClick={handleApplyFilters}
               >
                 Apply
+              </button>
+              <button
+                className="px-4 py-2 bg-primary-300 text-white rounded-md hover:bg-gray-500 focus:outline-none"
+                onClick={handleCancelFilters}
+              >
+                Cancel
               </button>
             </div>
           </div>
