@@ -8,7 +8,7 @@ import Container from "./Container";
 import Cookies from "js-cookie";
 import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners"; // Import ClipLoader from react-spinners
+import { ClipLoader } from "react-spinners";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -58,11 +58,10 @@ export default function Dashboard() {
     try {
       const response = await fetch("http://localhost:1200/api/getdata");
       const responseData = await response.json();
-      // debugger;
       setData(responseData);
-      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -83,7 +82,6 @@ export default function Dashboard() {
       {isLoading ? (
         <div className="loader-container">
           <div className="loader">
-            
             <ClipLoader size={50} color={"#123abc"} loading={loading} />
           </div>
         </div>

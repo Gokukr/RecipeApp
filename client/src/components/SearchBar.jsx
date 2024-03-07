@@ -96,6 +96,15 @@ const SearchBar = ({
   const toggleNotification = () => {
     setNotificationVisible(!notificationVisible);
   };
+  const handleResetFilters = () => {
+    setSelectedFilters({
+      cuisine: [],
+      mealType: [],
+      courseType: [],
+      rating: [],
+      culinarian: "",
+    });
+  };
 
   React.useEffect(() => {
     onSearch(searchTerm, selectedFilters);
@@ -172,8 +181,19 @@ const SearchBar = ({
           className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-hidden overflow-y-auto"
           style={{ marginTop: "40px" }}
         >
-          <div className="text-primary-300 p-4">
-            <h4 className="text-lg font-semibold font-open-sans">Filters</h4>
+          <div className="text-primary-300 p-4  ">
+            <div className="flex items-center gap-20">
+              <h4 className="text-lg font-semibold font-open-sans flex items-start">
+                Filters
+              </h4>
+              <button
+                className="px-3 py-2 bg-gray-300 text-primary-300 rounded-md hover:bg-primary-600 focus:outline-none ml-2"
+                onClick={handleResetFilters}
+              >
+                Reset
+              </button>
+            </div>
+
             {/* Cuisine */}
             <div className="mb-4">
               <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-2rem] flex flex-start">
@@ -509,7 +529,7 @@ const SearchBar = ({
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">
               <button
-                className="px-4 py-2 mr-2 bg-gray-300 text-primary-300 rounded-md hover:bg-primary-600 focus:outline-none"
+                className="px-4 py-2 mr-2 bg-gray-300 text-black rounded-md hover:bg-primary-600 focus:outline-none"
                 onClick={handleApplyFilters}
               >
                 Apply
