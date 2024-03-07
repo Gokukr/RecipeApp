@@ -72,49 +72,6 @@ const ChangePasswordModal = ({ handleClose }) => {
             <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-{/*                   <div className="mt-3 text-center sm:mt-0 sm:text-left flex flex-col justify-center items-center">
-                    <form>
-                      <h3
-                        className="text-[18px] font-semibold leading-6 text-gray-900 "
-                        id="modal-title"
-                      >
-                        Change Password
-                      </h3>
-
-                      <div className="password-container flex flex-col justify-center items-center w-[470px] my-2 ">
-                         <label for="old-password">Old Password:</label> 
-                        <input
-                          type="password"
-                          id="old-password"
-                          name="old_password"
-                          placeholder="OLD PASSWORD"
-                          required
-                          className="my-2 rounded-lg border border-gray-300 p-2 w-[80%]"
-                          onChange={handleChange1}
-                        />
-                       <label for="new-password">New Password:</label> 
-                        <input
-                          type="password"
-                          id="new-password"
-                          name="new_password"
-                          placeholder="NEW PASSWORD"
-                          required
-                          className="my-2 rounded-lg border border-gray-300 p-2 w-[80%]"
-                          onChange={handleChange2}
-                        />
-                        <label for="confirm-password">Confirm New Password:</label> 
-                        <input
-                          type="password"
-                          id="confirm-password"
-                          name="confirm_password"
-                          placeholder="CONFIRM NEW PASSWORD"
-                          required
-                          className="my-2 rounded-lg border border-gray-300 p-2 w-[80%]"
-                          onChange={handleChange3}
-                        />
-                      </div>
-                    </form>
-                  </div> */}
                   <div className="mt-3 text-center sm:mt-0 sm:text-left flex flex-col w-full">
                     <form>
                       <h3
@@ -132,7 +89,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           id="old-password"
                           name="old_password"
                           required
-                          className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChange1}
                         />
                         </div>
@@ -143,7 +100,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           id="new-password"
                           name="new_password"
                           required
-                          className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChange2}
                         />
                         </div>
@@ -154,7 +111,7 @@ const ChangePasswordModal = ({ handleClose }) => {
                           id="confirm-password"
                           name="confirm_password"
                           required
-                          className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full bg-[#EAEBEC] rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           onChange={handleChange3}
                         />
                         </div>
