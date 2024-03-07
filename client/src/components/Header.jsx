@@ -22,6 +22,9 @@ const Header = memo(() => {
   function handleHomeClick() {
     navigator("/dashboard");
   }
+  function handleReqClick() {
+    navigator("/culinarianReq");
+  }
   const notify = (message) => toast(message);
   function handleLogout()
   {   
