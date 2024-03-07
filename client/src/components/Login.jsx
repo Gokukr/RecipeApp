@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Limage from '../assets/login.png'
+import Limage from '../assets/signup.png'
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
-
 export default function Login() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isotpModelOpen,setOtpMOdelOPen] = useState(false)
@@ -143,8 +140,33 @@ export default function Login() {
       console.log(err.message);
     }
   };
+  const handleChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const getPasswordStrength = (password) => {
+    const hasCapitalLetter = /[A-Z]/.test(password);
+    const hasSmallLetter = /[a-z]/.test(password);
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const hasMinimumLength = password.length >= 8;
+    if (password.length === 0) {
+        return 'Please enter a password';
+    }
+    if (password.length === 1) {
+        return 'Very Weak';
+    }
+    if (hasCapitalLetter && hasSmallLetter && hasSpecialCharacter && hasMinimumLength) {
+        return 'Very Strong';
+    }
+    if (hasCapitalLetter && hasSmallLetter && hasMinimumLength) {
+        return 'Strong';
+    }
+    if ((hasCapitalLetter || hasSmallLetter) && hasMinimumLength) {
+        return 'Medium';
+    }
+    return 'Weak';
+  };
 
-  
+const passwordStrength = getPasswordStrength(Password);
 const FormSubmit = async(e) =>
 {
   try{
@@ -189,11 +211,11 @@ const FormSubmit = async(e) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-    }} className="bg-white">
+    }} className=" bg-textbg">
        <ToastContainer />
        {homeScreen &&( 
       <div className='flex items-center justify-center'>
-        <div className='relative flex flex-col m-6 space-y-8 bg-[#F9F9F9] shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
+        <div className='relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
           <div className='flex flex-col justify-center p-12 md:px-14 md:py-8'>
             <span className='mb-1 text-5xl text-center font-bold'>Login</span>
             <span className='font-light text-gray-400 mb-5 text-center'>Welcome Back! Please enter your details</span>
@@ -202,7 +224,7 @@ const FormSubmit = async(e) =>
               <span className='mb-2 text-md'>Email</span>
               <input
                 type='text'
-                className='block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                className='block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 name='email'
                 id="email"
                 value={email}
@@ -217,7 +239,7 @@ const FormSubmit = async(e) =>
                 type="password"
                 name="password"
                 autoComplete="password"
-                className="block w-full rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={password}
                 onChange={(e) => onChange(e)}
                 required
@@ -256,37 +278,37 @@ const FormSubmit = async(e) =>
           id="authentication-modal"
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed inset-0 z-50 overflow-y-auto bg-[#F9F9F9] bg-opacity-80 flex justify-center items-center"
+          className="fixed inset-0 z-50 overflow-y-auto  bg-opacity-80 flex justify-center items-center"
         >
-          <div className="relative p-4 w-full max-w-md">
-            <div className="relative bg-[#F9F9F9] rounded-lg shadow">
-              <div className="p-4 md:p-5">
+          <div className="relative p-4 w-full max-w-3xl">
+            <div className="relative flex flex-col md:flex-row space-y-8 md:space-y-0 shadow-2xl rounded-2xl">
+              <div className="p-4 md:p-10 flex-grow bg-white shadow-2xl rounded-l-2xl">
                 <button
                   onClick={toggleModal}
                   type="button"
-                  className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14" >
-                    <path
+                  className="end-2.5 text-gray-400 bg-transparent hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"                  >
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                 >
+                  <path
                       stroke="currentColor"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
+                      d="M9 1L3 7l6 6"
+                  />
+              </svg>
                   <span className="sr-only">Close modal</span>
                 </button>
-                <div class="p-4 md:p-5">
-                <form class="space-y-4" onSubmit={FormSubmit}>
+                <div class="relative">
+                <form class="space-y-4 mt-20" onSubmit={FormSubmit}>
                     <div>
                     <span className='mb-2 text-md'>Email</span>
-                    <input type="email" name="email" id="email" className="block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required/>
+                    <input type="email" name="email" id="email" className="block w-full mt-1.5 bg-textbg rounded-md box-border border-0 px-0 text-gray-900 pl-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required/>
                     </div>
                     <button type="submit" className="w-full bg-primary-100 text-white py-2 px-2 rounded-lg mb-2 hover:border-gray-300 mt-2" >Get OTP</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -294,6 +316,9 @@ const FormSubmit = async(e) =>
                 </form>
             </div>
              </div>
+             <div className='relative w-full md:w-[400px]'>
+              <img src={Limage} alt="Background" className='w-full h-full rounded-r-2xl md:block object-cover' />
+            </div>
             </div>
           </div>
         </div>
@@ -304,44 +329,43 @@ const FormSubmit = async(e) =>
           id="authentication-modal"
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed inset-0 z-50 overflow-y-auto bg-[#F9F9F9] bg-opacity-80 flex justify-center items-center"
+          className="fixed inset-0 z-50 overflow-y-auto bg-textbg flex justify-center items-center"
         >
-          <div className="relative p-4 w-full max-w-md">
-            <div className="relative bg-[#F9F9F9] rounded-lg shadow">
-              <div className="p-4 md:p-5">
+          <div className="relative p-4 w-full max-w-3xl ">
+            <div className="relative flex flex-col md:flex-row space-y-8 md:space-y-0 shadow-2xl rounded-2xl">
+              <div className="p-4 md:p-10 flex-grow bg-white shadow-2xl rounded-l-2xl">
                 <button
                   onClick={OTPModal}
                   type="button"
-                  className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
+                  className="end-2.5 text-gray-400 bg-transparent hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" >
+                 <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                 >
                   <path
                       stroke="currentColor"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                      d="M9 1L3 7l6 6"
                   />
                   </svg>
                   <span className="sr-only">Close modal</span>
                 </button>
 
               
-                <div class="p-4 md:p-5">
-                <form class="space-y-4" onSubmit={OTPSubmit}>
+                <div class="relative">
+                <form class="space-y-4 mt-10" onSubmit={OTPSubmit}>
                     <div>
                     <span className='mb-2 text-md'>Email</span>
-                    <input type="email" name="email" id="email" className="block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required />
+                    <input type="email" name="email" id="email"  className="block w-full  bg-textbg rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 mt-1.5 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Email} onChange={(e)=>setEmail(e.target.value)} required />
                     </div>
                     <div>
                     <span className='mb-2 text-md'>OTP</span>
-                    <input type="text" name="otp" id="otp" className="block w-full rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"   value={otp} onChange={(e)=>setotp(e.target.value)} required />
+                    <input type="text" name="otp" id="otp" className="block w-full  bg-textbg rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 mt-1.5 placeholder:text-gray-400 focus:ring-2 pl-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"   value={otp} onChange={(e)=>setotp(e.target.value)} required />
                     </div>
                     <button type="submit" className="w-full bg-primary-100 text-white py-2 px-1 rounded-lg mb-2 hover:border-gray-300 mt-2">Verify OTP</button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -349,6 +373,9 @@ const FormSubmit = async(e) =>
                 </form>
               </div>
              </div>
+             <div className='relative w-full md:w-[400px]'>
+              <img src={Limage} alt="Background" className='w-full h-full rounded-r-2xl md:block object-cover' />
+            </div>
             </div>
           </div>
         </div>
@@ -356,54 +383,90 @@ const FormSubmit = async(e) =>
       
       {isModelPassword && (
         <div
-          id="authentication-modal"
-          tabIndex="-1"
-          aria-hidden="true"
-          className="fixed inset-0 z-50 overflow-y-auto bg-[#F9F9F9] bg-opacity-80 flex justify-center items-center"
-        >
-          <div className="relative p-4 w-full max-w-md">
-            <div className="relative bg-[#F9F9F9] rounded-lg shadow">
-              <div className="p-4 md:p-5">
-                <button
-                  onClick={PasswordModel}
-                  type="button"
-                  className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
+        id="authentication-modal"
+        tabIndex="-1"
+        aria-hidden="true"
+        className="fixed inset-0 z-50 overflow-y-auto  bg-opacity-80 flex justify-center items-center"
+      >
+        <div className="relative p-4 w-full max-w-3xl ">
+          <div className="relative flex flex-col md:flex-row space-y-8 md:space-y-0 shadow-2xl rounded-2xl ">
+            <div className="p-4 md:p-10 flex-grow bg-white shadow-2xl rounded-l-2xl">
+              <button
+                onClick={PasswordModel}
+                type="button"
+                className="end-2.5 text-gray-400 bg-transparent hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" >
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
                   <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 1L3 7l6 6"
                   />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-                <div class="p-4 md:p-5">
-                <form class="space-y-4" onSubmit={onPasswordForm}>
-                    <div>
-                    <span className='mb-2 text-md'>Password</span>
-                    <input type="password" className="block w-full rounded-md box-border border-0 px-0 text-gray-900 pl-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"    value={Password} onChange={(e)=>setPassword(e.target.value)} required />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+              <div className="relative">
+                <form class="space-y-4 mt-10" onSubmit={onPasswordForm}>
+                <div className="max-w-sm mx-auto mt-3">
+                  <span className='mb-2 rext-md'>Password</span>
+                  <input
+                    type="password"
+                    value={Password}
+                    onChange={handleChange}
+                    className="block w-full mt-1.5 rounded-md box-border border-0 px-0 text-gray-900 shadow-sm ring-1 ring-inset  bg-textbg ring-gray-300 placeholder:text-gray-400 focus:ring-2 pl-2 pr-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    required
+                  />
+                  <div className="mt-2 flex justify-between">
+                    <div className="flex-1 mr-2">
+                      <div className={`h-2 rounded ${passwordStrength === 'Very Weak' ? 'bg-red-400' : 'bg-gray-300'}`}></div>
                     </div>
-                    <div>
+                    <div className="flex-1 mr-2">
+                      <div className={`h-2 rounded ${passwordStrength === 'Weak' ? 'bg-orange-400' : 'bg-gray-300'}`}></div>
+                    </div>
+                    <div className="flex-1 mr-2">
+                      <div className={`h-2 rounded ${passwordStrength === 'Medium' ? 'bg-yellow-400' : 'bg-gray-300'}`}></div>
+                    </div>
+                    <div className="flex-1 mr-2">
+                      <div className={`h-2 rounded ${passwordStrength === 'Strong' ? 'bg-green-400' : 'bg-gray-300'}`}></div>
+                    </div>
+                    <div className="flex-1">
+                      <div className={`h-2 rounded ${passwordStrength === 'Very Strong' ? 'bg-blue-400' : 'bg-gray-300'}`}></div>
+                    </div>
+                  </div>
+                </div>
+                  <div>
                     <span className='mb-2 text-md'>Re-Enter Password</span>
-                    <input type="password"  className="block w-full rounded-md box-border border-0 px-0 text-gray-900 pl-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={repassword}onChange={(e)=>setrePassword(e.target.value)} required />
-                    </div>
-                    <button type="submit" className="w-full bg-primary-100 text-white py-2 px-5 rounded-lg mb-2 hover:border-gray-300 mt-2">Change Password</button>
-                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    </div>
+                    <input
+                      type="password"
+                      className="block w-full mt-1.5 bg-textbg rounded-md box-border border-0 px-0 text-gray-900 pl-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={repassword}
+                      onChange={(e) => setrePassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-primary-100 text-white py-2 px-5 rounded-lg mb-2 hover:border-gray-300 mt-2"
+                  >
+                    Change Password
+                  </button>
+                  <div className="text-sm font-medium text-gray-500 dark:text-gray-300"></div>
                 </form>
+              </div>
             </div>
-             </div>
+            <div className='relative w-full md:w-[400px]'>
+              <img src={Limage} alt="Background" className='w-full h-full rounded-r-2xl md:block object-cover' />
             </div>
           </div>
         </div>
+      </div>
       )}
   </div>
   );
