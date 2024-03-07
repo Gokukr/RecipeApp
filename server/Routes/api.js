@@ -9,17 +9,33 @@ const mailservice = require("../services/registrationservices");
 const getSavedRecipes = require("../middleware/getSavedRecipe");
 const saveRecipe = require("../middleware/savedRecipe");
 const randomize = require("randomatic");
-const getRecipeRequests = require("../middleware/recipeRequest");
+const {
+  getRecipeRequests,
+  handleRecipeRequest,
+} = require("../middleware/recipeRequest");
 
-router.get("/recipe-req", async (req,res) => {
+router.get("/recipe-requests", async (req, res) => {
   try {
     const result = await getRecipeRequests();
     res.send(result);
   } catch (error) {
     console.log("error recieving reicpes ", error);
-    res.send("Unable to get recipe requests");    
+    res.send("Unable to get recipe requests");
   }
-})
+});
+
+router.post("/recipe-response/:recipeId", async (req, res) => {
+  try {
+    const result = handleRecipeRequest(
+      req.params.recipeId,
+      req.body.isAccept ? "Accepted" : "Rejected"
+    );
+    res.send(result);
+  } catch (error) {
+    console.log("Error handling recipe request", error);
+    res.send("Server error : Recipe request error");
+  }
+});
 
 router.get("/recipes/all", async (req, res) => {
   try {
@@ -32,7 +48,7 @@ router.get("/recipes/all", async (req, res) => {
     });
     res.send(result);
   } catch (error) {
-    console.log("error recieving reicpes ", error);
+    console.log("error recieving recipes ", error);
     res.send("Server error");
   }
 });
@@ -64,6 +80,12 @@ router.post("/:userId/save-a-recipe", async (req, res) => {
   res.send(result);
 });
 
+
+function isStrongPassword(password) {
+  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return strongRegex.test(password);
+}
+
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
   res.json(data);
@@ -76,10 +98,14 @@ router.post("/register", async (req, res) => {
       email,
       address,
       gender,
+      dob,
       phonenumber,
       password,
       repassword,
     } = req.body;
+    if (!isStrongPassword(password)) {
+      return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
+  }
     if (repassword === password) {
       const registration = await db.query(
         "SELECT * FROM user_data WHERE email = $1",
@@ -93,13 +119,14 @@ router.post("/register", async (req, res) => {
       const bcryptPassword = await bcrypt.hash(password, salt);
       const role = "user";
       await db.query(
-        "INSERT INTO user_data(first_name, last_name, email, address, gender, role, phone_number, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        "INSERT INTO user_data(first_name, last_name, email, address, gender, dob, role, phone_number, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9)",
         [
           firstname,
           lastname,
           email,
           address,
           gender,
+          dob,
           role,
           phonenumber,
           bcryptPassword,
@@ -110,7 +137,7 @@ router.post("/register", async (req, res) => {
         [email]
       );
       const newUser = newUserQuery.rows[0];
-      console.log(newUser);
+      // console.log(newUser);
       mailservice.sendmail(
         email,
         "Thank You for Signing Up with us",

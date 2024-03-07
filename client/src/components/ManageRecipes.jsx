@@ -475,7 +475,7 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                 <div className="lg:col-span-6"></div>
                 <button
                   type="button"
-                  className="text-text font-semibold leading-6 text-primary-100 px-10 py-2 hover:bg-bg hover:text-zinc-950 bg-white cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 shadow-md font-sans text-base xs:col-span-2"
+                  className="text-text font-semibold leading-6 px-10 py-2 bg-bg hover:text-black cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 shadow-md font-sans text-base xs:col-span-2"
                   onClick={() => {
                     Navigate(-1);
                   }}
