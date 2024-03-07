@@ -132,7 +132,11 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
           >
             <Link to="/add-recipe">
               <button className="bg-primary-100 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 text-xl">
-                {isHovered ? "Add Recipe" : "+"}
+                {isHovered ? (
+                  "Add Recipe"
+                ) : (
+                  <span style={{ fontSize: "30px" }}>+</span>
+                )}
               </button>
             </Link>
           </div>

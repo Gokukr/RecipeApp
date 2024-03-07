@@ -153,7 +153,7 @@ const SearchBar = ({
       {/* Filter Icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md hover:cursor-pointer drop-shadow-xl"
+        className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md drop-shadow-2xl hover:cursor-pointer"
         viewBox="0 0 20 20"
         fill="currentColor"
         onClick={toggleSidebar}
