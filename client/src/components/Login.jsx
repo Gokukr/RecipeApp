@@ -218,7 +218,6 @@ const FormSubmit = async(e) =>
         <div className='relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
           <div className='flex flex-col justify-center p-12 md:px-14 md:py-8'>
             <span className='mb-1 text-5xl text-center font-bold'>Login</span>
-            <span className='font-light text-gray-400 mb-5 text-center'>Welcome Back! Please enter your details</span>
             <form className="mt-4 space-y-4" onSubmit={onSubmitForm}>
             <div className='py-0.5'>
               <span className='mb-2 text-md'>Email</span>
