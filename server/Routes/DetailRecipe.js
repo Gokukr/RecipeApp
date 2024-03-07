@@ -360,14 +360,14 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
   const newRating = req.params.newRating;
-  pool.query(`update ratings set rating = $3 where recipe_id = $1 and user_id = $2`, [recipeId, userId, newRating],
-    (error, result) => {
-      if (error) {
-        res.status(500).json({ error: "cannot update ratings" });
-      } else {
-        res.json("Success");
-      }
-    });
+  pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId], 
+  (error, result) => {
+    if(error) {
+      res.status(500).json({error : "cannot update ratings"});
+    } else {
+      res.json("Success");
+    }
+  });
 });
 
 
