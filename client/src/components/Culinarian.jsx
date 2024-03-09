@@ -79,7 +79,7 @@ function Culinarian() {
                     <div class="data-set-cul flex flex-col justify-between  list list-disc ">
                     {Array.isArray(culinaryData) ? (
                       culinaryData.map((data, index) => (
-                        <li key={index} class="flex justify-between bg-gray-100 shadow-4xl shadow-primary-100 place-items-start px-4 gap-4 py-4 mb-2 border-2 border-solid border-black rounded-xl">
+                        <li key={index} class="flex justify-between bg-gray-100 shadow-4xl shadow-primary-100 place-items-start px-4 gap-4 py-4 mb-5 border-2 border-solid border-black rounded-xl">
                             {/* <span>{index+1}.</span> */}
                             <div class="flex flex-col gap-3 justify-between items-center  w-[25%] ">
                                 <span> Name</span>
