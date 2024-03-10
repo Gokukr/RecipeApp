@@ -11,7 +11,8 @@ const saveRecipe = require("../middleware/savedRecipe");
 const randomize = require("randomatic");
 const {
   getRecipeRequests,
-  handleRecipeRequest,
+  handleAcceptRequest,
+  handleRejectRequest,
 } = require("../middleware/recipeRequest");
 
 router.get("/recipe-requests", async (req, res) => {
@@ -26,10 +27,16 @@ router.get("/recipe-requests", async (req, res) => {
 
 router.post("/recipe-response/:recipeId", async (req, res) => {
   try {
-    const result = handleRecipeRequest(
-      req.params.recipeId,
-      req.body.isAccept ? "Accepted" : "Rejected"
-    );
+    let result;
+    if (req.body.isAccept) {
+      result = handleAcceptRequest(req.params.recipeId, "Accepted");
+    } else {
+      result = handleRejectRequest(
+        req.params.recipeId,
+        "Rejected",
+        req.body.message
+      );
+    }
     res.send(result);
   } catch (error) {
     console.log("Error handling recipe request", error);
@@ -80,11 +87,10 @@ router.post("/:userId/save-a-recipe", async (req, res) => {
   res.send(result);
 });
 
-
-function isStrongPassword(password) {
-  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return strongRegex.test(password);
-}
+// function isStrongPassword(password) {
+//   const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+//   return strongRegex.test(password);
+// }
 
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
@@ -103,9 +109,9 @@ router.post("/register", async (req, res) => {
       password,
       repassword,
     } = req.body;
-    if (!isStrongPassword(password)) {
-      return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
-  }
+    //   if (!isStrongPassword(password)) {
+    //     return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
+    // }
     if (repassword === password) {
       const registration = await db.query(
         "SELECT * FROM user_data WHERE email = $1",
@@ -140,8 +146,8 @@ router.post("/register", async (req, res) => {
       // console.log(newUser);
       mailservice.sendmail(
         email,
-        "Thank You for Signing Up with us",
-        `${newUser.first_name} Thank you for your registration with us`
+        "Cook Buddy",
+        `${newUser.first_name} Thank you for registration with us`
       );
       const status = true;
       res.json({ status });
@@ -291,6 +297,13 @@ router.post("/OtpVerify", async (req, res) => {
 router.post("/ChangePassword", async (req, res) => {
   try {
     const { email, Password, repassword } = req.body;
+    if (!isStrongPassword(Password)) {
+      return res
+        .status(401)
+        .send(
+          "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
+        );
+    }
     if (Password == repassword) {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
@@ -299,7 +312,7 @@ router.post("/ChangePassword", async (req, res) => {
         "update user_data set password = $1 where email = $2",
         [bcryptPassword, email]
       );
-      mailservice.sendmail(email, "Password as been Updated", `Thank You`);
+      mailservice.sendmail(email, "Password as been changed", `Thank You`);
       const verify = true;
       res.json({ verify });
     } else {

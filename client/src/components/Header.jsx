@@ -7,10 +7,10 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Header = memo(() => {
   const navigator = useNavigate();
   const userId = Cookies.get("user_id");
+  const userRole = Cookies.get("role");
 
   function handleProfileclick() {
     navigator("/user");
@@ -21,19 +21,24 @@ const Header = memo(() => {
   function handleHomeClick() {
     navigator("/dashboard");
   }
+  function handleReqClick() {
+    navigator("/culinarianReq");
+  }
+
+  // function handleRecipeReqClick() {
+  //   navigator("/recipe-request");
+  // }
   const notify = (message) => toast(message);
-  function handleLogout()
-  {   
+  function handleLogout() {
     Cookies.remove("token");
     Cookies.remove("role");
-    Cookies.remove("user_id"); 
-      notify("Logout Successfully")
-      setTimeout(()=>
-      {
-        navigator("/")
-      },500)   
+    Cookies.remove("user_id");
+    notify("Logout Successfully");
+    setTimeout(() => {
+      navigator("/");
+    }, 500);
   }
-  
+
   return (
     <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
       <div className="self-stretch w-[269px] flex flex-row items-start justify-end gap-[9px]">
@@ -59,8 +64,28 @@ const Header = memo(() => {
               Home
             </b>
           </div>
+          {(userRole === "Admin" || userRole === "admin") && (
+            <>
+              <div
+                onClick={handleReqClick}
+                className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
+              >
+                <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
+                  Requests
+                </b>
+              </div>
+              {/* <div
+                onClick={handleRecipeReqClick}
+                className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
+              >
+                <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
+                  Recipe Requests
+                </b>
+              </div> */}
+            </>
+          )}
           <div
-            onClick={handleFavClick} 
+            onClick={handleFavClick}
             className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
             <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
@@ -69,16 +94,15 @@ const Header = memo(() => {
           </div>
 
           <div
-            onClick={handleLogout} 
+            onClick={handleLogout}
             className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
             <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
-             Logout
+              Logout
             </b>
-            <ToastContainer className="text-lgi"/>
+            <ToastContainer className="text-lgi" />
           </div>
 
-          
           {/* <b className="h-[30px] flex-1 relative tracking-[0.03em] inline-block whitespace-nowrap z-[1]">
             About us
           </b> */}

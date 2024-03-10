@@ -10,14 +10,15 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Card from "./Card";
 import Container from "./Container";
+import { ClipLoader } from "react-spinners";
 
 function SavedRecipe() {
   const { userId } = useParams();
   const [recipes, setRecipes] = useState([]);
   const [showAll, setShowAll] = useState(true);
-  const [searchText, setSearchText] =useState("");  
+  const [searchText, setSearchText] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [filter, setFilter] =useState({
+  const [filter, setFilter] = useState({
     rating: [],
     mealType: [],
     course: [],
@@ -26,27 +27,26 @@ function SavedRecipe() {
   const [verify, setVerify] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     const token = Cookies.get("token");
     axios
-    .get("http://localhost:1200/api/is-verify", {
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-      setVerify(response.data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-      navigate("/");
-    });
-  },[])
+      .get("http://localhost:1200/api/is-verify", {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setVerify(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+        navigate("/");
+      });
+  }, []);
 
   const getRecipes = async (id, text, filter) => {
     try {
@@ -73,11 +73,11 @@ function SavedRecipe() {
   ];
 
   useEffect(() => {
-    if(verify) {
+    if (verify) {
       getRecipes(userId, searchText, filter);
-      debugger;
+      // debugger;
     }
-  }, [userId, searchText, filter,verify]);
+  }, [userId, searchText, filter, verify]);
 
   return (
     <div className="App">
@@ -90,31 +90,36 @@ function SavedRecipe() {
             placeholder={"Search favorite recipes..."}
           />
         </div>
-        {isLoading? 
-          <p>Loading</p>:showAll ? (
-            cuisines
-              .filter((cuisine) =>
-                recipes.some((item) => item.cuisine === cuisine.filter)
-              )
-              .map((cuisine) => (
-                <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
-                  {recipes
-                    .filter((item) => item.cuisine === cuisine.filter)
-                    .map((item, index) => (
-                      <Card
-                        key={index}
-                        foodName={item.name}
-                        imageUrl={item.image}
-                        timeTaken={`${item.total_time} mins`}
-                        id={item.id}
-                        rating={`${item.rating}⭐`}
-                      />
-                    ))}
-                </Container>
-              ))
-          ) :
-          <RecipeContainer data={recipes} 
-        />}
+        {isLoading ? (
+          <div className="loader-container">
+            <div className="loader">
+              <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
+            </div>
+          </div>
+        ) : showAll ? (
+          cuisines
+            .filter((cuisine) =>
+              recipes.some((item) => item.cuisine === cuisine.filter)
+            )
+            .map((cuisine) => (
+              <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
+                {recipes
+                  .filter((item) => item.cuisine === cuisine.filter)
+                  .map((item, index) => (
+                    <Card
+                      key={index}
+                      foodName={item.name}
+                      imageUrl={item.image}
+                      timeTaken={`${item.total_time} mins`}
+                      id={item.id}
+                      rating={`${item.rating}⭐`}
+                    />
+                  ))}
+              </Container>
+            ))
+        ) : (
+          <RecipeContainer data={recipes} />
+        )}
       </div>
       <Footer />
     </div>

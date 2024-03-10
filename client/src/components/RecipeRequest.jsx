@@ -5,16 +5,21 @@ import { getRecipeRequests, recipeResponse } from "../api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import PopupDialog from "./PopupDialog";
 
 const RecipeRequest = () => {
   const [recReq, setRecReq] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
   const notify = (message) => toast(message);
+  const [isPopupOpen, setPopup] = React.useState(false);
+  const [rejectId, setrejectId] = React.useState();
+
   const getRequests = async () => {
     setLoading(true);
     try {
       const result = await getRecipeRequests();
-      console.log(result);
+      // console.log(result);
       setLoading(false);
       setRecReq(result.data.rows);
     } catch (error) {
@@ -23,16 +28,20 @@ const RecipeRequest = () => {
     }
   };
 
-  const handleRecipeAction = async (isAccept, id) => {
+  const handleRecipeAction = async (isAccept, id, message = "") => {
     try {
-      const result = await recipeResponse(isAccept, id);
+      const res = await recipeResponse(isAccept, id, message);
+      console.log(res);
       notify(`Recipe ${isAccept ? "Accepted" : "Rejected"}`);
-      console.log(result);
+      // console.log(result);
+      setrejectId("");
       getRequests();
     } catch (error) {
       console.error(error);
     }
   };
+
+  const closePopup = () => setPopup(false);
 
   React.useEffect(() => {
     getRequests();
@@ -46,8 +55,11 @@ const RecipeRequest = () => {
     cuisine,
     totalTime,
   }) => (
-    <div className="flex items-center w-8/12 bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100">
-      <div className="h-40 p-4 rounded-lg overflow-hidden flex flex-col mr-4 rounded-md">
+    <div
+      className="flex items-center max-w-8/12 bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100"
+      key={id}
+    >
+      <div className="h-40 p-4 rounded-lg overflow-hidden flex flex-col mr-4 rounded-md min-w-48">
         <Link className="no-underline" to={`/user/detail-recipe/${id}`}>
           <img
             src={image}
@@ -57,7 +69,7 @@ const RecipeRequest = () => {
         </Link>
       </div>
       <div className="p-10 text-xl font-semibold text-gray-900">{culName}</div>
-      <div className="p-10">
+      <div className="p-10 max-w-56 min-w-52">
         <div className="p-2 text-xl font-bold text-gray-900">
           Recipe Name: {recipeName}
         </div>
@@ -75,7 +87,10 @@ const RecipeRequest = () => {
         </button>
         <button
           className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
-          onClick={() => handleRecipeAction(false, id)}
+          onClick={() => {
+            setPopup(true);
+            setrejectId(id);
+          }}
         >
           Reject
         </button>
@@ -84,25 +99,42 @@ const RecipeRequest = () => {
   );
 
   return (
-    <div>
+    <div className="App">
       <Header />
       <div className="items-center justify-center p-16">
         <ToastContainer />
         {isLoading ? (
-          <p>Loading</p>
-        ) : (
-          recReq.map((req) => (
-            <div className="py-4 flex items-center justify-center">
-              <RequestCard
-                id={req.id}
-                image={req.image}
-                culName={req.first_name}
-                recipeName={req.name}
-                cuisine={req.cuisine}
-                totalTime={req.total_time}
-              />
+          <div className="loader-container">
+            <div className="loader">
+              <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
             </div>
-          ))
+          </div>
+        ) : (
+          <>
+            <PopupDialog
+              isOpen={isPopupOpen}
+              onClose={closePopup}
+              onConfirm={(message) => {
+                closePopup();
+                handleRecipeAction(false, rejectId, message);
+              }}
+            />
+            {recReq.map((req, index) => (
+              <div
+                className="py-4 flex items-center justify-center"
+                key={index}
+              >
+                <RequestCard
+                  id={req.id}
+                  image={req.image}
+                  culName={req.first_name}
+                  recipeName={req.name}
+                  cuisine={req.cuisine}
+                  totalTime={req.total_time}
+                />
+              </div>
+            ))}
+          </>
         )}
         {/* <RequestCard
           image="https://static.toiimg.com/photo/52467119.cms"

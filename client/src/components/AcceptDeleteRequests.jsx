@@ -69,7 +69,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId }) => {
                 </button>
                 <button
                   type="button"
-                  className="mt-3 w-full rounded-md bg-gray-700 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                  className="mt-3 w-full rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                   onClick={cancel}
                 >
                   Cancel
@@ -97,7 +97,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId }) => {
                 </button>
                 <button
                   type="button"
-                  className="mt-3 w-full rounded-md bg-gray-700 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                  className="mt-3 w-full rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                   onClick={cancel}
                 >
                   Cancel

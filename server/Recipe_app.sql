@@ -36,7 +36,8 @@ Create table Recipe(
 	Status varchar(10),
 	Course_type varchar(20),
 	total_ratings numeric(5), 
-	User_id UUID references user_data(id)		
+	User_id UUID references user_data(id)		,
+	Comment text DEFAULT NULL
 );
 select * from Recipe;
 
@@ -84,7 +85,7 @@ create table Culinarian(
 	RequestDate timestamp default CURRENT_DATE,
 	Specialization varchar(255)[],
 	Bio text, 
-	Status varchar(255) DEFAULT Pending
+	Status varchar(255) DEFAULT Pending,
 );
 
 select * from Culinarian;
