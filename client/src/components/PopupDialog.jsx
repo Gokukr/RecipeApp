@@ -3,8 +3,8 @@ import React from "react";
 const PopupDialog = ({ isOpen, onClose, onConfirm }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target[0].value);
-    onConfirm();
+    // console.log();
+    onConfirm(event.target[0].value);
   };
 
   if (!isOpen) return null; // Render nothing if the popup is not open

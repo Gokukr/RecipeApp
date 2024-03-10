@@ -28,9 +28,10 @@ const RecipeRequest = () => {
     }
   };
 
-  const handleRecipeAction = async (isAccept, id) => {
+  const handleRecipeAction = async (isAccept, id, message = "") => {
     try {
-      await recipeResponse(isAccept, id);
+      const res = await recipeResponse(isAccept, id, message);
+      console.log(res);
       notify(`Recipe ${isAccept ? "Accepted" : "Rejected"}`);
       // console.log(result);
       setrejectId("");
@@ -39,10 +40,6 @@ const RecipeRequest = () => {
       console.error(error);
     }
   };
-
-  // const handleRecipeReject = (id) => {
-  //   setPopup(true);
-  // };
 
   const closePopup = () => setPopup(false);
 
@@ -59,7 +56,7 @@ const RecipeRequest = () => {
     totalTime,
   }) => (
     <div
-      className="flex items-center w-8/12 bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100 font-sans"
+      className="flex items-center max-w-8/12 bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100"
       key={id}
     >
       <div className="h-40 p-4 rounded-lg overflow-hidden flex flex-col mr-4 rounded-md min-w-48">
@@ -71,11 +68,11 @@ const RecipeRequest = () => {
           />
         </Link>
       </div>
-      <div className="p-10 text-xl font-semibold text-gray-900 min-w-28 text-center">
-        {culName}
-      </div>
-      <div className="p-10">
-        <div className="p-2 text-xl font-bold text-gray-900">{recipeName}</div>
+      <div className="p-10 text-xl font-semibold text-gray-900">{culName}</div>
+      <div className="p-10 max-w-56 min-w-52">
+        <div className="p-2 text-xl font-bold text-gray-900">
+          Recipe Name: {recipeName}
+        </div>
         <div className="p-2 text-base text-gray-700">Cuisine: {cuisine}</div>
         <div className="p-2 text-base text-gray-700">
           Total Time: {totalTime} minutes
@@ -117,9 +114,9 @@ const RecipeRequest = () => {
             <PopupDialog
               isOpen={isPopupOpen}
               onClose={closePopup}
-              onConfirm={() => {
+              onConfirm={(message) => {
                 closePopup();
-                handleRecipeAction(false, rejectId);
+                handleRecipeAction(false, rejectId, message);
               }}
             />
             {recReq.map((req, index) => (
@@ -130,7 +127,7 @@ const RecipeRequest = () => {
                 <RequestCard
                   id={req.id}
                   image={req.image}
-                  culName={`${req.first_name} ${req.last_name}`}
+                  culName={req.first_name}
                   recipeName={req.name}
                   cuisine={req.cuisine}
                   totalTime={req.total_time}
