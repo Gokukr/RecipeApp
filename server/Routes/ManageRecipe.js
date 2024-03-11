@@ -18,6 +18,7 @@ router.post("/add", async (req, res) => {
       cuisineType,
       mealType,
       courseType,
+      status,
       userId,
     } = req.body;
     const newRecipe = await pool.query(
@@ -38,7 +39,7 @@ router.post("/add", async (req, res) => {
         difficultyLevel,
         cuisineType,
         mealType,
-        "Accepted",
+        status,
         courseType,
         userId,
       ]
@@ -126,27 +127,19 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// Get all ingredients
-router.get("/ingredients", async (req, res) => {
+// Update recipe Status
+router.put("/status", async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT * FROM Ingredients ORDER BY ingredient_name ASC"
+    const { recipeStatus, recipeId } = req.body;
+    console.log(recipeStatus, recipeId)
+    const updatedStatus = await pool.query(
+      `UPDATE recipe SET status = $1 WHERE id = $2 RETURNING *; `,
+      [
+        recipeStatus,
+        recipeId,
+      ]
     );
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching ingredients:", error);
-  }
-});
-
-// Add new ingredient
-router.post("/ingredients/add", async (req, res) => {
-  try {
-    const { ingredientName, category } = req.body;
-    const newIngredient = await pool.query(
-      `INSERT INTO ingredients (Ingredient_name, Category) VALUES ($1, $2) RETURNING *`,
-      [ingredientName, category]
-    );
-    res.json(newIngredient.rows[0]);
+    res.json(updatedStatus.rows[0]);
   } catch (err) {
     console.error(err.message);
   }

@@ -25,22 +25,31 @@ export default function Dashboard() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    const type = Cookies.get("role");
     const id = Cookies.get("user_id");
-    setRole(type);
-    setTtoken(token);
     Setuser_id(id);
-
-    axios
-      .get("http://localhost:1200/api/is-verify", {
+   const body = {
+    id
+  }
+  axios.post("http://localhost:1200/api/Checkrole", body)
+  .then(response => {
+    console.log(response.data); 
+    Cookies.set("role", response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error); 
+  });
+  const token = Cookies.get("token");
+  const type = Cookies.get("role");
+  setRole(type);
+  setTtoken(token);
+  axios.get("http://localhost:1200/api/is-verify", {
         headers: {
           "Content-Type": "application/json",
           token: token,
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.role);
         setVerify(response.data);
         setLoading(false);
       })

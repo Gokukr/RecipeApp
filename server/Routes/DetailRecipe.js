@@ -41,7 +41,7 @@ router.get("/user-profile/:id", (req, res) => {
 router.get("/User-role/:recipeId/:userId", (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
-  pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
+  pool.query(`select user_data.role as role from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
     (error, result) => {
       if (error) {
         res.status(500).json({ error: "Internal Error" });
@@ -246,6 +246,8 @@ router.get("/recipes/:id", (req, res) => {
             cookingTime: recipe.cooking_time,
             servings: recipe.servings,
             courseType: recipe.course_type,
+            status: recipe.status,
+            chef: recipe.user_id,
           });
         }
       }
@@ -312,9 +314,40 @@ router.get("/culinarian/:status", (req, res) => {
     });
 });
 
-router.put("/culinarian/:status/:id", (req, res) => {
+router.put("/culinarian/:status/:id", async(req, res) => {
   const stat = req.params.status;
   const id = req.params.id;
+  if (stat === 'Accepted') {
+    try {
+        const queryResult = await pool.query("SELECT user_id FROM culinarian WHERE id = $1", [id]);
+        
+        if (queryResult.rows.length > 0) {
+            const user_id = queryResult.rows[0].user_id;
+            await pool.query("UPDATE user_data SET role = 'Culirian' WHERE id = $1", [user_id]);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+if (stat === 'Rejected') {
+  try {
+      const queryResult = await pool.query("SELECT * FROM culinarian WHERE id = $1", [id]);
+      
+      if (queryResult.rows.length > 0) {
+          const user_id = queryResult.rows[0].user_id;
+          if (user_id) {
+              await pool.query("UPDATE user_data SET role = 'user' WHERE id = $1", [user_id]);
+              console.log("Role updated to 'user' for user with user ID:", user_id);
+          } else {
+              console.log("Role is not 'Culirian' for user with user ID:", user_id);
+          }
+      } else {
+          console.log("No records found in the culinarian table for the given ID:", id);
+      }
+  } catch (error) {
+      console.error("Error:", error);
+  }
+}
   pool.query(`update culinarian set status = $1 where id = $2`, [stat, id],
     (error, result) => {
       if (error) {
@@ -360,6 +393,7 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
   const newRating = req.params.newRating;
+<<<<<<< HEAD
   pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId], 
   (error, result) => {
     if(error) {
@@ -368,6 +402,16 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
       res.json("Success");
     }
   });
+=======
+  pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId],
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "cannot update ratings" });
+      } else {
+        res.json("Success");
+      }
+    });
+>>>>>>> 3072eab4000be427442b281bda7ad52b9bca3762
 });
 
 

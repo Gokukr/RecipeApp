@@ -68,23 +68,27 @@ function UserProfile(userId) {
             },
             body: JSON.stringify(body),
           });
-
+      
           const data = await response.json();
-          if (data.exists) {
+          console.log(data.status);
+          if (data.status === 'Pending') {
             setBgColor("bg-red-500");
             setRequest("Request is pending");
             setDisabled(true);
+          } else if (data.status === 'Accepted') {
+            setBgColor("bg")
+            setRequest("Culinarian");
+            Cookies.set("role", "Culirian");
+            setDisabled(true);
           } else {
-            setRequest("Request to Culirian");
+            setRequest("Request to Culinarian");
             setDisabled(false);
           }
         } catch (error) {
           console.error("Error:", error.message);
-          // Handle errors if needed
         }
       };
-
-      fetchData();
+      fetchData();      
     } else {
       setType("admin");
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
 import Notification from "./Notification";
+import data from "../data.json";
 
 const SearchBar = ({
   onSearch,
@@ -18,7 +19,9 @@ const SearchBar = ({
   });
   const [culinarians, setCulinarians] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [notificationVisible, setNotificationVisible] = useState(false);
+  const [notificationVisible, setNotificationVisible] = useState(false); // Step 1: State for notification visibility
+  const { courseTypes, cuisineTypes, ratings } = data;
+
   useEffect(() => {
     fetchCulinarians();
   }, []);
@@ -202,111 +205,26 @@ const SearchBar = ({
 
               <ul className="list-none pl-0  ">
                 <div className="grid grid-cols-2 mt-[-2rem] items-start">
-                  <div
-                    className={`flex items-center mb-3 w-1/3 pl-4 ${
-                      selectedFilters.cuisine.includes("Italian")
-                        ? "bg-gray-200 "
-                        : ""
-                    }`}
-                    onClick={() => handleFilterChange("cuisine", "Italian")}
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "0.5rem",
-                      padding: "0.5rem 0.5rem",
-                    }}
-                  >
-                    <label className="text-base cursor-pointer hover:cursor-pointer">
-                      Italian
-                    </label>
-                  </div>
-
-                  <div
-                    className={`flex items-center mb-3 w-1/2 pl-4 ${
-                      selectedFilters.cuisine.includes("Mexican")
-                        ? "bg-gray-200 "
-                        : ""
-                    }`}
-                    onClick={() => handleFilterChange("cuisine", "Mexican")}
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "0.5rem",
-                      padding: "0.5rem 0.5rem",
-                    }}
-                  >
-                    <label className="text-base pl-1 cursor-pointer hover:cursor-pointer">
-                      Mexican
-                    </label>
-                  </div>
-                  <div
-                    className={`flex items-center mb-3 w-3/5 pl-4 ${
-                      selectedFilters.cuisine.includes("Continental")
-                        ? "bg-gray-200 "
-                        : ""
-                    }`}
-                    onClick={() => handleFilterChange("cuisine", "Continental")}
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "0.5rem",
-                      padding: "0.5rem 0.5rem",
-                    }}
-                  >
-                    <label className="text-base  flex items-center justify-center cursor-pointer hover:cursor-pointer">
-                      Continental
-                    </label>
-                  </div>
-                  <div
-                    className={`flex items-center mb-3 w-1/2 pl-4 ${
-                      selectedFilters.cuisine.includes("Chinese")
-                        ? "bg-gray-200 "
-                        : ""
-                    }`}
-                    onClick={() => handleFilterChange("cuisine", "Chinese")}
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "0.5rem",
-                      padding: "0.5rem 0.5rem",
-                    }}
-                  >
-                    <label className="text-base flex items-center justify-center cursor-pointer hover:cursor-pointer">
-                      Chinese
-                    </label>
-                  </div>
-                  <div
-                    className={`flex items-center mb-3 w-1/2 pl-4 ${
-                      selectedFilters.cuisine.includes("Japanese")
-                        ? "bg-gray-200 "
-                        : ""
-                    }`}
-                    onClick={() => handleFilterChange("cuisine", "Japanese")}
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "0.5rem",
-                      padding: "0.5rem 0.5rem",
-                    }}
-                  >
-                    <label className="text-base cursor-pointer hover:cursor-pointer">
-                      Japanese
-                    </label>
-                  </div>
-                  <div
-                    className={`flex items-center mb-3 w-3/4 pl-4 ${
-                      selectedFilters.cuisine.includes("North Indian")
-                        ? "bg-gray-200 "
-                        : ""
-                    }`}
-                    onClick={() =>
-                      handleFilterChange("cuisine", "North Indian")
-                    }
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "0.5rem",
-                      padding: "0.5rem 0.5rem",
-                    }}
-                  >
-                    <label className="text-base cursor-pointer hover:cursor-pointer">
-                      North Indian
-                    </label>
-                  </div>
+                  {cuisineTypes.map((cuisine) => (
+                    <div
+                      key={cuisine}
+                      className={`flex items-center mb-3 w-5/6 pl-4 ${
+                        selectedFilters.cuisine.includes(cuisine)
+                          ? "bg-gray-200"
+                          : ""
+                      }`}
+                      onClick={() => handleFilterChange("cuisine", cuisine)}
+                      style={{
+                        cursor: "pointer",
+                        borderRadius: "0.5rem",
+                        padding: "0.5rem 0.5rem",
+                      }}
+                    >
+                      <label className="text-base cursor-pointer hover:cursor-pointer">
+                        {cuisine}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </ul>
             </div>
@@ -315,9 +233,9 @@ const SearchBar = ({
               <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-1rem] flex flex-start">
                 Meal Type
               </h6>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2">
                 <div
-                  className={`flex items-center mb-3 w-1/4 pl-4 ${
+                  className={`flex items-center mb-3 w-5/6 pl-4 ${
                     selectedFilters.mealType.includes("Veg")
                       ? "bg-gray-200 "
                       : ""
@@ -334,7 +252,7 @@ const SearchBar = ({
                   </label>
                 </div>
                 <div
-                  className={`flex items-center mb-3 w-1/2 pl-4 ${
+                  className={`flex items-center mb-3 w-5/6 pl-4 ${
                     selectedFilters.mealType.includes("Non-veg")
                       ? "bg-gray-200 "
                       : ""
@@ -358,152 +276,56 @@ const SearchBar = ({
                 Course Type
               </h6>
               <div className="grid grid-cols-2">
-                <div
-                  className={`flex items-center mb-3 w-2/5 pl-4 ${
-                    selectedFilters.courseType.includes("Starter")
-                      ? "bg-gray-200 "
-                      : ""
-                  }`}
-                  onClick={() => handleFilterChange("courseType", "Starter")}
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 0.5rem",
-                  }}
-                >
-                  <label className="text-base cursor-pointer hover:cursor-pointer">
-                    Starter
-                  </label>
-                </div>
-                <div
-                  className={`flex items-center mb-3 w-4/5 pl-4 ${
-                    selectedFilters.courseType.includes("Main course")
-                      ? "bg-gray-200 "
-                      : ""
-                  }`}
-                  onClick={() =>
-                    handleFilterChange("courseType", "Main course")
-                  }
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 0.5rem",
-                  }}
-                >
-                  <label className="text-base pl-2 cursor-pointer hover:cursor-pointer">
-                    Main course
-                  </label>
-                </div>
-                <div
-                  className={`flex items-center mb-3 w-1/2 pl-4 ${
-                    selectedFilters.courseType.includes("Dinner")
-                      ? "bg-gray-200 "
-                      : ""
-                  }`}
-                  onClick={() => handleFilterChange("courseType", "Dinner")}
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 0.5rem",
-                  }}
-                >
-                  <label className="text-base pl-2 cursor-pointer hover:cursor-pointer">
-                    Dinner
-                  </label>
-                </div>
-                <div
-                  className={`flex items-center mb-3 w-1/2 pl-4 ${
-                    selectedFilters.courseType.includes("Snack")
-                      ? "bg-gray-200 "
-                      : ""
-                  }`}
-                  onClick={() => handleFilterChange("courseType", "Snack")}
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 0.5rem",
-                  }}
-                >
-                  <label className="text-base pl-2 cursor-pointer hover:cursor-pointer">
-                    Snack
-                  </label>
-                </div>
-                <div
-                  className={`flex items-center mb-3 w-1/2 pl-4 ${
-                    selectedFilters.courseType.includes("Breakfast")
-                      ? "bg-gray-200 "
-                      : ""
-                  }`}
-                  onClick={() => handleFilterChange("courseType", "Breakfast")}
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 0.5rem",
-                  }}
-                >
-                  <label className="text-base cursor-pointer hover:cursor-pointer">
-                    Breakfast
-                  </label>
-                </div>
-                <div
-                  className={`flex items-center mb-3 w-1/2 pl-4 ${
-                    selectedFilters.courseType.includes("Dessert")
-                      ? "bg-gray-200 "
-                      : ""
-                  }`}
-                  onClick={() => handleFilterChange("courseType", "Dessert")}
-                  style={{
-                    cursor: "pointer",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 0.5rem",
-                  }}
-                >
-                  <label className="text-base pl-1 cursor-pointer hover:cursor-pointer">
-                    Dessert
-                  </label>
-                </div>
+                {courseTypes.map((courseType) => (
+                  <div
+                    key={courseType}
+                    className={`flex items-center mb-3 w-5/6 pl-4 ${
+                      selectedFilters.courseType.includes(courseType)
+                        ? "bg-gray-200 "
+                        : ""
+                    }`}
+                    onClick={() => handleFilterChange("courseType", courseType)}
+                    style={{
+                      cursor: "pointer",
+                      borderRadius: "0.5rem",
+                      padding: "0.5rem 0.5rem",
+                    }}
+                  >
+                    <label className="text-base cursor-pointer hover:cursor-pointer">
+                      {courseType}
+                    </label>
+                  </div>
+                ))}
               </div>
               {/* Rating */}
               <div className="mt-4">
                 <h6 className="text-sm font-semibold mb-1 ml-0 mr-12 flex flex-start mt-[1rem]">
                   Rating
                 </h6>
-                <div className="flex items-center  ml-9 mb-3">
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="rating1"
-                    name="rating1"
-                    value="4"
-                    checked={selectedFilters.courseType.includes("4")}
-                    onChange={() => handleFilterChange("rating", "4")}
-                  />
-                  <label
-                    htmlFor="rating1"
-                    className="text-base cursor-pointer hover:cursor-pointer"
+                {ratings.map((rating) => (
+                  <div
+                    className="flex items-center ml-9 mb-3"
+                    key={rating.value}
                   >
-                    4⭐ & above
-                  </label>
-                </div>
-                <div className="flex items-center ml-9">
-                  <input
-                    className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border  rounded-lg"
-                    type="checkbox"
-                    id="rating2"
-                    name="rating2"
-                    value="3"
-                    checked={selectedFilters.courseType.includes("3")}
-                    onChange={() => handleFilterChange("rating", "3")}
-                  />
-                  <label
-                    htmlFor="rating2"
-                    className="text-base cursor-pointer hover:cursor-pointer"
-                  >
-                    3⭐ & above
-                  </label>
-                </div>
-
-                {/* Add more rating options */}
+                    <input
+                      className="text-sm mt-[0.5rem] h-3 w-3 ml-1 mr-2 border rounded-lg checked:bg-primary-100 checked:border-transparent"
+                      type="checkbox"
+                      id={`rating${rating.value}`}
+                      name={`rating${rating.value}`}
+                      value={rating.value}
+                      checked={selectedFilters.rating.includes(rating.value)}
+                      onChange={() =>
+                        handleFilterChange("rating", rating.value)
+                      }
+                    />
+                    <label
+                      htmlFor={`rating${rating.value}`}
+                      className="text-base cursor-pointer hover:cursor-pointer"
+                    >
+                      {rating.label}
+                    </label>
+                  </div>
+                ))}
               </div>
               <div className="mt-4">
                 <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
@@ -529,16 +351,16 @@ const SearchBar = ({
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">
               <button
-                className="px-4 py-2 mr-2 bg-gray-300 text-black rounded-md hover:bg-primary-600 focus:outline-none"
-                onClick={handleApplyFilters}
-              >
-                Apply
-              </button>
-              <button
-                className="px-4 py-2 bg-primary-300 text-white rounded-md hover:bg-gray-500 focus:outline-none"
+                className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-400 focus:outline-none"
                 onClick={handleCancelFilters}
               >
                 Cancel
+              </button>
+              <button
+                className="px-4 py-2 mr-2 bg-primary-100 text-white rounded-md hover:bg-primary-600 focus:outline-none"
+                onClick={handleApplyFilters}
+              >
+                Apply
               </button>
             </div>
           </div>

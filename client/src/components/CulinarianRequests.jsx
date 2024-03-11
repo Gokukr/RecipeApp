@@ -38,7 +38,7 @@ export default function CulinarianRequests({show}) {
             const data = await response.json();
             if (data) {
                 console.log(data);
-                notify("Request as sent to  Admin")
+                notify("Request as sent to Admin")
                 setTimeout(()=>{
                   window.location.reload();
                 },1000)

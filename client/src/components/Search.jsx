@@ -123,7 +123,7 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans relative">
-      {role === "admin" && (
+      {role !== "user" && (
         <div className="absolute top-0 right-0 mr-4 mt-4">
           <div
             style={{ position: "fixed", bottom: "50px", right: "20px" }}

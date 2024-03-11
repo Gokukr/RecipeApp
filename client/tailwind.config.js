@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}",
-  'node_modules/preline/dist/*.js',
-],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "node_modules/preline/dist/*.js"],
   theme: {
     extend: {
       colors: {
@@ -15,8 +13,10 @@ module.exports = {
         black: "#000",
         white: "#fff",
         bg: "#F9F9F9",
-        textbg: "#EAEBEC",
+        textbg: "#f2f2f3",
         secondary: "#ff9900",
+        presgreen: "#16978E",
+        presred: "#FF095C",
       },
       spacing: {},
       fontFamily: {
@@ -28,9 +28,9 @@ module.exports = {
         "3xs": "10px",
       },
       boxShadow: {
-        '3xl': '-2px 3px 13px 4px rgba(189, 204, 219, 0.5)',
-        '4xl': '0 1px 8px 1px rgba(189, 204, 219, 0.5)'
-      }
+        "3xl": "-2px 3px 13px 4px rgba(189, 204, 219, 0.5)",
+        "4xl": "0 1px 8px 1px rgba(189, 204, 219, 0.5)",
+      },
     },
     fontSize: {
       "5xl": "24px",
@@ -50,7 +50,5 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  plugins: [require("@tailwindcss/forms"),
-  require('preline/plugin'),],
-  
+  plugins: [require("@tailwindcss/forms"), require("preline/plugin")],
 };
