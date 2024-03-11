@@ -126,8 +126,8 @@ export default function Login() {
       if (parseRes.token) {
         const token = parseRes.token;
         Cookies.set("token", token, { expires: 1 });
-        Cookies.set("role", parseRes.role, { expires: 1 });
         Cookies.set("user_id", parseRes.user_id);
+        Cookies.set("role",parseRes.role);
         notify("Successfully Logged in");
         setTimeout(() => {
           Navigate("/dashboard");

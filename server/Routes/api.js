@@ -87,10 +87,10 @@ router.post("/:userId/save-a-recipe", async (req, res) => {
   res.send(result);
 });
 
-// function isStrongPassword(password) {
-//   const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-//   return strongRegex.test(password);
-// }
+function isStrongPassword(password) {
+  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return strongRegex.test(password);
+}
 
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
@@ -109,9 +109,9 @@ router.post("/register", async (req, res) => {
       password,
       repassword,
     } = req.body;
-    //   if (!isStrongPassword(password)) {
-    //     return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
-    // }
+      if (!isStrongPassword(password)) {
+        return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
+    }
     if (repassword === password) {
       const registration = await db.query(
         "SELECT * FROM user_data WHERE email = $1",
@@ -354,17 +354,25 @@ router.get("/is-verify", Authorize, async (req, res) => {
   }
 });
 
+router.post("/Checkrole",async(req,res)=>
+{ try{
+  const {id} = req.body;
+  const check = await db.query("select * from user_data where id = $1",[id])
+  if (check.rows.length > 0) {
+   res.json(check.rows[0].role);
+  }
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+})
+
+
+
 router.post("/culinarian", async (req, res) => {
   try {
     let { user_id, selectedSpecializations, bio } = req.body;
     const currentDate = new Date();
-    const existingUser = await db.query(
-      "SELECT * FROM culinarian WHERE user_id = $1",
-      [user_id]
-    );
-    if (existingUser.rows.length > 0) {
-      return res.json(false);
-    }
     await db.query(
       "INSERT INTO culinarian(user_id,requestdate,specialization,bio) values ($1,$2,$3,$4)",
       [user_id, currentDate, selectedSpecializations, bio]
@@ -385,16 +393,20 @@ router.post("/check-user", async (req, res) => {
     if (!user_id) {
       return res.status(400).json({ error: "User ID is required" });
     }
-
+    const accepted = await db.query(
+      "SELECT * FROM culinarian WHERE user_id = $1 AND status = 'Accepted'",
+      [user_id]
+    );
+    if (accepted.rows.length > 0) {
+      return res.json(accepted.rows[0]);
+    }
     const queryResult = await db.query(
-      "SELECT * FROM culinarian WHERE user_id = $1",
+      "SELECT * FROM culinarian WHERE user_id = $1 and status = 'Pending'",
       [user_id]
     );
     if (queryResult.rows.length > 0) {
-      res.json({ exists: true });
-    } else {
-      res.json({ exists: false });
-    }
+      res.json(queryResult.rows[0]);
+    } 
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Internal server error" });
