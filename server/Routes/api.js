@@ -336,6 +336,22 @@ router.get("/culinarianAccepted", async (req, res) => {
   }
 });
 
+router.put("/toAcceptCul", async (req, res) => {
+  try {
+    const query = `
+            UPDATE user_data
+            SET role = 'culinarian'
+            FROM culinarian
+            WHERE user_data.user_id = culinarian.user_id
+            AND culinarian.status = 'Accepted';
+        `;
+    db.query(query);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
 router.get("/getdata", async (req, res) => {
   try {
     const { rows } = await db.query("SELECT * FROM recipe");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Search from "./Search";
@@ -20,6 +20,9 @@ export default function Dashboard() {
   const Navigate = useNavigate();
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Reference to the container element
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -54,6 +57,13 @@ export default function Dashboard() {
     }
   }, [verify]);
 
+  useEffect(() => {
+    if (!isLoading && containerRef.current) {
+      // Scroll to the container element when it mounts
+      containerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isLoading]);
+
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:1200/api/getdata");
@@ -75,7 +85,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container overflow-y-auto">
       <Header />
       <Search allRecipe={setShowAll} setData={setData} />
 
@@ -91,20 +101,22 @@ export default function Dashboard() {
             data.some((item) => item.cuisine === cuisine.filter)
           )
           .map((cuisine) => (
-            <Container key={cuisine.name} cuisineName={`${cuisine.name}`}>
-              {data
-                .filter((item) => item.cuisine === cuisine.filter)
-                .map((item, index) => (
-                  <Card
-                    key={index}
-                    foodName={item.name}
-                    imageUrl={item.image}
-                    timeTaken={`${item.total_time} mins`}
-                    id={item.id}
-                    rating={`${item.rating}⭐`}
-                  />
-                ))}
-            </Container>
+            <div key={cuisine.name} ref={containerRef}>
+              <Container cuisineName={`${cuisine.name}`}>
+                {data
+                  .filter((item) => item.cuisine === cuisine.filter)
+                  .map((item, index) => (
+                    <Card
+                      key={index}
+                      foodName={item.name}
+                      imageUrl={item.image}
+                      timeTaken={`${item.total_time} mins`}
+                      id={item.id}
+                      rating={`${item.rating}⭐`}
+                    />
+                  ))}
+              </Container>
+            </div>
           ))
       ) : (
         <RecipeContainer data={data} />
