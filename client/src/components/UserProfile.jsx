@@ -188,7 +188,7 @@ function UserProfile(userId) {
       <Header />
 
       <ToastContainer />
-      <div className="user-profile-out bg-white">
+      <div className="user-profile-out bg-white font-open-sans">
         {user ? (
           <div>
             <div className="profile-card bg-primary-100 flex justify-between px-10 pt-16 pb-52">
