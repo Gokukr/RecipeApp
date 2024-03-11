@@ -40,7 +40,7 @@ function Culinarian() {
     <>
       <Header />
       {/* <ToastContainer /> */}
-      <div class="cul-body bg-white w-full h-screen overflow-hidden">
+      <div class="cul-body bg-white w-full h-screen overflow-hidden font-open-sans">
         <div class="cul-outer-container mx-40 bg-white">
           <div>
             <h2 class="text-[30px]">Culinarian's Requests</h2>
