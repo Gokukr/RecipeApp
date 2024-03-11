@@ -116,7 +116,7 @@ function Detailrecipe() {
                 <p class="pl-5 text-[20px] font-bold tracking-wide">
                   Rating: {recipe.rating}
                 </p>
-                <div className="pl-5 tracking-wide pt-1">
+                <div className="tracking-wide pt-1">
                   {Array.from(
                     { length: Math.floor(recipe.rating) },
                     (_, index) => (
