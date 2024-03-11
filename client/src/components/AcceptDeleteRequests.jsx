@@ -41,7 +41,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId }) => {
     <ToastContainer/>
     <div>
       <div
-        className="relative z-10"
+        className="relative z-10 font-open-sans"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
