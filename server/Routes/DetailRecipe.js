@@ -298,7 +298,7 @@ router.put("/edit-profile", async (req, res) => {
 router.get("/culinarian/:status", (req, res) => {
   const stat = req.params.status;
   pool.query(`
-  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `, [stat],
+  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id culinarian.user_id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `, [stat],
     (error, result) => {
       // console.log(result);
       if (error) {
@@ -393,7 +393,6 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
   const newRating = req.params.newRating;
-<<<<<<< HEAD
   pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId], 
   (error, result) => {
     if(error) {
@@ -402,16 +401,22 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
       res.json("Success");
     }
   });
-=======
-  pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId],
+});
+
+router.post(`/notification/:id/:message/:reason`, (req, res) => {
+  const userId = req.params.id;
+  const message = req.params.message;
+  const reason = req.params.reason;
+  pool.query(`insert into notification(user_id, message, reason) values ($1, $2, $3)`, [userId, message, reason],
     (error, result) => {
+      console.log(result);
       if (error) {
-        res.status(500).json({ error: "cannot update ratings" });
+        res.status(500).json({ error: "cannot update notification",
+                                ress: result });
       } else {
         res.json("Success");
       }
     });
->>>>>>> 3072eab4000be427442b281bda7ad52b9bca3762
 });
 
 
