@@ -142,6 +142,7 @@ function Culinarian() {
                                 handleClose={handleCloseModal}
                                 status={updatedStatus}
                                 culId={data.id}
+                                user_id = {data.user_id}
                               />
                             )}
                           </div>
@@ -162,6 +163,7 @@ function Culinarian() {
                                 handleClose={handleCloseModal}
                                 status={updatedStatus}
                                 culId={data.id}
+                                user_id = {data.user_id}
                               />
                             )}
                           </div>
