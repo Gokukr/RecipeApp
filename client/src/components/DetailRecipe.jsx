@@ -107,7 +107,7 @@ function Detailrecipe() {
   return (
     <div class="bg-white">
       <Header />
-      <div class=" mx-40 mb-10 sm:my-10 px-4 pb-6 rounded-xl bg-white">
+      <div class=" mx-40 mb-10 sm:my-10 px-4 pb-6 rounded-xl bg-white font-open-sans">
         {recipe ? (
           <div>
             <h2 class="font-bold ml-3 text-[60px]">{recipe.title}</h2>
