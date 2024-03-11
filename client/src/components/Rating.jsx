@@ -85,7 +85,7 @@ function Rating({ recipeId }) {
   return (
     <>
     <ToastContainer />
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center font-open-sans">
       <h3 className="mt-8 mb-2 text-lg font-bold ">Rate this Recipe</h3>
       <div className="flex space-x-1">
         {ratingStars.map((rating) => (
