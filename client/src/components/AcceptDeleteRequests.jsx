@@ -2,9 +2,15 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useState } from "react";
 
-const AcceptDeleteReq = ({ handleClose, status, culId }) => {
+const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
   const notify = (message) => toast(message);
+  const [feedbackText, setFeedbackText] = useState('');
+
+  const handleChange = (event) => {
+      setFeedbackText(event.target.value.trim());
+  };
 
   function handleAccept(){
     const updatedStatus = 'Accepted';
@@ -30,11 +36,21 @@ const AcceptDeleteReq = ({ handleClose, status, culId }) => {
         notify(error);
         handleClose();
     });
+
+    const message = "Request rejected";
+    axios.post(`http://localhost:1200/api/detail/notification/${user_id}/${message}/${feedbackText}`)
+    .then(() => {
+        handleClose();
+    })
+    .catch((error) => {
+        handleClose();
+    });
   }
 
   const cancel = () => {
     handleClose();
   };
+
   
   return (
     <>
@@ -87,6 +103,23 @@ const AcceptDeleteReq = ({ handleClose, status, culId }) => {
                   </div>
                 </div>
               </div>
+              <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className=" my-3 text-center sm:mt-0 sm:text-left flex flex-col w-full">
+                  <label className="mb-3 font-bold text-xl">Rejection Message</label>
+                  <textarea
+                    id="admin-feedback"
+                    name="adminFeedback"
+                    rows="4"
+                    className="resize-none rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-textbg"
+                    // value="Give Feedback"
+                    onChange={handleChange}
+                    required
+                  />
+                  </div>
+                </div>
+              </div>
+              
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse justify-center items-center sm:px-6">
                 <button
                   type="button"
