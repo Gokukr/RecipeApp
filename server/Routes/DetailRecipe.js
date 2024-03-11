@@ -41,7 +41,7 @@ router.get("/user-profile/:id", (req, res) => {
 router.get("/User-role/:recipeId/:userId", (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
-  pool.query(`select user_data.role as role  from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
+  pool.query(`select user_data.role as role from user_data join recipe on recipe.user_id = user_data.id where recipe.id = $1 and user_id = $2`, [recipeId, userId],
     (error, result) => {
       if (error) {
         res.status(500).json({ error: "Internal Error" });
@@ -246,6 +246,8 @@ router.get("/recipes/:id", (req, res) => {
             cookingTime: recipe.cooking_time,
             servings: recipe.servings,
             courseType: recipe.course_type,
+            status: recipe.status,
+            chef: recipe.user_id,
           });
         }
       }
@@ -360,14 +362,14 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
   const recipeId = req.params.recipeId;
   const userId = req.params.userId;
   const newRating = req.params.newRating;
-  pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId], 
-  (error, result) => {
-    if(error) {
-      res.status(500).json({error : "cannot update ratings"});
-    } else {
-      res.json("Success");
-    }
-  });
+  pool.query(`update ratings set rating = $1 where recipe_id = $2 and user_id = $3`, [newRating, recipeId, userId],
+    (error, result) => {
+      if (error) {
+        res.status(500).json({ error: "cannot update ratings" });
+      } else {
+        res.json("Success");
+      }
+    });
 });
 
 

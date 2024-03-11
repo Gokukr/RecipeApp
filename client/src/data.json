@@ -21,6 +21,12 @@
     "Chinese",
     "Italian",
     "Japanese",
-    "North Indian"
+    "North Indian",
+    "Mexican"
+  ],
+  "ratings": [
+    { "value": "4", "label": "4⭐ & above" },
+    { "value": "3", "label": "3⭐ & above" },
+    { "value": "2", "label": "2⭐ & above" }
   ]
 }

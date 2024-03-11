@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}",
-  'node_modules/preline/dist/*.js',
-],
+    'node_modules/preline/dist/*.js',
+  ],
   theme: {
     extend: {
       colors: {
@@ -15,8 +15,10 @@ module.exports = {
         black: "#000",
         white: "#fff",
         bg: "#F9F9F9",
-        textbg: "#EAEBEC",
+        textbg: "#f2f2f3",
         secondary: "#ff9900",
+        presgreen: "#16978E",
+        presred: "#FF095C",
       },
       spacing: {},
       fontFamily: {
@@ -52,5 +54,5 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/forms"),
   require('preline/plugin'),],
-  
+
 };
