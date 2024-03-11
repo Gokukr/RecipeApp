@@ -79,7 +79,7 @@ const RecipeRequest = () => {
       </div>
       <div className="ml-auto flex">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
           onClick={() => handleRecipeAction(true, id)}
         >
           Accept

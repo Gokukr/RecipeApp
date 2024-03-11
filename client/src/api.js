@@ -11,7 +11,7 @@ const base = "http://localhost:1200/api";
 export async function searchSavedRecipe(
   userId,
   text,
-  { rating, mealType, course, cuisine }
+  { rating, mealType, course, cuisine, culinarian }
 ) {
   const url = `${base}/${userId}/saved-recipes`;
   // debugger;
@@ -22,6 +22,7 @@ export async function searchSavedRecipe(
       mealType: mealType,
       course: course,
       cuisine: cuisine,
+      culinarian: culinarian,
     },
   });
   return res;

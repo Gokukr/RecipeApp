@@ -5,7 +5,7 @@ import Search from "./Search";
 import Card from "./Card";
 import Container from "./Container";
 import Cookies from "js-cookie";
-import RecipeContainer from "./RecipeContainer";
+// import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [Ttoken, setTtoken] = useState("");
   const [role, setRole] = useState("");
   const [user_id, Setuser_id] = useState("");
-  const [showAll, setShowAll] = useState(true);
+  // const [showAll, setShowAll] = useState(true);
   const Navigate = useNavigate();
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -26,22 +26,24 @@ export default function Dashboard() {
   useEffect(() => {
     const id = Cookies.get("user_id");
     Setuser_id(id);
-   const body = {
-    id
-  }
-  axios.post("http://localhost:1200/api/Checkrole", body)
-  .then(response => {
-    // console.log(response.data); 
-    Cookies.set("role", response.data);
-  })
-  .catch(error => {
-    console.error('Error:', error); 
-  });
-  const token = Cookies.get("token");
-  const type = Cookies.get("role");
-  setRole(type);
-  setTtoken(token);
-  axios.get("http://localhost:1200/api/is-verify", {
+    const body = {
+      id,
+    };
+    axios
+      .post("http://localhost:1200/api/Checkrole", body)
+      .then((response) => {
+        // console.log(response.data);
+        Cookies.set("role", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    const token = Cookies.get("token");
+    const type = Cookies.get("role");
+    setRole(type);
+    setTtoken(token);
+    axios
+      .get("http://localhost:1200/api/is-verify", {
         headers: {
           "Content-Type": "application/json",
           token: token,
@@ -96,7 +98,7 @@ export default function Dashboard() {
       <div>
         <div className="dashboard-container overflow-y-auto">
           <Header />
-          <Search allRecipe={setShowAll} setData={setData} />
+          <Search setData={setData} />
 
           {isLoading ? (
             <div className="loader-container">
@@ -107,13 +109,21 @@ export default function Dashboard() {
           ) : (
             cuisines
               .filter((cuisine) =>
-                data.some((item) => item.cuisine === cuisine.filter && item.status === "Accepted")
+                data.some(
+                  (item) =>
+                    item.cuisine === cuisine.filter &&
+                    item.status === "Accepted"
+                )
               )
               .map((cuisine) => (
                 <div key={cuisine.name} ref={containerRef}>
                   <Container cuisineName={`${cuisine.name}`}>
                     {data
-                      .filter((item) => item.cuisine === cuisine.filter && item.status === "Accepted")
+                      .filter(
+                        (item) =>
+                          item.cuisine === cuisine.filter &&
+                          item.status === "Accepted"
+                      )
                       .map((item, index) => (
                         <Card
                           key={index}

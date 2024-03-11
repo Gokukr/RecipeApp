@@ -23,14 +23,11 @@ const Header = memo(() => {
   }
   function handleReqClick() {
     navigator("/culinarianReq");
-}
+  }
 
   function handleRecipeReqClick() {
     navigator("/recipe-request");
   }
-  function handleMyRecipes(){
-    navigator("#")
-   }
   const notify = (message) => toast(message);
   function handleLogout() {
     Cookies.remove("token");
@@ -79,7 +76,6 @@ const Header = memo(() => {
                 value="hi"
                 className="h-10 text-5xl pt-1 text-center font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-sans border-none outline-none"
                 onChange={(e) => {
-                  
                   if (e.target.value === "culRequest") {
                     handleReqClick();
                   } else {
@@ -116,13 +112,6 @@ const Header = memo(() => {
               </select>
             </div>
           )}
-          { (userRole === 'admin' || userRole ==='Admin' || userRole ==='culinarian') && (
-         <div onClick={handleMyRecipes} className="flex flex-col items-start justify-start">
-          <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6" style={{ whiteSpace: 'nowrap' }}>
-          My Recipes
-         </b>
-         </div>
-          )}
           <div
             onClick={handleFavClick}
             className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
@@ -131,7 +120,6 @@ const Header = memo(() => {
               Favorites
             </b>
           </div>
-       
 
           <div
             onClick={handleLogout}

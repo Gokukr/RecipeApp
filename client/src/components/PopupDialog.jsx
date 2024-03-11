@@ -27,13 +27,13 @@ const PopupDialog = ({ isOpen, onClose, onConfirm }) => {
             Rejection Message
           </label>
           <div className="mt-2">
-            <input
-              type="text"
-              name="rejectionMessage"
+            <textarea
               id="rejectionMessage"
-              className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
-              placeholder="Enter rejection message"
+              name="rejectionMessage"
               autoComplete="off"
+              rows={3}
+              className=" rounded-md block w-full box-border max-w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset bg-textbg focus:ring-primary-100 sm:text-sm sm:leading-6 placeholder:font-sans"
+              placeholder="Enter message"
               required
             />
           </div>
