@@ -144,7 +144,6 @@ const RecipeRequest = () => {
           totalTime={2}
         /> */}
       </div>
-      <Footer />
     </div>
   );
 };

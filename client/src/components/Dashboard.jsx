@@ -85,44 +85,45 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="dashboard-container overflow-y-auto">
-      <Header />
-      <Search allRecipe={setShowAll} setData={setData} />
+    <>
+      <div>
+        <div className="dashboard-container overflow-y-auto">
+          <Header />
+          <Search allRecipe={setShowAll} setData={setData} />
 
-      {isLoading ? (
-        <div className="loader-container">
-          <div className="loader">
-            <ClipLoader size={50} color={"#123abc"} loading={loading} />
-          </div>
-        </div>
-      ) : showAll ? (
-        cuisines
-          .filter((cuisine) =>
-            data.some((item) => item.cuisine === cuisine.filter)
-          )
-          .map((cuisine) => (
-            <div key={cuisine.name} ref={containerRef}>
-              <Container cuisineName={`${cuisine.name}`}>
-                {data
-                  .filter((item) => item.cuisine === cuisine.filter)
-                  .map((item, index) => (
-                    <Card
-                      key={index}
-                      foodName={item.name}
-                      imageUrl={item.image}
-                      timeTaken={`${item.total_time} mins`}
-                      id={item.id}
-                      rating={`${item.rating}⭐`}
-                    />
-                  ))}
-              </Container>
+          {isLoading ? (
+            <div className="loader-container">
+              <div className="loader">
+                <ClipLoader size={50} color={"#123abc"} loading={loading} />
+              </div>
             </div>
-          ))
-      ) : (
-        <RecipeContainer data={data} />
-      )}
-
-      <Footer />
-    </div>
+          ) : (
+            cuisines
+              .filter((cuisine) =>
+                data.some((item) => item.cuisine === cuisine.filter)
+              )
+              .map((cuisine) => (
+                <div key={cuisine.name} ref={containerRef}>
+                  <Container cuisineName={`${cuisine.name}`}>
+                    {data
+                      .filter((item) => item.cuisine === cuisine.filter)
+                      .map((item, index) => (
+                        <Card
+                          key={index}
+                          foodName={item.name}
+                          imageUrl={item.image}
+                          timeTaken={`${item.total_time} mins`}
+                          id={item.id}
+                          rating={`${item.rating}⭐`}
+                        />
+                      ))}
+                  </Container>
+                </div>
+              ))
+          )}
+        </div>
+      </div>
+      <div style={{ height: "100px" }}></div>
+    </>
   );
 }

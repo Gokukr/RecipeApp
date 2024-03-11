@@ -439,7 +439,6 @@ function UserProfile(userId) {
         ) : (
           <p>Loading...</p>
         )}
-        <Footer />
       </div>
     </>
   );

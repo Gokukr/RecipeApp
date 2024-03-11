@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
-import RecipeContainer from "./RecipeContainer";
+// import RecipeContainer from "./RecipeContainer";
 import { searchSavedRecipe } from "../api";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
@@ -96,7 +96,7 @@ function SavedRecipe() {
               <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
             </div>
           </div>
-        ) : showAll ? (
+        ) : (
           cuisines
             .filter((cuisine) =>
               recipes.some((item) => item.cuisine === cuisine.filter)
@@ -117,11 +117,8 @@ function SavedRecipe() {
                   ))}
               </Container>
             ))
-        ) : (
-          <RecipeContainer data={recipes} />
         )}
       </div>
-      <Footer />
     </div>
   );
 }

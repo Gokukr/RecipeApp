@@ -4,7 +4,7 @@ import SignUp from "./components/SignUp.jsx";
 import "./index.css";
 import "./styles.css";
 import Dashboard from "./components/Dashboard.jsx";
-// import Footer from "./components/Footer.jsx";
+import Footer from "./components/Footer.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProfile from "./components/UserProfile.jsx";
 import DetailRecipe from "./components/DetailRecipe.jsx";
@@ -34,6 +34,7 @@ function App() {
           <Route path="/culinarianReq" element={<Culinarian />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

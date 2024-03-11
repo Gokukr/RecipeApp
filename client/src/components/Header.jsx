@@ -25,9 +25,9 @@ const Header = memo(() => {
     navigator("/culinarianReq");
   }
 
-  // function handleRecipeReqClick() {
-  //   navigator("/recipe-request");
-  // }
+  function handleRecipeReqClick() {
+    navigator("/recipe-request");
+  }
   const notify = (message) => toast(message);
   function handleLogout() {
     Cookies.remove("token");
@@ -65,24 +65,49 @@ const Header = memo(() => {
             </b>
           </div>
           {(userRole === "Admin" || userRole === "admin") && (
-            <>
-              <div
-                onClick={handleReqClick}
-                className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
+            <div className="shrink-0 z-[1] mr-6 ml-6 pr-6">
+              <select
+                style={{
+                  appearance: "none",
+                }}
+                value="hi"
+                className="h-10 text-5xl pt-1 text-center font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-sans border-none outline-none"
+                onChange={(e) => {
+                  if (e.target.value === "culRequest") {
+                    handleReqClick();
+                  } else {
+                    handleRecipeReqClick();
+                  }
+                }}
               >
-                <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
-                  Requests
-                </b>
-              </div>
-              {/* <div
-                onClick={handleRecipeReqClick}
-                className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
-              >
-                <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
-                  Recipe Requests
-                </b>
-              </div> */}
-            </>
+                <option
+                  // selected
+                  hidden
+                  value="requests"
+                  className="text-6xl h-[40px] relative "
+                >
+                  <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+                    Requests
+                  </b>
+                </option>
+                <option
+                  className="text-4xl h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6"
+                  value="culRequest"
+                >
+                  <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+                    Culinarian Requests
+                  </b>
+                </option>
+                <option
+                  className="text-4xl h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6"
+                  value="recRequest"
+                >
+                  <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+                    Recipe Requests
+                  </b>
+                </option>
+              </select>
+            </div>
           )}
           <div
             onClick={handleFavClick}
