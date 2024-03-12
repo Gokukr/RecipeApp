@@ -145,4 +145,37 @@ router.put("/status", async (req, res) => {
   }
 });
 
+// Get My recipes
+router.get("/myrecipes/:id", async (req, res) => {
+  let searchText = req.query.searchText;
+  let filter = {
+    mealType: req.query.mealType,
+    course: req.query.course,
+    cuisine: req.query.cuisine,
+    rating: req.query.rating,
+  };
+  const arrayReduce = (arr) => {
+    let out = "";
+    arr.map(item => out += `,'${item}'`);
+    return out.substring(1);
+  }
+  const filterQryConstruct = (filter, value) => ` and ${filter} IN (${value ? arrayReduce(value) : ""})`;
+  let qry = `select r.id, r.image, r.total_time, r.name, r.cuisine, u.first_name, r.status
+    from recipe r JOIN user_data u ON u.id = r.user_id
+    where u.id = '${req.params.id}'
+      and r.name ilike '%${searchText}%' 
+      ${filter.rating ? `and r.rating >= ${filter.rating[0]}` : ""} 
+      ${filter.mealType ? (Array.isArray(filter.mealType) ? filterQryConstruct("r.meal_type", filter.mealType) : `and r.meal_type = '${filter.mealType}'`) : ""} 
+      ${filter.course ? (Array.isArray(filter.course) ? filterQryConstruct("r.course_type", filter.course) : `and r.course_type = '${filter.course}'`) : ""} 
+      ${filter.cuisine ? (Array.isArray(filter.cuisine) ? filterQryConstruct("r.cuisine", filter.cuisine) : `and r.cuisine = '${filter.cuisine}'`) : ""};
+      `;
+  try {
+    const allMyRecipes = await pool.query(qry);
+    res.json(allMyRecipes.rows);
+    console.log(allMyRecipes.rows)
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 module.exports = router;

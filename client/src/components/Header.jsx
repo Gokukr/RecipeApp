@@ -42,7 +42,7 @@ const Header = memo(() => {
     }, 500);
   }
   function handleMyRecipes() {
-    navigator("#");
+    navigator("/my-recipes");
   }
 
   return (
@@ -116,7 +116,7 @@ const Header = memo(() => {
               </select>
             </div>
           )}
-          { (userRole === 'admin' || userRole ==='Admin' || userRole ==='Culirian') && (
+          { (userRole === 'admin' || userRole ==='Admin' || userRole ==='culinarian') && (
          <div onClick={handleMyRecipes} className="flex flex-col items-start justify-start">
           <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6" style={{ whiteSpace: 'nowrap' }}>
           My Recipes
@@ -131,21 +131,7 @@ const Header = memo(() => {
               Favorites
             </b>
           </div>
-          {(userRole === "admin" ||
-            userRole === "Admin" ||
-            userRole === "Culirian") && (
-            <div
-              onClick={handleMyRecipes}
-              className="flex flex-col items-start justify-start"
-            >
-              <b
-                className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6"
-                style={{ whiteSpace: "nowrap" }}
-              >
-                My Recipes
-              </b>
-            </div>
-          )}
+       
 
           <div
             onClick={handleLogout}

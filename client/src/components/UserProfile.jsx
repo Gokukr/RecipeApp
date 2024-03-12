@@ -78,7 +78,7 @@ function UserProfile(userId) {
           } else if (data.status === 'Accepted') {
             setBgColor("bg")
             setRequest("Culinarian");
-            Cookies.set("role", "Culirian");
+            Cookies.set("role", "culinarian");
             setDisabled(true);
           } else {
             Cookies.set("role", "user");
