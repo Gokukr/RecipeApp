@@ -23,7 +23,7 @@ const Header = memo(() => {
   }
   function handleReqClick() {
     navigator("/culinarianReq");
-  }
+}
 
   function handleRecipeReqClick() {
     navigator("/recipe-request");
@@ -76,6 +76,7 @@ const Header = memo(() => {
                 value="hi"
                 className="h-10 text-5xl pt-1 text-center font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-sans border-none outline-none"
                 onChange={(e) => {
+                  
                   if (e.target.value === "culRequest") {
                     handleReqClick();
                   } else {

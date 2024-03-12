@@ -32,7 +32,7 @@ export default function Dashboard() {
   }
   axios.post("http://localhost:1200/api/Checkrole", body)
   .then(response => {
-    console.log(response.data); 
+    // console.log(response.data); 
     Cookies.set("role", response.data);
   })
   .catch(error => {
@@ -49,7 +49,7 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        console.log(response.role);
+        // console.log(response.role);
         setVerify(response.data);
         setLoading(false);
       })
