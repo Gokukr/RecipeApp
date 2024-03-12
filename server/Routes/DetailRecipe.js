@@ -306,7 +306,7 @@ router.get("/culinarian/:status", (req, res) => {
   const stat = req.params.status;
   pool.query(
     `
-  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `,
+  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id, culinarian.user_id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `,
     [stat],
     (error, result) => {
       // console.log(result);
@@ -432,6 +432,26 @@ router.put(`/ratings/update/:recipeId/:userId/:newRating`, (req, res) => {
     (error, result) => {
       if (error) {
         res.status(500).json({ error: "cannot update ratings" });
+      } else {
+        res.json("Success");
+      }
+    }
+  );
+});
+
+router.post(`/notification/:id/:message/:reason`, (req, res) => {
+  const userId = req.params.id;
+  const message = req.params.message;
+  const reason = req.params.reason;
+  pool.query(
+    `insert into notification(user_id, message, reason) values ($1, $2, $3)`,
+    [userId, message, reason],
+    (error, result) => {
+      console.log(result);
+      if (error) {
+        res
+          .status(500)
+          .json({ error: "cannot update notification", ress: result });
       } else {
         res.json("Success");
       }

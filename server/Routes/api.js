@@ -410,7 +410,7 @@ router.post("/check-user", async (req, res) => {
       res.json(queryResult.rows[0]);
     }
     const query = await db.query(
-      "SELECT * FROM culinarian WHERE user_id = $1 and status = 'Pending'",
+      "SELECT * FROM culinarian WHERE user_id = $1",
       [user_id]
     );
     if (query.rows.length > 0) {
@@ -418,7 +418,6 @@ router.post("/check-user", async (req, res) => {
     }
   } catch (error) {
     console.error("Error:", error.message);
-    res.status(500).json({ error: "Internal server error" });
   }
 });
 

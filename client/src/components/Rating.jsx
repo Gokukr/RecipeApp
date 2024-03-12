@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function Rating({ recipeId }) {
+  const navigate = useNavigate();
   const notify = (message) => toast(message);
   const [selectedRating, setSelectedRating] = useState(Number); // Adjust based on user's previous rating
   const [lastRating, setLastRating] = useState(Number);
@@ -13,8 +15,12 @@ function Rating({ recipeId }) {
     axios.get(`http://localhost:1200/api/detail/ratings/${recipeId}/${userId}`)
     .then((response) => {
       setLastRating(response.data.rating);
+    })
+    .catch(error => {
+      navigate("/dashboard");
+      console.error(error);
     });
-  },[recipeId,userId]);
+  },[recipeId,userId, navigate]);
   console.log(lastRating);
 
   const handleRatingChange = (newRating) => {
@@ -29,9 +35,13 @@ function Rating({ recipeId }) {
     .then((response) => {
       setRating(response.data.rating);
       setTotal(response.data.count);
+    })
+    .catch(error => {
+      navigate("/dashboard");
+      console.error(error);
     });
       
-  }, [recipeId]);
+  }, [recipeId, navigate]);
   
   const submitRating = async () => {
     if(lastRating === 0){
