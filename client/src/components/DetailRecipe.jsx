@@ -100,7 +100,7 @@ function Detailrecipe() {
             <h2 class="font-bold ml-3 text-[60px]">{recipe.title}</h2>
             <div className="rating-container flex justify-between mt-[-10px]">
             <div class="rating-container-rating-tab flex flex-row mt-0 justify-start items-center">
-            <p class="pl-5 text-[20px] font-bold tracking-wide">Rating: {recipe.rating}</p>
+            <p class="pl-5 text-[20px] font-bold tracking-wide">Rating:</p>
             <div className=" tracking-wide pt-1">
                   {Array.from(
                     { length: Math.floor(recipe.rating) },
@@ -156,6 +156,7 @@ function Detailrecipe() {
                 
 
             </div>
+              <p class="pl-2 text-[20px] font-bold tracking-wide">{recipe.rating} </p>
             </div>
             
             <button
