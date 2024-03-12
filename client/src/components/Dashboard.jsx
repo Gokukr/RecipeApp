@@ -84,7 +84,6 @@ export default function Dashboard() {
       setIsLoading(false);
     }
   };
-
   const cuisines = [
     { name: "North Indian", filter: "North Indian" },
     { name: "Continental", filter: "Continental" },
@@ -109,13 +108,13 @@ export default function Dashboard() {
           ) : (
             cuisines
               .filter((cuisine) =>
-                data.some((item) => item.cuisine === cuisine.filter)
+                data.some((item) => item.cuisine === cuisine.filter && item.status === "Accepted")
               )
               .map((cuisine) => (
                 <div key={cuisine.name} ref={containerRef}>
                   <Container cuisineName={`${cuisine.name}`}>
                     {data
-                      .filter((item) => item.cuisine === cuisine.filter)
+                      .filter((item) => item.cuisine === cuisine.filter && item.status === "Accepted")
                       .map((item, index) => (
                         <Card
                           key={index}

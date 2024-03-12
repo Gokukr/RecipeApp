@@ -20,7 +20,7 @@ export default function MyRecipes() {
   const Navigate = useNavigate();
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [selectedStatus, setSelectedStatus] = useState("Pending");
+  const [selectedStatus, setSelectedStatus] = useState("Accepted");
   function handleClick(selectedLabel) {
     setSelectedStatus(selectedLabel);
   }
@@ -37,7 +37,6 @@ export default function MyRecipes() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setVerify(response.data);
         setLoading(false);
       })
@@ -73,7 +72,6 @@ export default function MyRecipes() {
         "course",
         filter.courseType || []
       )}&${queryString("cuisine", filter.cuisine || [])}`;
-      console.log(qry);
       const response = await axios.get(qry);
       setData(response.data);
     } catch (error) {

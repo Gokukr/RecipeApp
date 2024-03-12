@@ -145,6 +145,24 @@ router.put("/status", async (req, res) => {
   }
 });
 
+// Re-submit recipe
+router.put("/status", async (req, res) => {
+  try {
+    const { recipeStatus, recipeId } = req.body;
+    console.log(recipeStatus, recipeId)
+    const updatedStatus = await pool.query(
+      `UPDATE recipe SET status = $1 WHERE id = $2 RETURNING *; `,
+      [
+        recipeStatus,
+        recipeId,
+      ]
+    );
+    res.json(updatedStatus.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 // Get My recipes
 router.get("/myrecipes/:id", async (req, res) => {
   let searchText = req.query.searchText;

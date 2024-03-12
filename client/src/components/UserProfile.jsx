@@ -17,7 +17,7 @@ function UserProfile(userId) {
   const notify = (message) => toast(message);
   const [user, setUser] = useState(null);
   userId = Cookies.get("user_id");
-  const [request, setRequest] = useState("Request to Culirian");
+  const [request, setRequest] = useState("Request to become Culinarian");
   const [disabled, setDisabled] = useState(false);
   const [type, setType] = useState("user");
   const [bgColor, setBgColor] = useState("bg-green-500");
@@ -82,7 +82,7 @@ function UserProfile(userId) {
             setDisabled(true);
           } else {
             Cookies.set("role", "user");
-            setRequest("Request to Culinarian");
+            setRequest("Request to become Culinarian");
             setDisabled(false);
           }
         } catch (error) {
