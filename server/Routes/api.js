@@ -87,17 +87,11 @@ router.post("/:userId/save-a-recipe", async (req, res) => {
   res.send(result);
 });
 
-<<<<<<< HEAD
-// function isStrongPassword(password) {
-//   const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-//   return strongRegex.test(password);
-// }
-=======
 function isStrongPassword(password) {
-  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const strongRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return strongRegex.test(password);
 }
->>>>>>> 3072eab4000be427442b281bda7ad52b9bca3762
 
 router.get("/api/data", (req, res) => {
   const data = { message: "Hello world" };
@@ -116,15 +110,13 @@ router.post("/register", async (req, res) => {
       password,
       repassword,
     } = req.body;
-<<<<<<< HEAD
-    //   if (!isStrongPassword(password)) {
-    //     return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
-    // }
-=======
-      if (!isStrongPassword(password)) {
-        return res.status(401).send("Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long");
+    if (!isStrongPassword(password)) {
+      return res
+        .status(401)
+        .send(
+          "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
+        );
     }
->>>>>>> 3072eab4000be427442b281bda7ad52b9bca3762
     if (repassword === password) {
       const registration = await db.query(
         "SELECT * FROM user_data WHERE email = $1",
@@ -340,25 +332,9 @@ router.post("/ChangePassword", async (req, res) => {
 router.get("/culinarianAccepted", async (req, res) => {
   try {
     const { rows } = await db.query(
-      `SELECT * FROM user_data WHERE role = 'culinarian'`
+      `SELECT * FROM user_data WHERE role = 'Culirian'`
     );
     res.json(rows);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "server error" });
-  }
-});
-
-router.put("/toAcceptCul", async (req, res) => {
-  try {
-    const query = `
-            UPDATE user_data
-            SET role = 'culinarian'
-            FROM culinarian
-            WHERE user_data.user_id = culinarian.user_id
-            AND culinarian.status = 'Accepted';
-        `;
-    db.query(query);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "server error" });
@@ -383,20 +359,17 @@ router.get("/is-verify", Authorize, async (req, res) => {
   }
 });
 
-router.post("/Checkrole",async(req,res)=>
-{ try{
-  const {id} = req.body;
-  const check = await db.query("select * from user_data where id = $1",[id])
-  if (check.rows.length > 0) {
-   res.json(check.rows[0].role);
-  }
-  }
-  catch (err) {
+router.post("/Checkrole", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const check = await db.query("select * from user_data where id = $1", [id]);
+    if (check.rows.length > 0) {
+      res.json(check.rows[0].role);
+    }
+  } catch (err) {
     console.log(err.message);
   }
-})
-
-
+});
 
 router.post("/culinarian", async (req, res) => {
   try {
@@ -435,7 +408,14 @@ router.post("/check-user", async (req, res) => {
     );
     if (queryResult.rows.length > 0) {
       res.json(queryResult.rows[0]);
-    } 
+    }
+    const query = await db.query(
+      "SELECT * FROM culinarian WHERE user_id = $1 and status = 'Pending'",
+      [user_id]
+    );
+    if (query.rows.length > 0) {
+      res.json(query.rows[0]);
+    }
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Internal server error" });
