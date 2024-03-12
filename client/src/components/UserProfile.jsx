@@ -81,6 +81,7 @@ function UserProfile(userId) {
             Cookies.set("role", "Culirian");
             setDisabled(true);
           } else {
+            Cookies.set("role", "user");
             setRequest("Request to Culinarian");
             setDisabled(false);
           }
