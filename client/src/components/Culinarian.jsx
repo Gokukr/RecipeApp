@@ -5,6 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import AcceptDeleteReq from './AcceptDeleteRequests.jsx';
 import { useNavigate } from 'react-router-dom';
+import nodata from "../assets/No_data.png";
 
 function Culinarian() {
   const notify = (message) => toast(message);
@@ -163,7 +164,7 @@ function Culinarian() {
 
             {(hasData === false) && 
                 <div class="no-data w-full text-black flex flex-col justify-center items-center gap-5 py-10">
-                    <img src="./assets/No_data.png" alt='no-data'></img>
+                    <img src={nodata} alt='no-data'></img>
                     <h2 class="no-data-h2 text-[30px]">Check Other Tabs</h2>
                 </div>
             }
