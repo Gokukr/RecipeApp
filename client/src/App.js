@@ -33,8 +33,8 @@ function App() {
           <Route path="/edit-recipe" element={<UpdateRecipe />} />
           <Route path="/culinarianReq" element={<Culinarian />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }

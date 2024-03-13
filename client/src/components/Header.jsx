@@ -23,14 +23,14 @@ const Header = memo(() => {
   }
   function handleReqClick() {
     navigator("/culinarianReq");
-}
+  }
 
   function handleRecipeReqClick() {
     navigator("/recipe-request");
   }
-  function handleMyRecipes(){
-    navigator("#")
-   }
+  function handleMyRecipes() {
+    navigator("#");
+  }
   const notify = (message) => toast(message);
   function handleLogout() {
     Cookies.remove("token");
@@ -46,7 +46,7 @@ const Header = memo(() => {
   }
 
   return (
-    <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
+    <header className="w-full self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border ">
       <div className="self-stretch w-[269px] flex flex-row items-start justify-end gap-[9px]">
         <div className="flex flex-col items-start justify-start pt-1.5 px-0 pb-0">
           <img
@@ -79,7 +79,6 @@ const Header = memo(() => {
                 value="hi"
                 className="h-10 text-5xl pt-1 text-center font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-sans border-none outline-none"
                 onChange={(e) => {
-                  
                   if (e.target.value === "culRequest") {
                     handleReqClick();
                   } else {
@@ -116,21 +115,6 @@ const Header = memo(() => {
               </select>
             </div>
           )}
-          { (userRole === 'admin' || userRole ==='Admin' || userRole ==='Culirian') && (
-         <div onClick={handleMyRecipes} className="flex flex-col items-start justify-start">
-          <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6" style={{ whiteSpace: 'nowrap' }}>
-          My Recipes
-         </b>
-         </div>
-          )}
-          <div
-            onClick={handleFavClick}
-            className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
-          >
-            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
-              Favorites
-            </b>
-          </div>
           {(userRole === "admin" ||
             userRole === "Admin" ||
             userRole === "Culirian") && (
@@ -146,6 +130,29 @@ const Header = memo(() => {
               </b>
             </div>
           )}
+          <div
+            onClick={handleFavClick}
+            className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
+          >
+            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+              Favorites
+            </b>
+          </div>
+          {/* {(userRole === "admin" ||
+            userRole === "Admin" ||
+            userRole === "Culirian") && (
+            // <div
+            //   onClick={handleMyRecipes}
+            //   className="flex flex-col items-start justify-start"
+            // >
+            //   <b
+            //     className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6"
+            //     style={{ whiteSpace: "nowrap" }}
+            //   >
+            //     My Recipes
+            //   </b>
+            // </div>
+          )} */}
 
           <div
             onClick={handleLogout}
