@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, "client/src/components/card")));
 app.use("/api", require("./Routes/api"));
 app.use("/api/manage", require("./Routes/ManageRecipe"));
 app.use("/api/detail", require("./Routes/DetailRecipe"));
+app.use("/notify",require("./Routes/Notification"))
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

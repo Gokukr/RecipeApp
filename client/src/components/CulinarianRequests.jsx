@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
 
 export default function CulinarianRequests({show}) {
     const notify = (message) => toast(message);
@@ -19,7 +20,6 @@ export default function CulinarianRequests({show}) {
     };
     const handleSubmit = async (e) => {
         const user_id = Cookies.get("user_id");
-        
         e.preventDefault();
         try {
             const body = {
@@ -27,7 +27,7 @@ export default function CulinarianRequests({show}) {
                 selectedSpecializations,
                 bio,
             };
-    
+          
             const response = await fetch("http://localhost:1200/api/culinarian", {
                 method: "POST",
                 headers: {
@@ -37,10 +37,30 @@ export default function CulinarianRequests({show}) {
             });
             const data = await response.json();
             if (data) {
-                console.log(data);
+                axios.get("http://localhost:1200/notify/notification")
+                .then(response=>
+                  { 
+                    console.log(response.data);
+                    const body = {
+                      user_id : response.data,
+                      reason  :bio
+                   }
+                    axios.post("http://localhost:1200/notify/notification",body)
+                    .then(response=>
+                      {
+                         console.log(response.data) 
+                      })
+                     .catch(error=>
+                      {
+                         console.log(error);
+                      })
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  })
                 notify("Request as sent to Admin")
                 setTimeout(()=>{
-                  window.location.reload();
+                  //window.location.reload();
                 },1000)
             } else {
                     notify("it is under evalution");

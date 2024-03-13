@@ -10,6 +10,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
 
   const handleChange = (event) => {
       setFeedbackText(event.target.value.trim());
+
   };
 
   function handleAccept(){
@@ -23,6 +24,14 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
         notify(error);
         handleClose();
     });
+    const body=  {
+      user_id,
+      reason:"Accepted to be a culinarian"
+     }
+   axios.post(`http://localhost:1200/notify/notification`,body)
+   .then(response => {
+    console.log('Notification created successfully:', response.data.message);  
+      })
   }
 
   function handleReject() {
@@ -36,11 +45,15 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
         notify(error);
         handleClose();
     });
-
-    const message = "Request rejected";
-    axios.post(`http://localhost:1200/api/detail/notification/${user_id}/${message}/${feedbackText}`)
-    .then(() => {
-        handleClose();
+    const reason = feedbackText;
+    const body=  {
+       user_id,
+       reason,
+    }
+    axios.post(`http://localhost:1200/notify/notification`,body)
+    .then(response => {
+      console.log('Notification created successfully:', response.data.message);  
+      handleClose();
     })
     .catch((error) => {
         handleClose();
