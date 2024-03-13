@@ -41,6 +41,9 @@ const Header = memo(() => {
       navigator("/");
     }, 500);
   }
+  function handleMyRecipes() {
+    navigator("/my-recipes");
+  }
 
   return (
     <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
@@ -113,7 +116,7 @@ const Header = memo(() => {
               </select>
             </div>
           )}
-          { (userRole === 'admin' || userRole ==='Admin' || userRole ==='Culirian') && (
+          { (userRole === 'admin' || userRole ==='Admin' || userRole ==='culinarian') && (
          <div onClick={handleMyRecipes} className="flex flex-col items-start justify-start">
           <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6" style={{ whiteSpace: 'nowrap' }}>
           My Recipes
@@ -128,6 +131,7 @@ const Header = memo(() => {
               Favorites
             </b>
           </div>
+       
 
           <div
             onClick={handleLogout}

@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
 import Notification from "./Notification";
 import data from "../data.json";
+import { useLocation } from "react-router-dom";
 
 const SearchBar = ({
   onSearch,
   allRecipe,
   placeholder = "What are you looking to cook today...",
 }) => {
+  const location = useLocation();
+  const pageRoute = location.pathname;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -166,17 +170,21 @@ const SearchBar = ({
           clipRule="evenodd"
         />
       </svg>
-      <div
-        className="h-8 w-8 ml-6 mt-2 flex items-center justify-center text-white bg-primary-300 rounded-md hover:cursor-pointer"
-        style={{ fontSize: "0.8rem" }}
-        onClick={toggleNotification}
-      >
-        <FaBell />
-      </div>
-      {notificationVisible && (
-        <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
-          <Notification />
-        </div>
+      {pageRoute === "/dashboard" && (
+        <>
+          <div
+            className="h-8 w-8 ml-6 mt-2 flex items-center justify-center text-white bg-primary-300 rounded-md hover:cursor-pointer"
+            style={{ fontSize: "0.8rem" }}
+            onClick={toggleNotification}
+          >
+            <FaBell />
+          </div>
+          {notificationVisible && (
+            <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
+              <Notification />
+            </div>
+          )}
+        </>
       )}
       {sidebarVisible && (
         <div
@@ -327,27 +335,32 @@ const SearchBar = ({
                   </div>
                 ))}
               </div>
-              <div className="mt-4">
-                <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
-                  Culinarian
-                </h6>
-                {loading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <select
-                    value={selectedFilters.culinarian}
-                    onChange={handleCulinarianChange}
-                    className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
-                  >
-                    <option value="">Select culinarian</option>
-                    {culinarians.map((culinarian) => (
-                      <option key={culinarian.id} value={culinarian.first_name}>
-                        {culinarian.first_name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </div>
+              {pageRoute !== "/my-recipes" && (
+                <div className="mt-4">
+                  <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[1rem]">
+                    Culinarian
+                  </h6>
+                  {loading ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <select
+                      value={selectedFilters.culinarian}
+                      onChange={handleCulinarianChange}
+                      className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
+                    >
+                      <option value="">Select culinarian</option>
+                      {culinarians.map((culinarian) => (
+                        <option
+                          key={culinarian.id}
+                          value={culinarian.first_name}
+                        >
+                          {culinarian.first_name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              )}
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">
               <button

@@ -38,7 +38,7 @@ const AddRecipe = () => {
   const addRecipe = async (recipe) => {
     const role = Cookies.get("role");
     let status = "Pending";
-    if (role === "admin") status = "Accepoted";
+    if (role === "admin") status = "Accepted";
     if (verify) {
       const newRecipe = { ...recipe, userId, status };
       try {
@@ -47,7 +47,8 @@ const AddRecipe = () => {
           newRecipe
         );
         console.log(newRecipe);
-        notify("Recipe added successfully!");
+        if (role === "admin") notify("Recipe added successfully!");
+        else notify("Request sent to add recipe");
         setTimeout(() => {
           Navigate("/dashboard");
         }, 2000);
