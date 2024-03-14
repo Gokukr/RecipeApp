@@ -77,7 +77,7 @@ const Header = memo(() => {
                   appearance: "none",
                 }}
                 value="hi"
-                className="h-10 text-5xl pt-1 text-center font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-sans border-none outline-none"
+                className="h-10 text-5xl pt-1 font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-open-sans border-none outline-none"
                 onChange={(e) => {
                   if (e.target.value === "culRequest") {
                     handleReqClick();
@@ -90,7 +90,7 @@ const Header = memo(() => {
                   // selected
                   hidden
                   value="requests"
-                  className="text-6xl h-[40px] relative "
+                  className="text-6xl h-[40px] relative"
                 >
                   <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
                     Requests

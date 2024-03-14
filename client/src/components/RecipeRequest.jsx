@@ -55,10 +55,10 @@ const RecipeRequest = () => {
     totalTime,
   }) => (
     <div
-      className="flex items-center max-w-8/12 bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100"
+      className="flex h-48 lg:w-3/4 items-center bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100 gap-10 md:w-5/6 sm:w-11/12"
       key={id}
     >
-      <div className="h-40 p-4 rounded-lg overflow-hidden flex flex-col mr-4 rounded-md min-w-48">
+      <div className="h-40 w-48 p-4 rounded-lg rounded-md">
         <Link className="no-underline" to={`/user/detail-recipe/${id}`}>
           <img
             src={image}
@@ -67,23 +67,17 @@ const RecipeRequest = () => {
           />
         </Link>
       </div>
-      <div className="p-10 text-xl font-semibold text-gray-900">{culName}</div>
-      <div className="p-10 max-w-56 min-w-52">
-        <div className="p-2 text-xl font-bold text-gray-900">
+      <div className="w-1/6 text-xl font-semibold text-gray-900">{culName}</div>
+      <div className="w-3/6 flex flex-col gap-3 ">
+        <p className="text-xl font-bold text-gray-900 line-clamp-2">
           Recipe Name: {recipeName}
-        </div>
-        <div className="p-2 text-base text-gray-700">Cuisine: {cuisine}</div>
-        <div className="p-2 text-base text-gray-700">
+        </p>
+        <div className="text-base text-gray-700">Cuisine: {cuisine}</div>
+        <div className="text-base text-gray-700">
           Total Time: {totalTime} minutes
         </div>
       </div>
-      <div className="ml-auto flex">
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
-          onClick={() => handleRecipeAction(true, id)}
-        >
-          Accept
-        </button>
+      <div className="w-2/6 lg:flex lg:flex-row sm:flex-col md:flex-col justify-center items-center">
         <button
           className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
           onClick={() => {
@@ -92,6 +86,12 @@ const RecipeRequest = () => {
           }}
         >
           Reject
+        </button>
+        <button
+          className="bg-primary-100 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+          onClick={() => handleRecipeAction(true, id)}
+        >
+          Accept
         </button>
       </div>
     </div>
@@ -118,6 +118,11 @@ const RecipeRequest = () => {
                 handleRecipeAction(false, rejectId, message);
               }}
             />
+            <div class="mx-40">
+              <div>
+                <h2 class="text-[30px] px-10">Recipe Requests</h2>
+              </div>
+            </div>
             {recReq.map((req, index) => (
               <div
                 className="py-4 flex items-center justify-center"
@@ -135,13 +140,6 @@ const RecipeRequest = () => {
             ))}
           </>
         )}
-        {/* <RequestCard
-          image="https://static.toiimg.com/photo/52467119.cms"
-          culName="Kishore"
-          recipeName="Noodles"
-          cuisine="Chinese"
-          totalTime={2}
-        /> */}
       </div>
     </div>
   );

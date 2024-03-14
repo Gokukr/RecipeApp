@@ -67,12 +67,12 @@ export default function Dashboard() {
     }
   }, [verify]);
 
-  useEffect(() => {
-    if (!isLoading && containerRef.current) {
-      // Scroll to the container element when it mounts
-      containerRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading && containerRef.current) {
+  //     // Scroll to the container element when it mounts
+  //     containerRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [isLoading]);
 
   const fetchData = async () => {
     try {

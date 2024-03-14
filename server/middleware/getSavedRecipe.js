@@ -6,16 +6,18 @@ async function getSavedRecipes(userId, searchText = "", filter) {
     arr.map((item) => (out += `,'${item}'`));
     return out.substring(1);
   };
-  let culId = [];
+  let culId;
   if (filter.culinarian) {
-    const t = `select id from user_data where first_name IN (${
-      Array.isArray(filter.culinarian)
-        ? arrayReduce(filter.culinarian)
-        : `'${filter.culinarian}'`
-    })`;
-    const temp = await pool.query(t);
+    // const t = ;
+    const temp = await pool.query(
+      `select id from user_data where lower(first_name) IN (${
+        Array.isArray(filter.culinarian)
+          ? arrayReduce(filter.culinarian)
+          : `'${filter.culinarian}'`
+      })`
+    );
     culId = temp.rows.map((row) => row.id);
-    console.log(temp);
+    console.log(culId);
   }
 
   const filterQryConstruct = (filter, value) =>
@@ -26,7 +28,7 @@ async function getSavedRecipes(userId, searchText = "", filter) {
       where f.user_id = '${userId}'
         and r.name ilike '%${searchText}%' 
         ${filter.rating ? ratingQry("rating", filter.rating) : ""} 
-        ${culId.length !== 0 ? ` and r.user_id IN (${arrayReduce(culId)})` : ""}
+        ${filter.culinarian ? ` and r.user_id IN (${arrayReduce(culId)})` : ""}
         ${
           filter.mealType
             ? Array.isArray(filter.mealType)
