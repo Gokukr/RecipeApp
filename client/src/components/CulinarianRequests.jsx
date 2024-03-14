@@ -10,6 +10,7 @@ export default function CulinarianRequests({show}) {
     const [selectedSpecializations, setSelectedSpecializations] = useState([]);
     const [bio,setbio] = useState("");
     const navigate = useNavigate();
+    const [username,setusername] = useState("");
     const handleChange = (event) => {
       const { value, checked } = event.target;
       if (checked) {
@@ -43,7 +44,7 @@ export default function CulinarianRequests({show}) {
                     console.log(response.data);
                     const body = {
                       user_id : response.data,
-                      reason  :bio
+                      reason  :data + " Requested to be a culinarian"
                    }
                     axios.post("http://localhost:1200/notify/notification",body)
                     .then(response=>

@@ -45,7 +45,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
         notify(error);
         handleClose();
     });
-    const reason = feedbackText;
+    const reason = "Your Culinarian Request as been Rejected" +feedbackText;
     const body=  {
        user_id,
        reason,

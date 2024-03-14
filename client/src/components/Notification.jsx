@@ -17,8 +17,8 @@ const Notification = () => {
           console.log('User ID:', notification.user_id);
           console.log('Reason:', notification.reason);
           console.log('Recipe ID:', notification.recipe_id);
+          console.log('User_Name:', notification.first_name)
           console.log('Created At:', notification.created_at);
-          console.log('---------------------------------');
         });
       })
       .catch(error => {
