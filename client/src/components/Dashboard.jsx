@@ -5,7 +5,7 @@ import Search from "./Search";
 import Card from "./Card";
 import Container from "./Container";
 import Cookies from "js-cookie";
-// import RecipeContainer from "./RecipeContainer";
+import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
