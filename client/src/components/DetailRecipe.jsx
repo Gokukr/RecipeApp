@@ -52,7 +52,7 @@ function Detailrecipe() {
         notify("An Error Occured");
         navigate("/dashboard");
       });
-  }, [recipeId, error, navigate]);
+  }, [recipeId, error, navigate, recipe.status]);
   const handleEdit = () => {
     navigate("/edit-recipe", { state: { recipe } });
   };
@@ -75,8 +75,6 @@ function Detailrecipe() {
   console.log("value of fav is : ");
   console.log(fav);
   const handleAddToFavourites = () => {
-    // const userId='cded7396-c732-11ee-993a-505a65b0ab55';
-
     try {
       const res = axios.post(
         `http://localhost:1200/api/${userId}/save-a-recipe`,
@@ -124,9 +122,10 @@ function Detailrecipe() {
         {recipe ? (
           <div>
             <h2 class="font-bold ml-3 text-[60px]">{recipe.title}</h2>
+            {recipe.status === "Accepted" && (
             <div className="rating-container flex justify-between mt-[-10px]">
               <div class="rating-container-rating-tab flex flex-row mt-0 justify-start items-center">
-                <p class="pl-5 text-[20px] font-bold tracking-wide">Rating:</p>
+                <p class="pl-5 pr-2 text-[20px] tracking-wide">{recipe.rating} </p>
                 <div className=" tracking-wide pt-1">
                   {Array.from(
                     { length: Math.floor(recipe.rating) },
@@ -181,9 +180,7 @@ function Detailrecipe() {
                     )
                   )}
                 </div>
-                <p class="pl-2 text-[20px] font-bold tracking-wide">
-                  {recipe.rating}{" "}
-                </p>
+                <p class="pl-3 text-[20px] tracking-wide">{recipe.count} Ratings</p>
               </div>
 
               <button
@@ -205,15 +202,13 @@ function Detailrecipe() {
                 </svg>
               </button>
             </div>
-            {/* <div>
-          <svg fill="#000000" height="64px" width="64px" version="1.1" id="Capa_1" viewBox="-14.15 -14.15 500.00 500.00" xml:space="preserve" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)" stroke="#000000" stroke-width="0.004717010000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.9434020000000001"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1 c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3 l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4 C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3 s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4 c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3 C444.801,187.101,434.001,213.101,414.401,232.701z"></path> </g> </g></svg>
-          </div> */}
+            )}
+            
             <hr class="h-0.5 bg-gray-300 ml-3"></hr>
             <div class="pl-5 text-black text-left">
               <p class="mb-10 text-[20px]">{recipe.description}</p>
             </div>
 
-            {/* <hr class="h-1 bg-gray-300 mb-3 ml-3"></hr> */}
             <div class="overflow-hidden position-relative ml-5 width-full">
               <img
                 src={recipe.image}
@@ -221,7 +216,7 @@ function Detailrecipe() {
                 class="w-full h-[600px] rounded-xl object-cover"
               />
             </div>
-            {/* Admin and their recipes */}
+            
             {role === "admin" && recipe.chef === userId && (
               <div className="flex justify-end gap-4 mt-4">
                 <button
@@ -239,7 +234,7 @@ function Detailrecipe() {
                 </button>
               </div>
             )}
-            {/* Admin and culinarian recipe */}
+            
             {role === "admin" &&
               recipe.chef !== userId &&
               (recipe.status === "Accepted" ||
@@ -268,7 +263,7 @@ function Detailrecipe() {
                   </label>
                 </div>
               )}
-            {/* Culinarian - Pending recipe*/}
+            
             {userRole === "culinarian" && recipe.status === "Pending" && (
               <div className="flex justify-end gap-4 mt-4">
                 <button
@@ -279,7 +274,7 @@ function Detailrecipe() {
                 </button>
               </div>
             )}
-            {/* Culinarian - Rejected recipe*/}
+            
             {userRole === "culinarian" && recipe.status === "Rejected" && (
               <div className="flex justify-end gap-4 mt-4">
                 <button
@@ -302,7 +297,7 @@ function Detailrecipe() {
                 </button>
               </div>
             )}
-            {/* Culinarian - Inactive recipe*/}
+            
             {userRole === "culinarian" && recipe.status === "Inactive" && (
               <div className="flex justify-end gap-4 mt-4 mr-5">
                 <button
@@ -341,7 +336,7 @@ function Detailrecipe() {
                 <p>{recipe.difficulty}</p>
               </div>
             </div>
-            {/* border-solid border-2 border-gray-500 */}
+            
             <div class="ml-5 mt-4 rounded-lg px-5 py-3 text-black ">
               <strong class="text-[30px]">Ingredients</strong>
 
@@ -372,9 +367,6 @@ function Detailrecipe() {
                 )}
               </ul>
             </div>
-            {/* <p>{recipe.instructions}</p> */}
-            {/* <p>{recipe.instruction}</p> */}
-            {/* border-solid border-2 border-gray-500 */}
             <div class="ml-5 mt-4 rounded-lg px-5 py-3 text-black ">
               <div class="mb-2">
                 <strong class="text-[30px] ">Instructions</strong>
@@ -384,9 +376,6 @@ function Detailrecipe() {
                 {Array.isArray(recipe.instructions) ? (
                   recipe.instructions.map((instruction, index) => (
                     <li class="flex flex-wrap flex-row my-2">
-                      {/* <svg class="mt-1 mr-2" width="20" height="20" viewBox="0 0 20 20">
-                        <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1" fill="#FF642F" />
-                      </svg> */}
                       <span class=" top-2 left-0 w-6 h-6  bg-orange-500 font-medium rounded-full text-white text-center flex justify-center items-center">
                         {index + 1}
                       </span>
@@ -406,7 +395,9 @@ function Detailrecipe() {
             Loading...
           </p>
         )}
-        <Rating recipeId={recipeId} />
+        {recipe.status === "Accepted" && (
+          <Rating recipeId={recipeId} />
+        )}
       </div>
     </div>
   );
