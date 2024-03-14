@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./Header.jsx";
-import Footer from "./Footer.jsx";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "./ChangePassword.jsx";
@@ -68,15 +67,15 @@ function UserProfile(userId) {
             },
             body: JSON.stringify(body),
           });
-      
+
           const data = await response.json();
           console.log(data.status);
-          if (data.status === 'Pending') {
+          if (data.status === "Pending") {
             setBgColor("bg-red-500");
             setRequest("Request is pending");
             setDisabled(true);
-          } else if (data.status === 'Accepted') {
-            setBgColor("bg")
+          } else if (data.status === "Accepted") {
+            setBgColor("bg");
             setRequest("Culinarian");
             Cookies.set("role", "culinarian");
             setDisabled(true);
@@ -89,7 +88,7 @@ function UserProfile(userId) {
           console.error("Error:", error.message);
         }
       };
-      fetchData();      
+      fetchData();
     } else {
       setType("admin");
     }
@@ -249,11 +248,11 @@ function UserProfile(userId) {
                     className="rounded-full h-[200px] w-[200px] "
                   ></img>
                 )}
-                <h3 className="pt-4 font-sans">{fName + " " + lName}</h3>
+                <h3 className="pt-4 font-open-sans">{fName + " " + lName}</h3>
                 <p className="mx-3 py-4 w-5/6">
                   <textarea
                     type="text"
-                    className={`px-5 text-black text-center font-bold w-full font-sans box-border rounded-lg border-0 text-wrap ${
+                    className={`px-5 text-black text-center font-bold w-full font-open-sans box-border rounded-lg border-0 text-wrap ${
                       isEditMode ? editCSS : ""
                     }`}
                     value={about}
@@ -264,7 +263,7 @@ function UserProfile(userId) {
                 <button onClick={handleEditProfile} className="bg-white">
                   {isEditMode ? (
                     <div>
-                      <button className="bg-[#16978E] font-semibold text-white px-10 py-2 shadow-md cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 font-sans text-base xs:col-span-2">
+                      <button className="bg-[#16978E] font-semibold text-white px-10 py-2 shadow-md cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 font-open-sans text-base xs:col-span-2">
                         Save
                       </button>
                     </div>
@@ -289,11 +288,11 @@ function UserProfile(userId) {
 
               <div className="profile-details w-[70%] mx-6 mt--7 ">
                 <div className="bg-white rounded-lg border-solid border-black border-2 ">
-                  <div className="mt-5 font-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
+                  <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
                     <label className="w-1/6">First Name:</label>
                     <input
                       type="text"
-                      className={`text-black font-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
                         isEditMode ? editCSS : ""
                       }`}
                       value={fName}
@@ -301,11 +300,11 @@ function UserProfile(userId) {
                       disabled={!isEditMode}
                     />
                   </div>
-                  <div className="mt-5 font-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
+                  <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
                     <label className="w-1/6">Last Name: </label>
                     <input
                       type="text"
-                      className={`text-black font-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
                         isEditMode ? editCSS : ""
                       }`}
                       value={lName}
@@ -313,11 +312,11 @@ function UserProfile(userId) {
                       disabled={!isEditMode}
                     />
                   </div>
-                  <div className="mt-5 font-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
+                  <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
                     <label className="w-1/6">Address:</label>
                     <input
                       type="text"
-                      className={`text-black font-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
                         isEditMode ? editCSS : ""
                       }`}
                       value={address}
@@ -325,18 +324,18 @@ function UserProfile(userId) {
                       disabled={!isEditMode}
                     />
                   </div>
-                  <div className="mt-5 font-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
+                  <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
                     <label className="w-1/6">Email:</label>
                     <input
                       type="text"
-                      className={`text-black font-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
                         isEditMode ? "text-gray-500" : ""
                       }`}
                       value={user.email}
                       disabled
                     />
                   </div>
-                  <div className="mt-5 font-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
+                  <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
                     <label className="w-1/6">Gender:</label>
                     {isEditMode ? (
                       <div
@@ -384,16 +383,16 @@ function UserProfile(userId) {
                         </label>
                       </div>
                     ) : (
-                      <p className="text-black font-sans ml-7 w-full rounded-lg bg-textbg border-0 my-2">
+                      <p className="text-black font-open-sans ml-7 w-full rounded-lg bg-textbg border-0 my-2">
                         {gender}
                       </p>
                     )}
                   </div>
-                  <div className="my-5 font-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
+                  <div className="my-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
                     <label className="w-1/6">Phone Number:</label>
                     <input
                       type="text"
-                      className={`text-black font-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
                         isEditMode ? editCSS : ""
                       }`}
                       value={phone}
@@ -405,7 +404,7 @@ function UserProfile(userId) {
                 <div className="lg:flex md:flex lg:justify-around ">
                   {role === "admin" && (
                     <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
-                      <p className="font-sans text-white absolute left-5 right-5 top-2 text-center text-xl ">
+                      <p className="font-open-sans text-white absolute left-5 right-5 top-2 text-center text-xl ">
                         Total Recipes
                       </p>
                       <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-6">
@@ -414,7 +413,7 @@ function UserProfile(userId) {
                     </div>
                   )}
                   <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
-                    <p className="font-sans text-white absolute left-5 right-5 text-center text-xl ">
+                    <p className="font-open-sans text-white absolute left-5 right-5 text-center text-xl ">
                       Number of Favorite Recipes
                     </p>
                     <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-6">
@@ -422,7 +421,7 @@ function UserProfile(userId) {
                     </div>
                   </div>
                   <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
-                    <p className="font-sans text-white absolute left-5 right-5 top-2 text-center text-xl ">
+                    <p className="font-open-sans text-white absolute left-5 right-5 top-2 text-center text-xl ">
                       Favorite Cuisine
                     </p>
                     <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-6">
@@ -430,7 +429,7 @@ function UserProfile(userId) {
                     </div>
                   </div>
                   <div className="bg-primary-100 m-5 w-52 h-48 rounded-2xl relative">
-                    <p className="font-sans text-white absolute left-5 right-5 top-2 text-center text-xl">
+                    <p className="font-open-sans text-white absolute left-5 right-5 top-2 text-center text-xl">
                       Favorite Course
                     </p>
                     <div className="rounded-lg bg-white absolute top-24 left-5 right-5 bottom-5 text-center text-xl pt-6">

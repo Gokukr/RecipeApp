@@ -17,7 +17,7 @@ import MyRecipes from "./components/MyRecipes.jsx";
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col h-screen justify-between">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />

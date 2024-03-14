@@ -58,13 +58,13 @@ const DeleteRecipe = ({ recipeId }) => {
                   </div>
                   <div class="text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <h3
-                      class="text-base font-semibold leading-6 text-gray-900 font-sans"
+                      class="text-base font-semibold leading-6 text-gray-900 font-open-sans"
                       id="modal-title"
                     >
                       Delete Recipe
                     </h3>
                     <div class="mt-2">
-                      <p class="text-sm text-gray-500 font-sans">
+                      <p class="text-sm text-gray-500 font-open-sans">
                         Are you sure you want to delete this recipe? This action
                         cannot be undone.
                       </p>
@@ -75,14 +75,14 @@ const DeleteRecipe = ({ recipeId }) => {
               <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   type="button"
-                  class="inline-flex w-full font-sans justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  class="inline-flex w-full font-open-sans justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                   onClick={deleteRecipe}
                 >
                   Delete
                 </button>
                 <button
                   type="button"
-                  class="mt-3 font-sans inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                  class="mt-3 font-open-sans inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                   onClick={cancelDelete}
                 >
                   Cancel

@@ -99,3 +99,16 @@ create table Ratings(
 );
 
 select * from Ratings;
+
+
+CREATE TABLE notifications (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID,
+    recipe_id UUID,
+    reason VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user_data(id),
+    FOREIGN KEY (recipe_id) REFERENCES recipe(id)
+);
+select * from notifications;
+
