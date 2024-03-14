@@ -13,7 +13,7 @@ export default function MyRecipes() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [Ttoken, setTtoken] = useState("");
-  const [role, setRole] = useState("");
+  const role = Cookies.get("role");
   const userId = Cookies.get("user_id");
   const [showAll, setShowAll] = useState(true);
   const Navigate = useNavigate();
@@ -100,51 +100,53 @@ export default function MyRecipes() {
               placeholder={"Search your recipes..."}
             />
           </div>
-          <div className="mx-20">
-            <nav className="flex gap-4 mt-10 ml-10 font-open-sans">
-              <span
-                className={`cursor-pointer py-2 px-4 rounded-md ${
-                  selectedStatus === "Accepted"
-                    ? "bg-primary-100 text-white"
-                    : "text-black"
-                }`}
-                onClick={() => handleClick("Accepted")}
-              >
-                Accepted
-              </span>
-              <span
-                className={`cursor-pointer py-2 px-4 rounded-md ${
-                  selectedStatus === "Pending"
-                    ? "bg-yellow-500 text-white"
-                    : "text-black"
-                }`}
-                onClick={() => handleClick("Pending")}
-              >
-                Pending
-              </span>
-              <span
-                className={`cursor-pointer py-2 px-4 rounded-md ${
-                  selectedStatus === "Inactive"
-                    ? "bg-gray-500 text-white"
-                    : "text-black"
-                }`}
-                onClick={() => handleClick("Inactive")}
-              >
-                Inactive
-              </span>
-              <span
-                className={`cursor-pointer py-2 px-4 rounded-md ${
-                  selectedStatus === "Rejected"
-                    ? "bg-red-500 text-white"
-                    : "text-black"
-                }`}
-                onClick={() => handleClick("Rejected")}
-              >
-                Rejected
-              </span>
-            </nav>
-            <hr className="h-1 bg-gray-400 ml-3"></hr>
-          </div>
+          {role === "culinarian" && (
+            <div className="mx-20">
+              <nav className="flex gap-4 mt-10 ml-10 font-open-sans">
+                <span
+                  className={`cursor-pointer py-2 px-4 rounded-md ${
+                    selectedStatus === "Accepted"
+                      ? "bg-primary-100 text-white"
+                      : "text-black"
+                  }`}
+                  onClick={() => handleClick("Accepted")}
+                >
+                  Accepted
+                </span>
+                <span
+                  className={`cursor-pointer py-2 px-4 rounded-md ${
+                    selectedStatus === "Pending"
+                      ? "bg-yellow-500 text-white"
+                      : "text-black"
+                  }`}
+                  onClick={() => handleClick("Pending")}
+                >
+                  Pending
+                </span>
+                <span
+                  className={`cursor-pointer py-2 px-4 rounded-md ${
+                    selectedStatus === "Inactive"
+                      ? "bg-gray-500 text-white"
+                      : "text-black"
+                  }`}
+                  onClick={() => handleClick("Inactive")}
+                >
+                  Inactive
+                </span>
+                <span
+                  className={`cursor-pointer py-2 px-4 rounded-md ${
+                    selectedStatus === "Rejected"
+                      ? "bg-red-500 text-white"
+                      : "text-black"
+                  }`}
+                  onClick={() => handleClick("Rejected")}
+                >
+                  Rejected
+                </span>
+              </nav>
+              <hr className="h-1 bg-gray-400 ml-3"></hr>
+            </div>
+          )}
           {isLoading ? (
             <div className="loader-container">
               <div className="loader">
