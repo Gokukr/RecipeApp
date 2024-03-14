@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Search from "./Search";
-import Footer from "./Footer";
 import Card from "./Card";
 import Container from "./Container";
 import Cookies from "js-cookie";

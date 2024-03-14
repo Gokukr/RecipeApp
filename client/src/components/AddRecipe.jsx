@@ -66,7 +66,6 @@ const AddRecipe = () => {
       <Header />
       <ToastContainer />
       <ManageRecipes handleSubmit={addRecipe} />
-      <Footer />
     </div>
   );
 };

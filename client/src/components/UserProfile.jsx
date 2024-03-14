@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./Header.jsx";
-import Footer from "./Footer.jsx";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "./ChangePassword.jsx";

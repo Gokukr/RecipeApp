@@ -363,7 +363,7 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                 <div className="lg:col-span-1 md:col-span-2 sm:col-span-2 xs:col-span-2">
                   <button
                     type="button"
-                    className="cursor-pointer bg-white w-full px-2 py-3 hover:bg-primary-100 hover:text-white text-black font-bold border border-text shadow-3xl"
+                    className="cursor-pointer rounded-md bg-white w-full px-2 py-3 hover:bg-primary-100 hover:text-white text-black font-bold border border-text shadow-3xl"
                     onClick={handleAddIngredient}
                   >
                     Add Ingredient
@@ -417,7 +417,7 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                 <div className="lg:col-span-1 md:col-span-2 sm:col-span-2 xs:col-span-2">
                   <button
                     type="button"
-                    className="cursor-pointer bg-white w-full px-5 py-3 hover:bg-primary-100 text-black font-bold border border-text shadow-3xl"
+                    className="cursor-pointer rounded-md bg-white w-full px-5 py-3 hover:bg-primary-100 text-black font-bold border border-text shadow-3xl"
                     onClick={handleAddInstruction}
                   >
                     Add Step
@@ -426,7 +426,7 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                 <div className="lg:col-span-6"></div>
                 <button
                   type="button"
-                  className="text-white font-semibold leading-6 px-10 py-2 bg-gray-400 hover:text-black cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 shadow-md font-sans text-base xs:col-span-2"
+                  className="text-white font-semibold rounded-md leading-6 px-10 py-2 bg-gray-400 hover:text-black cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 shadow-md font-sans text-base xs:col-span-2"
                   onClick={() => {
                     Navigate(-1);
                   }}
@@ -435,7 +435,7 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-primary-100 font-semibold text-white hover:bg-primary-300 px-10 py-2 shadow-md cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 font-sans text-base xs:col-span-2"
+                  className="bg-primary-100 font-semibold rounded-md text-white hover:bg-primary-300 px-10 py-2 shadow-md cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 font-sans text-base xs:col-span-2"
                 >
                   Save
                 </button>
