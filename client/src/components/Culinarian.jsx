@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import Header from './Header';
-import Footer from './Footer';
 import AcceptDeleteReq from './AcceptDeleteRequests.jsx';
 import { useNavigate } from 'react-router-dom';
 import nodata from "../assets/No_data.png";
@@ -171,7 +170,6 @@ function Culinarian() {
             
         </div>
     </div>
-    <Footer/>
     </>   
   );
 }

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Header from "./Header";
-import Footer from "./Footer";
-// import RecipeContainer from "./RecipeContainer";
 import { searchSavedRecipe } from "../api";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
@@ -11,18 +9,20 @@ import Cookies from "js-cookie";
 import Card from "./Card";
 import Container from "./Container";
 import { ClipLoader } from "react-spinners";
+import fields from "../data.json";
 
 function SavedRecipe() {
   const { userId } = useParams();
   const [recipes, setRecipes] = useState([]);
-  const [showAll, setShowAll] = useState(true);
+  // const [showAll, setShowAll] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
-    rating: [],
-    mealType: [],
-    course: [],
     cuisine: [],
+    mealType: [],
+    courseType: [],
+    rating: [],
+    culinarian: "",
   });
   const [verify, setVerify] = useState(false);
   const navigate = useNavigate();
@@ -64,18 +64,14 @@ function SavedRecipe() {
     setFilter(filter);
   };
 
-  const cuisines = [
-    { name: "North Indian", filter: "North Indian" },
-    { name: "Continental", filter: "Continental" },
-    { name: "Chinese", filter: "Chinese" },
-    { name: "Japanese", filter: "Japanese" },
-    { name: "Italian", filter: "Italian" },
-  ];
+  const cuisines = fields.cuisineTypes.map((cuisine) => ({
+    name: cuisine,
+    filter: cuisine,
+  }));
 
   useEffect(() => {
     if (verify) {
       getRecipes(userId, searchText, filter);
-      // debugger;
     }
   }, [userId, searchText, filter, verify]);
 
@@ -86,7 +82,7 @@ function SavedRecipe() {
         <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans">
           <SearchBar
             onSearch={setItems}
-            allRecipe={setShowAll}
+            // allRecipe={setShowAll}
             placeholder={"Search favorite recipes..."}
           />
         </div>

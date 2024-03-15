@@ -376,10 +376,11 @@ router.post("/culinarian", async (req, res) => {
       [user_id, currentDate, selectedSpecializations, bio]
     );
     const request = await db.query(
-      "SELECT * FROM  culinarian WHERE user_id = $1",
+      "SELECT first_name FROM  user_data WHERE id = $1",
       [user_id]
     );
-    res.json(true);
+    const firstName = request.rows[0].first_name; 
+    res.json(firstName);
   } catch (err) {
     console.log(err.message);
   }

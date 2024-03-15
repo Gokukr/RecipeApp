@@ -1,14 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Card = ({ foodName, timeTaken, imageUrl, id }) => {
+const Card = ({ foodName, timeTaken, imageUrl, id, status }) => {
   // console.log(id);
 
   return (
     <Link className="no-underline" to={`/user/detail-recipe/${id}`}>
       {/* {name} */}
 
-      <div className="w-72 h-56 bg-primary-100  hover:drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4">
+      <div
+        className={`w-72 ${
+          status ? "h-64" : "h-50"
+        } bg-primary-100 hover:drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4`}
+      >
         <img
           src={imageUrl}
           alt={foodName}
@@ -19,7 +23,7 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
           style={{ paddingTop: "5px" }}
         >
           <h3
-            className="text-base text-white font-open-sans mb-1"
+            className="text-base text-white font-open-sans mb-1 line-clamp-1"
             style={{ letterSpacing: "0.05em", marginLeft: "-5px" }}
           >
             {foodName}
@@ -30,6 +34,16 @@ const Card = ({ foodName, timeTaken, imageUrl, id }) => {
           >
             Total Time: {timeTaken}
           </p>
+          {status ? (
+            <p
+              className="text-xs text-white font-open-sans mb-1"
+              style={{ letterSpacing: "0.03em", marginLeft: "-5px" }}
+            >
+              Status: {status === "Accepted" ? "Active" : status}
+            </p>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </Link>

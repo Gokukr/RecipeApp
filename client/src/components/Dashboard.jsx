@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Search from "./Search";
-import Footer from "./Footer";
 import Card from "./Card";
 import Container from "./Container";
 import Cookies from "js-cookie";
 import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import fields from "../data.json";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -16,7 +16,7 @@ export default function Dashboard() {
   const [Ttoken, setTtoken] = useState("");
   const [role, setRole] = useState("");
   const [user_id, Setuser_id] = useState("");
-  const [showAll, setShowAll] = useState(true);
+  // const [showAll, setShowAll] = useState(true);
   const Navigate = useNavigate();
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -86,20 +86,18 @@ export default function Dashboard() {
       setIsLoading(false);
     }
   };
-  const cuisines = [
-    { name: "North Indian", filter: "North Indian" },
-    { name: "Continental", filter: "Continental" },
-    { name: "Chinese", filter: "Chinese" },
-    { name: "Japanese", filter: "Japanese" },
-    { name: "Italian", filter: "Italian" },
-  ];
+
+  const cuisines = fields.cuisineTypes.map((cuisine) => ({
+    name: cuisine,
+    filter: cuisine,
+  }));
 
   return (
     <>
       <div>
         <div className="dashboard-container overflow-y-auto">
           <Header />
-          <Search allRecipe={setShowAll} setData={setData} />
+          <Search setData={setData} />
 
           {isLoading ? (
             <div className="loader-container">
@@ -123,7 +121,10 @@ export default function Dashboard() {
                       .filter(
                         (item) =>
                           item.cuisine === cuisine.filter &&
-                          item.status === "Accepted"
+                          (role === "admin"
+                            ? item.status === "Accepted" ||
+                              item.status === "Inactive"
+                            : item.status === "Accepted")
                       )
                       .map((item, index) => (
                         <Card
@@ -133,6 +134,7 @@ export default function Dashboard() {
                           timeTaken={`${item.total_time} mins`}
                           id={item.id}
                           rating={`${item.rating}⭐`}
+                          status={item.status}
                         />
                       ))}
                   </Container>

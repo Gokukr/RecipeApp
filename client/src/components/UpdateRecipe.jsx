@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import ManageRecipes from "./ManageRecipes";
 import Header from "./Header";
-import Footer from "./Footer";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -42,7 +41,6 @@ const UpdateRecipe = () => {
       <Header />
       <ToastContainer />
       <ManageRecipes handleSubmit={updateRecipe} recipe={recipe} />
-      <Footer />
     </div>
   );
 };

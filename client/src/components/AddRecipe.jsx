@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ManageRecipes from "./ManageRecipes";
 import Header from "./Header";
-import Footer from "./Footer";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -66,7 +65,6 @@ const AddRecipe = () => {
       <Header />
       <ToastContainer />
       <ManageRecipes handleSubmit={addRecipe} />
-      <Footer />
     </div>
   );
 };

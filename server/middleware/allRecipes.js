@@ -1,7 +1,6 @@
 const pool = require('../dbconfig')
 
 const allRecipes = async (searchText = "", filter) =>{
-
     const arrayReduce = (arr) => {
       let out = "";
       arr.map(item => out += `,'${item}'`);
@@ -12,7 +11,7 @@ const allRecipes = async (searchText = "", filter) =>{
     
     let qry;
     if(filter.culinarian){
-      qry = `select r.id, r.image, r.total_time, r.name, r.cuisine, u.first_name r.status
+      qry = `select r.id, r.image, r.total_time, r.name, r.cuisine, u.first_name, r.status
     from recipe r JOIN user_data u ON u.id = r.user_id
     where u.first_name = '${filter.culinarian}'
       and r.name ilike '%${searchText}%' 
