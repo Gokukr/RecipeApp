@@ -11,17 +11,12 @@ const Notification = () => {
 
   useEffect(() => {
     const id = Cookies.get("user_id");
-    axios.get(`http://localhost:1200/notify/notification1?user_id=${id}`)
-      .then(response => {
-        const notifications = response.data;
-         notifications.forEach(notification => {
-          console.log('ID:', notification.id);
-          console.log('User ID:', notification.user_id);
-          console.log('Reason:', notification.reason);
-          console.log('Recipe ID:', notification.recipe_id);
-          console.log('User_Name:', notification.first_name)
-          console.log('Created At:', notification.created_at);
-        });
+    axios
+      .get(`http://localhost:1200/notify/notification1?user_id=${id}`)
+      .then((response) => {
+        const notificationsData = response.data;
+        console.log(response.data);
+        setNotifications(notificationsData);
       })
       .catch((error) => {
         console.error("Error fetching notification data:", error);
