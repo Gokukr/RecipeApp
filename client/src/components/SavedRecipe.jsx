@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Header from "./Header";
-import Footer from "./Footer";
 import { searchSavedRecipe } from "../api";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import Cookies from "js-cookie";
 import Card from "./Card";
 import Container from "./Container";
 import { ClipLoader } from "react-spinners";
+import fields from "../data.json";
 
 function SavedRecipe() {
   const { userId } = useParams();
@@ -64,13 +64,10 @@ function SavedRecipe() {
     setFilter(filter);
   };
 
-  const cuisines = [
-    { name: "North Indian", filter: "North Indian" },
-    { name: "Continental", filter: "Continental" },
-    { name: "Chinese", filter: "Chinese" },
-    { name: "Japanese", filter: "Japanese" },
-    { name: "Italian", filter: "Italian" },
-  ];
+  const cuisines = fields.cuisineTypes.map((cuisine) => ({
+    name: cuisine,
+    filter: cuisine,
+  }));
 
   useEffect(() => {
     if (verify) {
@@ -118,7 +115,6 @@ function SavedRecipe() {
             ))
         )}
       </div>
-      <Footer />
     </div>
   );
 }
