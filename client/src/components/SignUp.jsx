@@ -280,7 +280,7 @@ export default function SignUp() {
           </div>
           </div>
           <div className='relative flex items-center justify-center'>
-          <img src={Limage} alt="Image" className='w-[600px] h-[800px] rounded-r-2xl md:block mr-4'/>
+          <img src={Limage} alt="Image" className='w-[630px] h-[900px] rounded-r-2xl md:block mr-4'/>
         </div>
           </div>
         </div>
