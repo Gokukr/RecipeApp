@@ -6,20 +6,16 @@ const getRecipeRequests = () => {
   );
 };
 
-const handleAcceptRequest = (id, status) => {
+const handleRecipeRequest = (id, status) => {
   return pool.query("UPDATE recipe SET status=$1 WHERE id=$2", [status, id]);
 };
 
-const handleRejectRequest = (id, status, message) => {
-  return pool.query("UPDATE recipe SET status=$1,comment=$2 WHERE id=$3", [
-    status,
-    message,
-    id,
-  ]);
-};
+// const handleRejectRequest = (id, status) => {
+//   return pool.query("UPDATE recipe SET status=$1 WHERE id=$2", [status, id]);
+// };
 
 module.exports = {
   getRecipeRequests,
-  handleRejectRequest,
-  handleAcceptRequest,
+  handleRecipeRequest,
+  // handleAcceptRequest,
 };

@@ -79,6 +79,12 @@ const RecipeRequest = () => {
       </div>
       <div className="w-2/6 lg:flex lg:flex-row sm:flex-col md:flex-col justify-center items-center">
         <button
+          className="bg-primary-100 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+          onClick={() => handleRecipeAction(true, id)}
+        >
+          Accept
+        </button>
+        <button
           className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
           onClick={() => {
             setPopup(true);
@@ -86,12 +92,6 @@ const RecipeRequest = () => {
           }}
         >
           Reject
-        </button>
-        <button
-          className="bg-primary-100 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
-          onClick={() => handleRecipeAction(true, id)}
-        >
-          Accept
         </button>
       </div>
     </div>
@@ -110,6 +110,7 @@ const RecipeRequest = () => {
           </div>
         ) : (
           <>
+            {/* {recReq.length == 0 ? } */}
             <PopupDialog
               isOpen={isPopupOpen}
               onClose={closePopup}
@@ -120,7 +121,7 @@ const RecipeRequest = () => {
             />
             <div class="mx-40">
               <div>
-                <h2 class="text-[30px] px-10">Recipe Requests</h2>
+                <h2 class="text-[30px] px-10 font-sans">Recipe Requests</h2>
               </div>
             </div>
             {recReq.map((req, index) => (

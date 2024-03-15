@@ -11,8 +11,8 @@ const saveRecipe = require("../middleware/savedRecipe");
 const randomize = require("randomatic");
 const {
   getRecipeRequests,
-  handleAcceptRequest,
-  handleRejectRequest,
+  // handleAcceptRequest,
+  handleRecipeRequest,
 } = require("../middleware/recipeRequest");
 
 router.get("/recipe-requests", async (req, res) => {
@@ -27,16 +27,21 @@ router.get("/recipe-requests", async (req, res) => {
 
 router.post("/recipe-response/:recipeId", async (req, res) => {
   try {
-    let result;
-    if (req.body.isAccept) {
-      result = handleAcceptRequest(req.params.recipeId, "Accepted");
-    } else {
-      result = handleRejectRequest(
-        req.params.recipeId,
-        "Rejected",
-        req.body.message
-      );
-    }
+    let result = await handleRecipeRequest(
+      req.params.recipeId,
+      req.body.isAccept ? "Accepted" : "Rejected"
+    );
+    // if (req.body.isAccept) {
+    //   result = await handleAcceptRequest(req.params.recipeId, "Accepted");
+    // } else {
+    //   result = await handleRejectRequest(req.params.recipeId, "Rejected");
+    // }
+    const userId = await db.query("select user_id from recipe");
+    await db.query(
+      "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
+      [userId.rows[0].user_id, req.params.recipeId, req.body.message]
+    );
+    // console.log(temp);
     res.send(result);
   } catch (error) {
     console.log("Error handling recipe request", error);
@@ -379,7 +384,7 @@ router.post("/culinarian", async (req, res) => {
       "SELECT first_name FROM  user_data WHERE id = $1",
       [user_id]
     );
-    const firstName = request.rows[0].first_name; 
+    const firstName = request.rows[0].first_name;
     res.json(firstName);
   } catch (err) {
     console.log(err.message);

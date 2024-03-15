@@ -38,19 +38,20 @@ const PopupDialog = ({ isOpen, onClose, onConfirm }) => {
             />
           </div>
         </div>
+
         <div className="flex justify-center gap-5 font-open-sans">
+          <button
+            type="submit"
+            className="bg-primary-100 w-24 hover:bg-blue-700 text-white font-semibold px-4 py-2 mr-2 rounded font-open-sans"
+          >
+            Yes
+          </button>
           <button
             type="button"
             className="bg-red-500 w-24 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded font-open-sans"
             onClick={onClose}
           >
             No
-          </button>
-          <button
-            type="submit"
-            className="bg-primary-100 w-24 hover:bg-blue-700 text-white font-semibold px-4 py-2 mr-2 rounded font-open-sans"
-          >
-            Yes
           </button>
         </div>
       </form>
