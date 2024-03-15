@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
 import Notification from "./Notification";
 import data from "../data.json";
+import { useLocation } from "react-router-dom";
 
 const SearchBar = ({
   onSearch,
   allRecipe,
   placeholder = "What are you looking to cook today...",
 }) => {
+  const location = useLocation();
+  const pageRoute = location.pathname;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -19,7 +23,7 @@ const SearchBar = ({
   });
   const [culinarians, setCulinarians] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [notificationVisible, setNotificationVisible] = useState(false); // Step 1: State for notification visibility
+  const [notificationVisible, setNotificationVisible] = useState(false);
   const { courseTypes, cuisineTypes, ratings } = data;
 
   useEffect(() => {
@@ -166,18 +170,23 @@ const SearchBar = ({
           clipRule="evenodd"
         />
       </svg>
-      <div
-        className="h-8 w-8 ml-6 mt-2 flex items-center justify-center text-white bg-primary-300 rounded-md hover:cursor-pointer"
-        style={{ fontSize: "0.8rem" }}
-        onClick={toggleNotification}
-      >
-        <FaBell />
-      </div>
-      {notificationVisible && (
-        <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
-          <Notification />
-        </div>
-      )}
+      {/* {pageRoute === "/dashboard" && (
+        // <>
+        //   <div
+        //     className="h-8 w-8 ml-6 mt-2 flex items-center justify-center text-white bg-primary-300 rounded-md hover:cursor-pointer"
+        //     style={{ fontSize: "0.8rem" }}
+        //     onClick={toggleNotification}
+        //   >
+        //     <FaBell />
+        //   </div>
+
+        //   {notificationVisible && (
+        //     <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
+        //       <Notification />
+        //     </div>
+        //   )}
+        // </>
+      )} */}
       {sidebarVisible && (
         <div
           className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-hidden overflow-y-auto"
@@ -208,7 +217,7 @@ const SearchBar = ({
                   {cuisineTypes.map((cuisine) => (
                     <div
                       key={cuisine}
-                      className={`flex items-center mb-3 w-5/6 pl-4 ${
+                      className={`flex items-center justify-center mb-3 w-5/6 pl-4 ${
                         selectedFilters.cuisine.includes(cuisine)
                           ? "bg-gray-200"
                           : ""
@@ -220,7 +229,7 @@ const SearchBar = ({
                         padding: "0.5rem 0.5rem",
                       }}
                     >
-                      <label className="text-base cursor-pointer hover:cursor-pointer">
+                      <label className="text-base cursor-pointer hover:cursor-pointer pl-2">
                         {cuisine}
                       </label>
                     </div>
@@ -235,7 +244,7 @@ const SearchBar = ({
               </h6>
               <div className="grid grid-cols-2">
                 <div
-                  className={`flex items-center mb-3 w-5/6 pl-4 ${
+                  className={`flex items-center justify-center mb-3 w-5/6 pl-4 ${
                     selectedFilters.mealType.includes("Veg")
                       ? "bg-gray-200 "
                       : ""
@@ -252,7 +261,7 @@ const SearchBar = ({
                   </label>
                 </div>
                 <div
-                  className={`flex items-center mb-3 w-5/6 pl-4 ${
+                  className={`flex items-center justify-center mb-3 w-5/6 pl-4 ${
                     selectedFilters.mealType.includes("Non-veg")
                       ? "bg-gray-200 "
                       : ""
@@ -279,7 +288,7 @@ const SearchBar = ({
                 {courseTypes.map((courseType) => (
                   <div
                     key={courseType}
-                    className={`flex items-center mb-3 w-5/6 pl-4 ${
+                    className={`flex items-center justify-center mb-3 w-5/6 pl-4 ${
                       selectedFilters.courseType.includes(courseType)
                         ? "bg-gray-200 "
                         : ""
@@ -327,27 +336,32 @@ const SearchBar = ({
                   </div>
                 ))}
               </div>
-              <div className="mt-4">
-                <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
-                  Culinarian
-                </h6>
-                {loading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <select
-                    value={selectedFilters.culinarian}
-                    onChange={handleCulinarianChange}
-                    className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
-                  >
-                    <option value="">Select culinarian</option>
-                    {culinarians.map((culinarian) => (
-                      <option key={culinarian.id} value={culinarian.first_name}>
-                        {culinarian.first_name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </div>
+              {pageRoute !== "/my-recipes" && (
+                <div className="mt-4">
+                  <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[1rem]">
+                    Culinarian
+                  </h6>
+                  {loading ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <select
+                      value={selectedFilters.culinarian}
+                      onChange={handleCulinarianChange}
+                      className="text-base w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary-300"
+                    >
+                      <option value="">Select culinarian</option>
+                      {culinarians.map((culinarian) => (
+                        <option
+                          key={culinarian.id}
+                          value={culinarian.first_name}
+                        >
+                          {culinarian.first_name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              )}
             </div>
             <div className="flex justify-center gap-5 mb-8 p-4">
               <button

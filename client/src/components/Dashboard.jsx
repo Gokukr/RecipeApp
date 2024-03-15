@@ -27,22 +27,24 @@ export default function Dashboard() {
   useEffect(() => {
     const id = Cookies.get("user_id");
     Setuser_id(id);
-   const body = {
-    id
-  }
-  axios.post("http://localhost:1200/api/Checkrole", body)
-  .then(response => {
-    // console.log(response.data); 
-    Cookies.set("role", response.data);
-  })
-  .catch(error => {
-    console.error('Error:', error); 
-  });
-  const token = Cookies.get("token");
-  const type = Cookies.get("role");
-  setRole(type);
-  setTtoken(token);
-  axios.get("http://localhost:1200/api/is-verify", {
+    const body = {
+      id,
+    };
+    axios
+      .post("http://localhost:1200/api/Checkrole", body)
+      .then((response) => {
+        // console.log(response.data);
+        Cookies.set("role", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    const token = Cookies.get("token");
+    const type = Cookies.get("role");
+    setRole(type);
+    setTtoken(token);
+    axios
+      .get("http://localhost:1200/api/is-verify", {
         headers: {
           "Content-Type": "application/json",
           token: token,
@@ -66,12 +68,12 @@ export default function Dashboard() {
     }
   }, [verify]);
 
-  useEffect(() => {
-    if (!isLoading && containerRef.current) {
-      // Scroll to the container element when it mounts
-      containerRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading && containerRef.current) {
+  //     // Scroll to the container element when it mounts
+  //     containerRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [isLoading]);
 
   const fetchData = async () => {
     try {
@@ -84,7 +86,6 @@ export default function Dashboard() {
       setIsLoading(false);
     }
   };
-
   const cuisines = [
     { name: "North Indian", filter: "North Indian" },
     { name: "Continental", filter: "Continental" },
@@ -109,13 +110,21 @@ export default function Dashboard() {
           ) : (
             cuisines
               .filter((cuisine) =>
-                data.some((item) => item.cuisine === cuisine.filter)
+                data.some(
+                  (item) =>
+                    item.cuisine === cuisine.filter &&
+                    item.status === "Accepted"
+                )
               )
               .map((cuisine) => (
                 <div key={cuisine.name} ref={containerRef}>
                   <Container cuisineName={`${cuisine.name}`}>
                     {data
-                      .filter((item) => item.cuisine === cuisine.filter)
+                      .filter(
+                        (item) =>
+                          item.cuisine === cuisine.filter &&
+                          item.status === "Accepted"
+                      )
                       .map((item, index) => (
                         <Card
                           key={index}

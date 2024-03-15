@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import hatimage from "../assets/hat.png";
 // import search from "../assets/Vector.png";
 import user from "../assets/Vector (1).png";
@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaBell } from "react-icons/fa";
+import Notification from "./Notification";
 
 const Header = memo(() => {
   const navigator = useNavigate();
   const userId = Cookies.get("user_id");
   const userRole = Cookies.get("role");
+  const [notificationVisible, setNotificationVisible] = useState(false);
 
   function handleProfileclick() {
     navigator("/user");
@@ -42,11 +45,14 @@ const Header = memo(() => {
     }, 500);
   }
   function handleMyRecipes() {
-    navigator("#");
+    navigator("/my-recipes");
   }
+  const toggleNotification = () => {
+    setNotificationVisible(!notificationVisible);
+  };
 
   return (
-    <header className="w-full self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border ">
+    <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
       <div className="self-stretch w-[269px] flex flex-row items-start justify-end gap-[9px]">
         <div className="flex flex-col items-start justify-start pt-1.5 px-0 pb-0">
           <img
@@ -117,7 +123,7 @@ const Header = memo(() => {
           )}
           {(userRole === "admin" ||
             userRole === "Admin" ||
-            userRole === "Culirian") && (
+            userRole === "culinarian") && (
             <div
               onClick={handleMyRecipes}
               className="flex flex-col items-start justify-start"
@@ -138,21 +144,6 @@ const Header = memo(() => {
               Favorites
             </b>
           </div>
-          {/* {(userRole === "admin" ||
-            userRole === "Admin" ||
-            userRole === "Culirian") && (
-            // <div
-            //   onClick={handleMyRecipes}
-            //   className="flex flex-col items-start justify-start"
-            // >
-            //   <b
-            //     className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6"
-            //     style={{ whiteSpace: "nowrap" }}
-            //   >
-            //     My Recipes
-            //   </b>
-            // </div>
-          )} */}
 
           <div
             onClick={handleLogout}
@@ -175,8 +166,23 @@ const Header = memo(() => {
               src={search}
             /> */}
           {/* </div> */}
+          <div className="flex items-center justify-center">
+            <div
+              className="h-8 w-8 relative mr-8 flex items-center justify-center text-primary-300 bg-none  hover:cursor-pointer"
+              // style={{ fontSize: "2.5 rem" }}
+              onClick={toggleNotification}
+            >
+              <FaBell />
+            </div>
+            {notificationVisible && (
+              <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
+                <Notification />
+              </div>
+            )}
+          </div>
+
           <img
-            className="h-9 w-10 relative min-h-[36px]  "
+            className="h-9 w-10 relative min-h-[36px] "
             loading="eager"
             alt=""
             src={user}

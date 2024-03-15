@@ -337,7 +337,7 @@ router.put("/culinarian/:status/:id", async (req, res) => {
       if (queryResult.rows.length > 0) {
         const user_id = queryResult.rows[0].user_id;
         await pool.query(
-          "UPDATE user_data SET role = 'Culirian' WHERE id = $1",
+          "UPDATE user_data SET role = 'culinarian' WHERE id = $1",
           [user_id]
         );
       }
@@ -360,7 +360,7 @@ router.put("/culinarian/:status/:id", async (req, res) => {
           ]);
           console.log("Role updated to 'user' for user with user ID:", user_id);
         } else {
-          console.log("Role is not 'Culirian' for user with user ID:", user_id);
+          console.log("Role is not 'Culinarian' for user with user ID:", user_id);
         }
       } else {
         console.log(

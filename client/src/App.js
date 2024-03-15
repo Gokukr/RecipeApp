@@ -13,6 +13,7 @@ import AddRecipe from "./components/AddRecipe.jsx";
 import UpdateRecipe from "./components/UpdateRecipe.jsx";
 import RecipeRequest from "./components/RecipeRequest.jsx";
 import Culinarian from "./components/Culinarian.jsx";
+import MyRecipes from "./components/MyRecipes.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/edit-recipe" element={<UpdateRecipe />} />
           <Route path="/culinarianReq" element={<Culinarian />} />
+          <Route path="/my-recipes" element={<MyRecipes />} />
         </Routes>
         <Footer />
       </BrowserRouter>
