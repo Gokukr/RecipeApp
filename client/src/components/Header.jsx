@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import hatimage from "../assets/hat.png";
 // import search from "../assets/Vector.png";
 import user from "../assets/Vector (1).png";
@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaBell } from "react-icons/fa";
+import Notification from "./Notification";
 
 const Header = memo(() => {
   const navigator = useNavigate();
   const userId = Cookies.get("user_id");
   const userRole = Cookies.get("role");
+  const [notificationVisible, setNotificationVisible] = useState(false);
 
   function handleProfileclick() {
     navigator("/user");
@@ -28,9 +31,7 @@ const Header = memo(() => {
   function handleRecipeReqClick() {
     navigator("/recipe-request");
   }
-  function handleMyRecipes() {
-    navigator("#");
-  }
+
   const notify = (message) => toast(message);
   function handleLogout() {
     Cookies.remove("token");
@@ -44,6 +45,9 @@ const Header = memo(() => {
   function handleMyRecipes() {
     navigator("/my-recipes");
   }
+  const toggleNotification = () => {
+    setNotificationVisible(!notificationVisible);
+  };
 
   return (
     <header className="self-stretch h-[99px] bg-white overflow-hidden shrink-0 flex flex-row items-center justify-between py-[22px] pr-[95px] pl-[43px] box-border gap-[20px] top-[0] z-[99] sticky max-w-full text-left text-21xl text-darkslategray-100 font-mystery-quest mq450:pr-5 mq450:box-border mq750:pl-[21px] mq750:pr-[47px] mq750:box-border">
@@ -160,8 +164,23 @@ const Header = memo(() => {
               src={search}
             /> */}
           {/* </div> */}
+          <div className="flex items-center justify-center">
+            <div
+              className="h-8 w-8 relative mr-8 flex items-center justify-center text-primary-300 bg-none  hover:cursor-pointer"
+              // style={{ fontSize: "2.5 rem" }}
+              onClick={toggleNotification}
+            >
+              <FaBell />
+            </div>
+            {notificationVisible && (
+              <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
+                <Notification />
+              </div>
+            )}
+          </div>
+
           <img
-            className="h-9 w-10 relative min-h-[36px]  "
+            className="h-9 w-10 relative min-h-[36px] "
             loading="eager"
             alt=""
             src={user}

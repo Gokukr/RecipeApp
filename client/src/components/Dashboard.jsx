@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import fields from "../data.json";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -85,13 +86,11 @@ export default function Dashboard() {
       setIsLoading(false);
     }
   };
-  const cuisines = [
-    { name: "North Indian", filter: "North Indian" },
-    { name: "Continental", filter: "Continental" },
-    { name: "Chinese", filter: "Chinese" },
-    { name: "Japanese", filter: "Japanese" },
-    { name: "Italian", filter: "Italian" },
-  ];
+
+  const cuisines = fields.cuisineTypes.map((cuisine) => ({
+    name: cuisine,
+    filter: cuisine,
+  }));
 
   return (
     <>
@@ -122,7 +121,10 @@ export default function Dashboard() {
                       .filter(
                         (item) =>
                           item.cuisine === cuisine.filter &&
-                          item.status === "Accepted"
+                          (role === "admin"
+                            ? item.status === "Accepted" ||
+                              item.status === "Inactive"
+                            : item.status === "Accepted")
                       )
                       .map((item, index) => (
                         <Card
@@ -132,6 +134,7 @@ export default function Dashboard() {
                           timeTaken={`${item.total_time} mins`}
                           id={item.id}
                           rating={`${item.rating}⭐`}
+                          status={item.status}
                         />
                       ))}
                   </Container>

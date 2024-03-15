@@ -229,22 +229,18 @@ router.get("/user-profile/:id", (req, res) => {
   );
 });
 
-//for ingredients data
-// router.post("/insertdata", async (req, res) => {
-//   try {
-//     const { ingredient_name, category } = req.body;
-
-//     await db.query(
-//       "INSERT INTO ingredients (ingredient_name,category) VALUES($1,$2)",
-//       [ingredient_name, category]
-//     );
-//     res.json({ success: true, message: "insertion successfull" });
-//     console.log(ingredient_name, category);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error: "internal server error" });
-//   }
-// });
+router.get("/notification", (req, res) => {
+  try {
+    const notification = {
+      timestamp: "2024-03-23",
+      message: "hello",
+    };
+    res.send(notification);
+    console.log(notification);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 //for meal type table
 // router.post("/mealtype", async (req, res) => {
