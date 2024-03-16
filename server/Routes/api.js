@@ -98,10 +98,10 @@ function isStrongPassword(password) {
   return strongRegex.test(password);
 }
 
-router.get("/api/data", (req, res) => {
-  const data = { message: "Hello world" };
-  res.json(data);
-});
+// router.get("/api/data", (req, res) => {
+//   const data = { message: "Hello world" };
+//   res.json(data);
+// });
 router.post("/register", async (req, res) => {
   try {
     const {
@@ -344,7 +344,9 @@ router.get("/culinarianAccepted", async (req, res) => {
 
 router.get("/getdata", async (req, res) => {
   try {
-    const { rows } = await db.query("SELECT * FROM recipe");
+    const { rows } = await db.query(
+      "SELECT * FROM recipe where status='Accepted'"
+    );
     res.json(rows);
   } catch (error) {
     console.log(error);

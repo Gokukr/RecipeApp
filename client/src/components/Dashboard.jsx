@@ -9,6 +9,7 @@ import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import fields from "../data.json";
+import NoRecipeFound from "./NoRecipeFound";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -105,6 +106,8 @@ export default function Dashboard() {
                 <ClipLoader size={50} color={"#123abc"} loading={loading} />
               </div>
             </div>
+          ) : data.length === 0 ? (
+            <NoRecipeFound />
           ) : (
             cuisines
               .filter((cuisine) =>
