@@ -46,6 +46,19 @@ const RecipeRequest = () => {
     getRequests();
   }, []);
 
+  const getTagClass = (status) => {
+    switch (status) {
+      case "Accepted":
+        return "bg-green-300";
+      case "Rejected":
+        return "bg-red-300";
+      case "Pending":
+        return "bg-amber-300";
+      default:
+        return "bg-blue-300";
+    }
+  };
+
   const RequestCard = ({
     id,
     image,
@@ -53,6 +66,7 @@ const RecipeRequest = () => {
     recipeName,
     cuisine,
     totalTime,
+    status,
   }) => (
     <div
       className="flex h-48 lg:w-3/4 items-center bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100 gap-10 md:w-5/6 sm:w-11/12"
@@ -77,22 +91,40 @@ const RecipeRequest = () => {
           Total Time: {totalTime} minutes
         </div>
       </div>
-      <div className="w-2/6 lg:flex lg:flex-row sm:flex-col md:flex-col justify-center items-center">
-        <button
-          className="bg-primary-100 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
-          onClick={() => handleRecipeAction(true, id)}
+      <div
+        className={`font-sans w-2/6 lg:flex lg:flex-row sm:flex-col md:flex-col justify-center items-center`}
+      >
+        <p
+          className={`min-w-24 rounded min-h-8 text-center pt-2  ${
+            // status === "Pending" ? "bg-green-500" : "bg-red-500"
+            getTagClass(status)
+          }`}
         >
-          Accept
-        </button>
-        <button
-          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
-          onClick={() => {
-            setPopup(true);
-            setrejectId(id);
-          }}
-        >
-          Reject
-        </button>
+          {status}
+        </p>
+      </div>
+      <div className="w-48 lg:flex lg:flex-row sm:flex-col md:flex-col justify-center items-center">
+        {status === "Pending" ? (
+          <>
+            <button
+              className="bg-primary-100 hover:bg-primary-300 text-white px-4 py-2 rounded-md mr-4"
+              onClick={() => handleRecipeAction(true, id)}
+            >
+              Accept
+            </button>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
+              onClick={() => {
+                setPopup(true);
+                setrejectId(id);
+              }}
+            >
+              Reject
+            </button>
+          </>
+        ) : (
+          <div className="w-48"></div>
+        )}
       </div>
     </div>
   );
@@ -136,6 +168,7 @@ const RecipeRequest = () => {
                   recipeName={req.name}
                   cuisine={req.cuisine}
                   totalTime={req.total_time}
+                  status={req.status}
                 />
               </div>
             ))}
