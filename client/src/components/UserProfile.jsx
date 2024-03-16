@@ -193,7 +193,7 @@ function UserProfile(userId) {
           <div>
             <div className="profile-card bg-primary-100 flex justify-between px-10 pt-16 pb-52">
               <span className=" text-white text-[50px]">
-                Hello !! {fName + " " + lName}
+                Hello!! {fName + " " + lName}
               </span>
               <div className="profile-buttons flex gap-4 ml-auto mr-5 py-2">
                 {type === "user" && (
@@ -249,29 +249,33 @@ function UserProfile(userId) {
                   ></img>
                 )}
                 <h3 className="pt-4 font-open-sans">{fName + " " + lName}</h3>
-                <p className="mx-3 py-4 w-5/6">
-                  <textarea
-                    type="text"
-                    className={`px-5 text-black text-center font-bold w-full font-open-sans box-border rounded-lg border-0 text-wrap ${
-                      isEditMode ? editCSS : ""
-                    }`}
-                    value={about}
-                    onChange={(e) => handleInputChange(e, setAbout)}
-                    disabled={!isEditMode}
-                  />
+                <p className="mx-3 py-4 w-5/6 text-black text-center font-bold mb-16">
+                  {isEditMode ? (
+                    <textarea
+                      type="text"
+                      className={`px-5 text-black text-center font-bold w-full font-open-sans box-border rounded-lg border-0 text-wrap ${
+                        isEditMode ? editCSS : ""
+                      }`}
+                      value={about}
+                      onChange={(e) => handleInputChange(e, setAbout)}
+                      disabled={!isEditMode}
+                    />
+                  ) : (
+                    about
+                  )}
                 </p>
                 <button onClick={handleEditProfile} className="bg-white">
                   {isEditMode ? (
                     <div>
-                      <button className="bg-[#16978E] font-semibold text-white px-10 py-2 shadow-md cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 font-open-sans text-base xs:col-span-2">
+                      <button className="bg-presgreen font-semibold text-white px-10 py-2 shadow-md cursor-pointer lg:col-span-3 md:col-span-2 sm:col-span-2 font-open-sans text-base xs:col-span-2">
                         Save
                       </button>
                     </div>
                   ) : (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
+                      width="37"
+                      height="37"
                       fill="white"
                       className="stroke-primary-100"
                       viewBox="0 0 16 16"
@@ -289,7 +293,7 @@ function UserProfile(userId) {
               <div className="profile-details w-[70%] mx-6 mt--7 ">
                 <div className="bg-white rounded-lg border-solid border-black border-2 ">
                   <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
-                    <label className="w-1/6">First Name:</label>
+                    <label className="w-36">First Name:</label>
                     <input
                       type="text"
                       className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
@@ -301,7 +305,7 @@ function UserProfile(userId) {
                     />
                   </div>
                   <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
-                    <label className="w-1/6">Last Name: </label>
+                    <label className="w-36">Last Name: </label>
                     <input
                       type="text"
                       className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
@@ -313,7 +317,7 @@ function UserProfile(userId) {
                     />
                   </div>
                   <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
-                    <label className="w-1/6">Address:</label>
+                    <label className="w-36">Address:</label>
                     <input
                       type="text"
                       className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
@@ -325,7 +329,7 @@ function UserProfile(userId) {
                     />
                   </div>
                   <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
-                    <label className="w-1/6">Email:</label>
+                    <label className="w-36">Email:</label>
                     <input
                       type="text"
                       className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${
@@ -336,7 +340,7 @@ function UserProfile(userId) {
                     />
                   </div>
                   <div className="mt-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
-                    <label className="w-1/6">Gender:</label>
+                    <label className="w-36">Gender:</label>
                     {isEditMode ? (
                       <div
                         className={`w-full rounded-lg flex ml-4 pl-5 py-2 ${
@@ -389,7 +393,7 @@ function UserProfile(userId) {
                     )}
                   </div>
                   <div className="my-5 font-open-sans pl-3 mx-4 flex items-center rounded-lg bg-textbg">
-                    <label className="w-1/6">Phone Number:</label>
+                    <label className="w-36">Phone Number:</label>
                     <input
                       type="text"
                       className={`text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 ${

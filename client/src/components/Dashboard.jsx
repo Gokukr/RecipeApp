@@ -121,10 +121,7 @@ export default function Dashboard() {
                       .filter(
                         (item) =>
                           item.cuisine === cuisine.filter &&
-                          (role === "admin"
-                            ? item.status === "Accepted" ||
-                              item.status === "Inactive"
-                            : item.status === "Accepted")
+                          item.status === "Accepted"
                       )
                       .map((item, index) => (
                         <Card
@@ -134,7 +131,6 @@ export default function Dashboard() {
                           timeTaken={`${item.total_time} mins`}
                           id={item.id}
                           rating={`${item.rating}⭐`}
-                          status={item.status}
                         />
                       ))}
                   </Container>

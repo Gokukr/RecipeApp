@@ -66,41 +66,25 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
     } catch (error) {
       console.log(error);
     }
-
-    // if (query.trim() !== "") {
-    //   setSearchUsed(true);
-    //   try {
-    //     const response = await axios.get("http://localhost:1200/api/getdata");
-    //     // const searchData = response.data.filter((recipe) =>
-    //     //   recipe.name.toLowerCase().includes(query.toLowerCase())
-    //     // );
-    //     // setSearchResults(searchData);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // } else {
-    //   setSearchResults(originalData); // Reset to original data when search query is empty
-    //   setSearchUsed(false);
-    // }
   };
+  const [buttonPosition, setButtonPosition] = useState("bottom-[90px]");
 
-  // const handleFilter = (filters) => {
-  //   setFilterOptions(filters);
-  //   applyFiltersAndSetResults(filters);
-  // };
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const pageHeight = document.body.scrollHeight;
+      if (pageHeight - window.scrollY <= windowHeight) {
+        setButtonPosition("bottom-[150px]");
+      } else {
+        setButtonPosition("bottom-[90px]");
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
 
-  // const applyFiltersAndSetResults = (filters) => {
-  //   const filteredData = applyFilters(originalData, filters); // Apply filters to original data
-  //   setSearchResults(filteredData);
-  // };
-
-  // const handleCloseFilterDialog = () => {
-  //   setShowFilterDialog(false);
-  // };
-
-  // const handleFilterClick = () => {
-  //   setShowFilterDialog(true);
-  // };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -116,60 +100,36 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
     if (type) {
       setRole(type);
     }
-    // setRole("user");
   }, []);
-  // console.log(searchResults);
-  // debugger;
-
   return (
-    <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans relative">
+    <>
       {role !== "user" && (
-        <div className="absolute top-0 right-0 mr-4 mt-4">
-          <div
-            style={{ position: "fixed", bottom: "50px", right: "20px" }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Link to="/add-recipe">
-              <button className="bg-primary-100 hover:cursor-pointer text-white font-open-sans py-2 px-4 rounded mt-12 mr-12 text-xl">
-                {isHovered ? (
-                  "Add Recipe"
-                ) : (
-                  <span style={{ fontSize: "30px" }}>+</span>
-                )}
-              </button>
-            </Link>
-          </div>
+        // <div className="absolute top-0 right-0 mr-4 mt-4">
+        <div
+          className={`fixed ${buttonPosition} right-[70px] w-20 h-20 ${
+            isHovered ? "w-32 h-16" : ""
+          }`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Link to="/add-recipe">
+            <button
+              className={`bg-primary-100 hover:cursor-pointer text-white font-open-sans text-xl w-full h-full shadow-md shadow-primary-100 
+              ${isHovered ? "rounded-lg" : " rounded-full"}`}
+            >
+              {isHovered ? (
+                "Add Recipe"
+              ) : (
+                <span className="text-[45px]">+</span>
+              )}
+            </button>
+          </Link>
         </div>
       )}
-      {/* <div className="inline-block mq450:text-primary-300 mq750:text-7xl mt-8">
-        <b className="text-primary-300">Explore</b>
-        <span>{` `}</span>
-        <b className="text-primary-300">{`variety of Cuisines `}</b>
-      </div> */}
-      <SearchBar onSearch={handleSearch} allRecipe={allRecipe} />
-
-      {/* <RecipeContainer data={searchResults}/> */}
-      {/* {searchUsed && (
-        <Container>
-          {searchResults.map((recipe, index) => (
-            <Card
-              key={index}
-              foodName={recipe.name}
-              imageUrl={recipe.image}
-              timeTaken={`${recipe.total_time} mins`}
-              id={recipe.id}
-            />
-          ))}
-        </Container>
-      )} */}
-      {/* {showFilterDialog && (
-        <FilterDialog
-          onClose={handleCloseFilterDialog}
-          onApply={handleFilter}
-        />
-      )} */}
-    </div>
+      <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans relative">
+        <SearchBar onSearch={handleSearch} allRecipe={allRecipe} />
+      </div>
+    </>
   );
 };
 
