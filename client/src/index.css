@@ -6,12 +6,15 @@
 @tailwind utilities;
 
 body {
-    @apply leading-[normal] m-0;
-    background: #F9F9F9;
+  @apply leading-[normal] m-0;
+  background: #f9f9f9;
 }
 
 *,
 ::before,
 ::after {
-    border-width: 0;
+  border-width: 0;
+}
+body::-webkit-scrollbar {
+  width: 20px;
 }
