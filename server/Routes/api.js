@@ -333,7 +333,7 @@ router.post("/ChangePassword", async (req, res) => {
 router.get("/culinarianAccepted", async (req, res) => {
   try {
     const { rows } = await db.query(
-      `SELECT * FROM user_data WHERE role = 'Culirian'`
+      `SELECT * FROM user_data WHERE role = 'culinarian'`
     );
     res.json(rows);
   } catch (error) {

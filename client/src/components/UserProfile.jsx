@@ -10,6 +10,7 @@ import maleAvatar from "../assets/male-avatar.png";
 import avatar from "../assets/Vector (1).png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ClipLoader } from "react-spinners";
 
 function UserProfile(userId) {
   const navigate = useNavigate();
@@ -156,7 +157,13 @@ function UserProfile(userId) {
   const handleCloseModal = () => setShowModal(false);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loader-container">
+        <div className="loader">
+          <ClipLoader size={50} color={"#123abc"} loading={loading} />
+        </div>
+      </div>
+    );
   }
 
   const handleSave = async () => {
@@ -445,7 +452,11 @@ function UserProfile(userId) {
             </div>
           </div>
         ) : (
-          <p>Loading...</p>
+          <div className="loader-container">
+            <div className="loader">
+              <ClipLoader size={50} color={"#123abc"} />
+            </div>
+          </div>
         )}
       </div>
     </>
