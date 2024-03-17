@@ -69,7 +69,7 @@ const RecipeRequest = () => {
     status,
   }) => (
     <div
-      className="flex h-48 lg:w-3/4 items-center bg-white hover:drop-shadow-2xl relative rounded-md text-darkslategray-100 gap-10 md:w-5/6 sm:w-11/12"
+      className="font-open-sans flex h-48 lg:w-3/4 items-center bg-white hover:drop-shadow-2xl relative rounded-xl text-darkslategray-100 gap-10 md:w-5/6 sm:w-11/12"
       key={id}
     >
       <div className="h-40 w-48 p-4 rounded-lg rounded-md">
@@ -95,7 +95,7 @@ const RecipeRequest = () => {
         className={`font-sans w-2/6 lg:flex lg:flex-row sm:flex-col md:flex-col justify-center items-center`}
       >
         <p
-          className={`min-w-24 rounded min-h-8 text-center pt-2  ${
+          className={`font-open-sans min-w-24 rounded min-h-8 text-center pt-2  ${
             // status === "Pending" ? "bg-green-500" : "bg-red-500"
             getTagClass(status)
           }`}
@@ -107,13 +107,13 @@ const RecipeRequest = () => {
         {status === "Pending" ? (
           <>
             <button
-              className="bg-primary-100 hover:bg-primary-300 text-white px-4 py-2 rounded-md mr-4"
+              className="font-open-sans bg-primary-100 hover:bg-primary-300 text-white px-4 py-2 rounded-md mr-4"
               onClick={() => handleRecipeAction(true, id)}
             >
               Accept
             </button>
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
+              className="font-open-sans bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-8"
               onClick={() => {
                 setPopup(true);
                 setrejectId(id);

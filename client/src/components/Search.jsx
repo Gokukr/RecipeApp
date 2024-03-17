@@ -106,8 +106,8 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
       {role !== "user" && (
         // <div className="absolute top-0 right-0 mr-4 mt-4">
         <div
-          className={`fixed ${buttonPosition} right-[70px] w-20 h-20 ${
-            isHovered ? "w-32 h-16" : ""
+          className={`fixed ${buttonPosition} right-[80px] ${
+            isHovered ? "w-[150px] h-[50px]" : " w-[70px] h-[70px]"
           }`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
