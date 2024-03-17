@@ -286,22 +286,25 @@ const FormSubmit = async(e) =>
                   onClick={toggleModal}
                   type="button"
                   className="end-2.5 text-gray-400 bg-transparent hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"                  >
-                <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                 >
-                  <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1L3 7l6 6"
-                  />
-              </svg>
-                  <span className="sr-only">Close modal</span>
+                <div className="flex items-center">
+                    <svg
+                        className="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 1L3 7l6 6"
+                        />
+                    </svg>
+                    <span className="ml-1.5">back</span>
+                </div>
+
                 </button>
                 <div class="relative">
                 <form class="space-y-4 mt-20" onSubmit={FormSubmit}>
@@ -337,22 +340,25 @@ const FormSubmit = async(e) =>
                   onClick={OTPModal}
                   type="button"
                   className="end-2.5 text-gray-400 bg-transparent hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" >
-                 <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                 >
-                  <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1L3 7l6 6"
-                  />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
+                   <div className="flex items-center">
+                    <svg
+                        className="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 1L3 7l6 6"
+                        />
+                    </svg>
+                    <span className="ml-1.5">back</span>
+                </div>
+
                 </button>
 
               
@@ -394,22 +400,24 @@ const FormSubmit = async(e) =>
                 onClick={PasswordModel}
                 type="button"
                 className="end-2.5 text-gray-400 bg-transparent hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" >
-                <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 1L3 7l6 6"
-                  />
-                </svg>
-                <span className="sr-only">Close modal</span>
+                  <div className="flex items-center">
+                    <svg
+                        className="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 1L3 7l6 6"
+                        />
+                    </svg>
+                    <span className="ml-1.5">back</span>
+                </div>
               </button>
               <div className="relative">
                 <form class="space-y-4 mt-10" onSubmit={onPasswordForm}>

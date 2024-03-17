@@ -47,11 +47,12 @@ const Notification = () => {
                 {formatDate(notification.created_at)}
               </div>
               <div className="flex float-start ml-2">
-                {(notification.role === 'admin') && ( 
-                <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
-                {`${notification.reason}`}
-                </div>
-                )}
+              {(notification.role === 'admin') && (
+  <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
+    {/* Conditional bolding using template literal and split() */}
+    <b>{notification.reason.split(' ')[0]}</b> {notification.reason.split(' ').slice(1).join(' ')}
+  </div>
+)}
                   {(notification.role != 'admin') && ( 
                 <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-san">
                 {notification.first_name && (
