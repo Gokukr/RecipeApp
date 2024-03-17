@@ -40,8 +40,12 @@ export async function getRecipeRequests() {
   return res;
 }
 
-export async function recipeResponse(isAccept, id, message) {
+export async function recipeResponse(isAccept, id, recipe, message) {
   const url = `${base}/recipe-response/${id}`;
-  const res = await axios.post(url, { isAccept: isAccept, message: message });
+  const res = await axios.post(url, {
+    isAccept: isAccept,
+    message: message,
+    name: recipe,
+  });
   return res;
 }
