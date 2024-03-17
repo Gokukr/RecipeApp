@@ -24,8 +24,9 @@ export default function CulinarianRequests({show}) {
         e.preventDefault();
         try {
             const body = {
-              user_id: response.data,
-              reason: bio,
+              user_id,
+              selectedSpecializations,
+              bio
             };
           
             const response = await fetch("http://localhost:1200/api/culinarian", {

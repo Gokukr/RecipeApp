@@ -80,7 +80,7 @@ router.post("/notifications", async (req, res) => {
     const { user_id, recipe_id, reason } = req.body;
 
     await db.query(
-      "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3, $4)",
+      "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
       [user_id, recipe_id, reason]
     );
 
