@@ -36,12 +36,20 @@ router.post("/recipe-response/:recipeId", async (req, res) => {
     // } else {
     //   result = await handleRejectRequest(req.params.recipeId, "Rejected");
     // }
-    const userId = await db.query("select user_id from recipe");
+    const recipeDetail = await db.query(
+      "select user_id,name from recipe where id = $1",
+      [req.params.recipeId]
+    );
+    let msg;
+    if (req.body.message === undefined) {
+      msg = `${recipeDetail.rows[0].name}: Your recipe has been accepted`;
+    } else {
+      msg = req.body.message;
+    }
     await db.query(
       "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
-      [userId.rows[0].user_id, req.params.recipeId, req.body.message]
+      [recipeDetail.rows[0].user_id, req.params.recipeId, msg]
     );
-    // console.log(temp);
     res.send(result);
   } catch (error) {
     console.log("Error handling recipe request", error);
