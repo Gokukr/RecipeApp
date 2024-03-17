@@ -60,7 +60,7 @@ async function AddNotification(recipe_id,user_id, Recipename){
       const requires = await pool.query(
         "select * from user_data where role='admin'"
       );
-      const reason = "Culinarian "+ name.rows[0].first_name + "request for accept the recipe name " +  Recipename;
+      const reason =  name.rows[0].first_name +" "+"request for accept the recipe name " +  Recipename;
       await pool.query(
         "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
         [requires.rows[0].id, recipe_id, reason]
