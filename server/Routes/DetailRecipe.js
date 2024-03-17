@@ -26,7 +26,6 @@ router.get("/user-profile/:id", (req, res) => {
             gender: user.gender,
             role: user.role,
             phone: user.phone_number,
-            pass: user.password,
             fname: user.first_name,
             lname: user.last_name,
             about: user.about,
@@ -302,12 +301,11 @@ router.put("/edit-profile", async (req, res) => {
   }
 });
 
-router.get("/culinarian/:status", (req, res) => {
-  const stat = req.params.status;
+router.get("/culinarian", (req, res) => {
   pool.query(
     `
-  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id, culinarian.user_id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `,
-    [stat],
+  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id, culinarian.user_id , culinarian.status from culinarian join user_data on culinarian.user_id = user_data.id `,
+    [],
     (error, result) => {
       // console.log(result);
       if (error) {
@@ -360,7 +358,10 @@ router.put("/culinarian/:status/:id", async (req, res) => {
           ]);
           console.log("Role updated to 'user' for user with user ID:", user_id);
         } else {
-          console.log("Role is not 'Culinarian' for user with user ID:", user_id);
+          console.log(
+            "Role is not 'Culinarian' for user with user ID:",
+            user_id
+          );
         }
       } else {
         console.log(

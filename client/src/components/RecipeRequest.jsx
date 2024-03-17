@@ -13,7 +13,7 @@ const RecipeRequest = () => {
   const notify = (message) => toast(message);
   const [isPopupOpen, setPopup] = React.useState(false);
   const [rejectId, setrejectId] = React.useState();
-
+  const [curRecipe, setRecipe] = React.useState();
   const getRequests = async () => {
     setLoading(true);
     try {
@@ -27,13 +27,14 @@ const RecipeRequest = () => {
     }
   };
 
-  const handleRecipeAction = async (isAccept, id, message = "") => {
+  const handleRecipeAction = async (isAccept, id, name, message = "") => {
     try {
-      const res = await recipeResponse(isAccept, id, message);
+      const res = await recipeResponse(isAccept, id, name, message);
       console.log(res);
       notify(`Recipe ${isAccept ? "Accepted" : "Rejected"}`);
       // console.log(result);
       setrejectId("");
+      setRecipe("");
       getRequests();
     } catch (error) {
       console.error(error);
@@ -117,6 +118,7 @@ const RecipeRequest = () => {
               onClick={() => {
                 setPopup(true);
                 setrejectId(id);
+                setRecipe(recipeName);
               }}
             >
               Reject
@@ -148,7 +150,7 @@ const RecipeRequest = () => {
               onClose={closePopup}
               onConfirm={(message) => {
                 closePopup();
-                handleRecipeAction(false, rejectId, message);
+                handleRecipeAction(false, rejectId, curRecipe, message);
               }}
             />
             <div class="mx-40">
