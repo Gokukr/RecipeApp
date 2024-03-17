@@ -8,6 +8,7 @@ const getRecipeRequests = () => {
 
 const handleRecipeRequest = (id, status) => {
   return pool.query("UPDATE recipe SET status=$1 WHERE id=$2", [status, id]);
+
 };
 
 module.exports = {
