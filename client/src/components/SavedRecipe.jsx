@@ -10,6 +10,7 @@ import Card from "./Card";
 import Container from "./Container";
 import { ClipLoader } from "react-spinners";
 import fields from "../data.json";
+import NoRecipeFound from "./NoRecipeFound";
 
 function SavedRecipe() {
   const { userId } = useParams();
@@ -92,6 +93,8 @@ function SavedRecipe() {
               <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
             </div>
           </div>
+        ) : recipes.length === 0 ? (
+          <NoRecipeFound />
         ) : (
           cuisines
             .filter((cuisine) =>

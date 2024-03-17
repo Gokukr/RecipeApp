@@ -17,7 +17,7 @@ async function getSavedRecipes(userId, searchText = "", filter) {
       })`
     );
     culId = temp.rows.map((row) => row.id);
-    console.log(culId);
+    // console.log(culId);
   }
 
   const filterQryConstruct = (filter, value) =>

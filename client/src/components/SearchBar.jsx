@@ -3,6 +3,7 @@ import { FaBell } from "react-icons/fa";
 import Notification from "./Notification";
 import data from "../data.json";
 import { useLocation } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const SearchBar = ({
   onSearch,
@@ -167,23 +168,6 @@ const SearchBar = ({
           clipRule="evenodd"
         />
       </svg>
-      {/* {pageRoute === "/dashboard" && (
-        // <>
-        //   <div
-        //     className="h-8 w-8 ml-6 mt-2 flex items-center justify-center text-white bg-primary-300 rounded-md hover:cursor-pointer"
-        //     style={{ fontSize: "0.8rem" }}
-        //     onClick={toggleNotification}
-        //   >
-        //     <FaBell />
-        //   </div>
-
-        //   {notificationVisible && (
-        //     <div className="absolute top-0 right-12 bg-primary-300 p-2 rounded-lg shadow-md">
-        //       <Notification />
-        //     </div>
-        //   )}
-        // </>
-      )} */}
       {sidebarVisible && (
         <div
           className="fixed top-0 right-0 h-full  w-80 bg-white z-10 rounded-lg drop-shadow-2xl overflow-hidden overflow-y-auto"
@@ -338,7 +322,15 @@ const SearchBar = ({
                     Culinarian
                   </h6>
                   {loading ? (
-                    <p>Loading...</p>
+                    <div className="loader-container">
+                      <div className="loader">
+                        <ClipLoader
+                          size={50}
+                          color={"#123abc"}
+                          loading={loading}
+                        />
+                      </div>
+                    </div>
                   ) : (
                     <select
                       value={selectedFilters.culinarian}
