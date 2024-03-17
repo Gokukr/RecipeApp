@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import DeleteRecipe from "./DeleteRecipe";
+import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 
 function Detailrecipe() {
@@ -398,9 +399,11 @@ function Detailrecipe() {
             </div>
           </div>
         ) : (
-          <p class="ml-5 mt-4 rounded-lg bg-gray-100 w-[85%] px-10 py-4">
-            Loading...
-          </p>
+          <div className="loader-container">
+            <div className="loader">
+              <ClipLoader size={50} color={"#123abc"} />
+            </div>
+          </div>
         )}
         {recipe.status === "Accepted" && <Rating recipeId={recipeId} />}
       </div>

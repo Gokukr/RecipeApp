@@ -65,23 +65,20 @@ const Header = memo(() => {
         </h2>
       </div>
       <div className="w-[550px] flex flex-col items-start justify-start pt-[5px] px-0 pb-0 box-border max-w-full text-5xl font-open-sans mq1050:w-0">
-        <div className="self-stretch flex flex-row items-start justify-end  mq1050:hidden">
+        <div className="self-stretch flex flex-row items-start justify-end mq1050:hidden">
           <div
             onClick={handleHomeClick}
             className="flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
-            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
+            <b className="cursor-pointer h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6">
               Home
             </b>
           </div>
           {(userRole === "Admin" || userRole === "admin") && (
             <div className="shrink-0 z-[1] mr-6 ml-6 pr-6">
               <select
-                style={{
-                  appearance: "none",
-                }}
                 value="hi"
-                className="h-10 text-5xl pt-1 font-bold mq1050:w-0 w-40 rounded-md focus:border-none flex flex-col justify-center font-open-sans border-none outline-none"
+                className="cursor-pointer h-10 focus:w-[250px] text-5xl pt-1 font-bold mq1050:w-0 w-44 rounded-md focus:border-none flex flex-col justify-center font-open-sans border-none outline-none"
                 onChange={(e) => {
                   if (e.target.value === "culRequest") {
                     handleReqClick();
@@ -90,32 +87,11 @@ const Header = memo(() => {
                   }
                 }}
               >
-                <option
-                  // selected
-                  hidden
-                  value="requests"
-                  className="text-6xl h-[40px] relative"
-                >
-                  <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
-                    Requests
-                  </b>
+                <option hidden value="requests">
+                  Requests
                 </option>
-                <option
-                  className="text-4xl h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6"
-                  value="culRequest"
-                >
-                  <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
-                    Culinarian Requests
-                  </b>
-                </option>
-                <option
-                  className="text-4xl h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] mr-6 ml-6 pr-6"
-                  value="recRequest"
-                >
-                  <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
-                    Recipe Requests
-                  </b>
-                </option>
+                <option value="culRequest">Culinarian Requests</option>
+                <option value="recRequest">Recipe Requests</option>
               </select>
             </div>
           )}
@@ -127,7 +103,7 @@ const Header = memo(() => {
               className="flex flex-col items-start justify-start"
             >
               <b
-                className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6"
+                className="cursor-pointer h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6"
                 style={{ whiteSpace: "nowrap" }}
               >
                 My Recipes
@@ -138,7 +114,7 @@ const Header = memo(() => {
             onClick={handleFavClick}
             className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
-            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+            <b className="cursor-pointer h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
               Favorites
             </b>
           </div>
@@ -147,7 +123,7 @@ const Header = memo(() => {
             onClick={handleLogout}
             className="flex-[0.8226] flex flex-col items-start justify-start py-0 pr-[4px] pl-0"
           >
-            <b className="h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
+            <b className="cursor-pointer h-[30px] relative tracking-[0.03em] inline-block shrink-0 z-[1] ml-6 mr-6 pr-6">
               Logout
             </b>
             <ToastContainer className="text-lgi" />
@@ -166,7 +142,7 @@ const Header = memo(() => {
           {/* </div> */}
           <div className="flex items-center justify-center">
             <div
-              className="h-8 w-8 relative mr-8 flex items-center justify-center text-primary-300 bg-none  hover:cursor-pointer"
+              className="cursor-pointer h-8 w-8 relative mr-8 flex items-center justify-center text-primary-300 bg-none  hover:cursor-pointer"
               // style={{ fontSize: "2.5 rem" }}
               onClick={toggleNotification}
             >
@@ -180,7 +156,7 @@ const Header = memo(() => {
           </div>
 
           <img
-            className="h-9 w-10 relative min-h-[36px] "
+            className="cursor-pointer h-9 w-10 relative min-h-[36px] "
             loading="eager"
             alt=""
             src={user}

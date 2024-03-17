@@ -9,6 +9,7 @@ import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import fields from "../data.json";
+import NoRecipeFound from "./NoRecipeFound";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -105,6 +106,8 @@ export default function Dashboard() {
                 <ClipLoader size={50} color={"#123abc"} loading={loading} />
               </div>
             </div>
+          ) : data.length === 0 ? (
+            <NoRecipeFound />
           ) : (
             cuisines
               .filter((cuisine) =>
@@ -121,10 +124,7 @@ export default function Dashboard() {
                       .filter(
                         (item) =>
                           item.cuisine === cuisine.filter &&
-                          (role === "admin"
-                            ? item.status === "Accepted" ||
-                              item.status === "Inactive"
-                            : item.status === "Accepted")
+                          item.status === "Accepted"
                       )
                       .map((item, index) => (
                         <Card
@@ -134,7 +134,6 @@ export default function Dashboard() {
                           timeTaken={`${item.total_time} mins`}
                           id={item.id}
                           rating={`${item.rating}⭐`}
-                          status={item.status}
                         />
                       ))}
                   </Container>

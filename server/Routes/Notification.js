@@ -1,35 +1,36 @@
 const router = require("express").Router();
 const db = require("../dbconfig");
- 
-router.get('/notification',async(req,res)=>
-{
-    try{
-        const requires = await db.query("select * from user_data where role='admin'") 
-        res.json(requires.rows[0].id);
-    }
-    catch(err)
-    {
-        console.log(err.message);
-    }
-})
 
-router.get('/notification1', async (req, res) => {
-    try {
-      const { user_id } = req.query;
-      console.log('User ID:', user_id);
-      const result = await db.query(`
-      SELECT n.*, u.first_name 
+router.get("/notification", async (req, res) => {
+  try {
+    const requires = await db.query(
+      "select * from user_data where role='admin'"
+    );
+    res.json(requires.rows[0].id);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+router.get("/notification1", async (req, res) => {
+  try {
+    const { user_id } = req.query;
+    console.log("User ID:", user_id);
+    const result = await db.query(
+      `
+      SELECT n.*, u.first_name ,u.role
       FROM notifications AS n
       JOIN user_data AS u ON n.user_id = u.id
       WHERE n.user_id = $1
-  `, [user_id]);
-     res.json(result.rows);
-    } catch (err) {
-      console.error('Error fetching notification data:', err.message);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
-  
+  `,
+      [user_id]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching notification data:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 router.get("/notification", async (req, res) => {
   try {
