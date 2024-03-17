@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+
 const Notification = () => {
   const [visible, setVisible] = useState(true);
   const [notifications, setNotifications] = useState([]);
@@ -41,18 +42,25 @@ const Notification = () => {
             marginRight: "200px",
           }}
         >
-          {notifications.map((notification, index) => (
-            <div key={index} className="flex flex-col mb-3 mr-6 mt-1">
-              <div className="text-center justify-center text-xs text-gray-500 mb-2">
-                {formatDate(notification.created_at)}
-              </div>
-              <div className="flex float-start ml-2">
-                <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
-                  {`${notification.first_name}  ${notification.reason}`}
+          {notifications
+            .slice()
+            .reverse()
+            .map((notification, index) => (
+              <div key={index} className="flex flex-col mb-3 mr-6 mt-1">
+                <div className="text-center justify-center text-xs text-gray-500 mb-2">
+                  {formatDate(notification.created_at)}
+                </div>
+                <div className="flex float-start ml-2">
+                  <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
+                    <strong className="text-black">
+                      {notification.first_name}
+                    </strong>{" "}
+                    {notification.reason}
+                    
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </>
