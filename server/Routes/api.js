@@ -41,10 +41,10 @@ router.post("/recipe-response/:recipeId", async (req, res) => {
       [req.params.recipeId]
     );
     let msg;
-    if (req.body.message === undefined) {
+    if (req.body.message) {
       msg = `${recipeDetail.rows[0].name}: Your recipe has been accepted`;
     } else {
-      msg = req.body.message;
+      msg =`${recipeDetail.rows[0].name}: Your recipe has been Rejected`;
     }
     await db.query(
       "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
