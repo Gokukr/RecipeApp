@@ -4,7 +4,6 @@ import Notification from "./Notification";
 import data from "../data.json";
 import { useLocation } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-
 const SearchBar = ({
   onSearch,
   placeholder = "What are you looking to cook today...",
@@ -27,7 +26,7 @@ const SearchBar = ({
   useEffect(() => {
     fetchCulinarians();
   }, []);
-
+  //to fetch culinarians
   const fetchCulinarians = async () => {
     try {
       const response = await fetch(
@@ -44,9 +43,7 @@ const SearchBar = ({
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    console.log("search item", searchTerm);
   };
-
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
@@ -65,21 +62,9 @@ const SearchBar = ({
     });
   };
   const handleApplyFilters = () => {
-    console.log("Selected Filters:", selectedFilters);
     onSearch(searchTerm, selectedFilters);
-    // JSON.stringify(selectedFilters) ==
-    //   JSON.stringify({
-    //     cuisine: [],
-    //     mealType: [],
-    //     courseType: [],
-    //     rating: [],
-    //     culinarian: "",
-    //   }) && searchTerm === ""
-    //   ? allRecipe(true)
-    //   : allRecipe(false);
     toggleSidebar();
   };
-
   const handleCancelFilters = () => {
     setSelectedFilters({
       cuisine: [],
@@ -88,15 +73,9 @@ const SearchBar = ({
       rating: [],
       culinarian: "",
     });
-    // Close the sidebar
     toggleSidebar();
   };
-  // const handleCulinarianChange = (event) => {
-  //   setSelectedFilters({
-  //     ...selectedFilters,
-  //     culinarian: event.target.value,
-  //   });
-  // };
+
   const toggleNotification = () => {
     setNotificationVisible(!notificationVisible);
   };
@@ -113,19 +92,6 @@ const SearchBar = ({
   React.useEffect(() => {
     onSearch(searchTerm, selectedFilters);
   }, [searchTerm]);
-
-  // React.useEffect(() => {
-  //   JSON.stringify(selectedFilters) ==
-  //     JSON.stringify({
-  //       cuisine: [],
-  //       mealType: [],
-  //       courseType: [],
-  //       rating: [],
-  //       culinarian: "",
-  //     }) && searchTerm === ""
-  //     ? allRecipe(true)
-  //     : allRecipe(false);
-  // }, [searchTerm]);
 
   return (
     <div
@@ -154,7 +120,6 @@ const SearchBar = ({
           />
         </svg>
       </div>
-      {/* Filter Icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-8 w-8 ml-8 mt-2 text-white bg-primary-300 rounded-md drop-shadow-2xl hover:cursor-pointer"
@@ -185,8 +150,6 @@ const SearchBar = ({
                 Reset
               </button>
             </div>
-
-            {/* Cuisine */}
             <div className="mb-4">
               <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-2rem] flex flex-start">
                 Cuisine
@@ -217,7 +180,6 @@ const SearchBar = ({
                 </div>
               </ul>
             </div>
-            {/* Meal Type */}
             <div className="mb-4">
               <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 mt-[-1rem] flex flex-start">
                 Meal Type
@@ -259,7 +221,6 @@ const SearchBar = ({
                 </div>
               </div>
             </div>
-            {/* Course Type */}
             <div className="mb-4">
               <h6 className="text-sm font-semibold mb-4 ml-0 mr-12 flex flex-start mt-[-0.5rem]">
                 Course Type
@@ -286,7 +247,6 @@ const SearchBar = ({
                   </div>
                 ))}
               </div>
-              {/* Rating */}
               <div className="mt-4">
                 <h6 className="text-sm font-semibold mb-1 ml-0 mr-12 flex flex-start mt-[1rem]">
                   Rating

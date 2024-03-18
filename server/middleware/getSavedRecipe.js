@@ -8,7 +8,6 @@ async function getSavedRecipes(userId, searchText = "", filter) {
   };
   let culId;
   if (filter.culinarian) {
-    // const t = ;
     const temp = await pool.query(
       `select id from user_data where lower(first_name) IN (${
         Array.isArray(filter.culinarian)
@@ -17,7 +16,6 @@ async function getSavedRecipes(userId, searchText = "", filter) {
       })`
     );
     culId = temp.rows.map((row) => row.id);
-    // console.log(culId);
   }
 
   const filterQryConstruct = (filter, value) =>

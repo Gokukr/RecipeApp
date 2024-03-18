@@ -41,14 +41,12 @@ async function saveRecipe(userId, recipeId, saveDate) {
         "DELETE FROM favorites where user_id = $1 and recipe_id = $2",
         [userId, recipeId]
       );
-      // console.log("removed from saved table!!");
     } else {
       await pool.query(
         `INSERT INTO favorites(user_id, recipe_id, Date_added, notes) 
         values ($1, $2 ,$3, $4)`,
         [userId, recipeId, saveDate, "..."]
       );
-      // console.log("saved!!");
     }
     return { status: "success" };
   } catch (error) {

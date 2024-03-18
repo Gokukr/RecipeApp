@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import Limage from "../assets/signup.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 export default function SignUp() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -14,7 +13,6 @@ export default function SignUp() {
   const [dob, setDob] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setrePassword] = useState("");
-  // const [checkuser, setcheckuser] = useState("");
   const Navigate = useNavigate();
   const notify = (message) => toast(message);
 
@@ -55,7 +53,6 @@ export default function SignUp() {
         });
         if (response.status === 401) {
           const errorMessage = await response.text();
-          // Call notify when there's an error
           notify(errorMessage);
         } else {
           notify("Successfully Registered");

@@ -1,9 +1,6 @@
 import React from "react";
-
 const Container = ({ cuisineName, children }) => {
-  // Convert a single child into an array if it's not already an array
   const childrenArray = Array.isArray(children) ? children : [children];
-
   return (
     <div className="container mx-auto py-8 pl-12" style={{ width: "90%" }}>
       <h2 className="text-gray-800 font-semibold font-open-sans">

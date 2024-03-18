@@ -13,18 +13,15 @@ import NoRecipeFound from "./NoRecipeFound";
 export default function MyRecipes() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [Ttoken, setTtoken] = useState("");
   const role = Cookies.get("role");
   const userId = Cookies.get("user_id");
   const [showAll, setShowAll] = useState(true);
-  const Navigate = useNavigate();
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState("Accepted");
   function handleClick(selectedLabel) {
     setSelectedStatus(selectedLabel);
   }
-  // Reference to the container element
   const containerRef = useRef(null);
   const navigate = useNavigate();
   useEffect(() => {

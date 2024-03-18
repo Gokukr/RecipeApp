@@ -4,8 +4,6 @@ const bcrypt = require("bcrypt");
 
 router.get("/user-profile/:id", (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
-
   pool.query(
     `select * from user_data where id= $1`,
     [userId],
@@ -18,7 +16,6 @@ router.get("/user-profile/:id", (req, res) => {
           res.status(404).json({ error: "User not found" });
         } else {
           const user = result.rows[0];
-          console.log(user);
           res.json({
             id: user.id,
             name: user.first_name + " " + user.last_name,
@@ -26,7 +23,6 @@ router.get("/user-profile/:id", (req, res) => {
             gender: user.gender,
             role: user.role,
             phone: user.phone_number,
-            pass: user.password,
             fname: user.first_name,
             lname: user.last_name,
             about: user.about,
@@ -117,7 +113,6 @@ router.get("/likedCuisine/:id", (req, res) => {
           res.json({ cuisine: "Nothing to show here" });
         } else {
           const counter = result.rows[0];
-          // console.log(counter);
           res.json({ cuisine: counter.favorite_cuisine });
         }
       }
@@ -205,7 +200,6 @@ router.get("/recipe-count/:id", (req, res) => {
         console.error("Error fetching user-data:", error);
         res.status(500).json({ error: "Internal Server Error" });
       } else {
-        console.log(result);
         const num = result.rows[0];
         res.json({
           count: num.count,
@@ -235,23 +229,18 @@ router.put("/recipe/update/:recipeId/:newRating/:total", (req, res) => {
 });
 
 router.get("/recipes/:id", (req, res) => {
-  //   const recipeId = "23d5525f-9701-4ad3-8e36-eb8ab4802875";
   const recipeId = req.params.id;
-  console.log(recipeId);
   pool.query(
     `SELECT * FROM recipe WHERE id = $1`,
     [recipeId],
     (error, result) => {
       if (error) {
         console.error("Error fetching recipe:", error);
-        // res.status(500).json({ error: "Internal Server Error" });
       } else {
         if (result.rows.length === 0) {
-          // res.status(404).json({ error: "Recipe not found" });
           console.error(error);
         } else {
           const recipe = result.rows[0];
-          //console.log(recipe);
           res.json({
             id: recipe.id,
             title: recipe.name,
@@ -302,19 +291,16 @@ router.put("/edit-profile", async (req, res) => {
   }
 });
 
-router.get("/culinarian/:status", (req, res) => {
-  const stat = req.params.status;
+router.get("/culinarian", (req, res) => {
   pool.query(
     `
-  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id, culinarian.user_id from culinarian join user_data on culinarian.user_id = user_data.id where culinarian.status = $1 `,
-    [stat],
+  select user_data.first_name as f_name, user_data.last_name as l_name, culinarian.specialization, culinarian.bio, culinarian.id, culinarian.user_id , culinarian.status from culinarian join user_data on culinarian.user_id = user_data.id `,
+    [],
     (error, result) => {
-      // console.log(result);
       if (error) {
         res.status(500).json({ error: "Error Fetching Data" });
       } else {
         const hasData = result.rows.length > 0;
-        // console.log(hasData);
         res.json({
           data: result.rows,
           count: hasData,
@@ -358,15 +344,9 @@ router.put("/culinarian/:status/:id", async (req, res) => {
           await pool.query("UPDATE user_data SET role = 'user' WHERE id = $1", [
             user_id,
           ]);
-          console.log("Role updated to 'user' for user with user ID:", user_id);
         } else {
-          console.log("Role is not 'Culinarian' for user with user ID:", user_id);
         }
       } else {
-        console.log(
-          "No records found in the culinarian table for the given ID:",
-          id
-        );
       }
     } catch (error) {
       console.error("Error:", error);
@@ -447,7 +427,6 @@ router.post(`/notification/:id/:message/:reason`, (req, res) => {
     `insert into notification(user_id, message, reason) values ($1, $2, $3)`,
     [userId, message, reason],
     (error, result) => {
-      console.log(result);
       if (error) {
         res
           .status(500)

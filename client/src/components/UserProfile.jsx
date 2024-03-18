@@ -43,7 +43,6 @@ function UserProfile(userId) {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setVerify(response.data);
         setLoading(false);
       })
@@ -70,7 +69,6 @@ function UserProfile(userId) {
           });
 
           const data = await response.json();
-          console.log(data.status);
           if (data.status === "Pending") {
             setBgColor("bg-red-500");
             setRequest("Request is pending");

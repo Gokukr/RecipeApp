@@ -1,13 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const Card = ({ foodName, timeTaken, imageUrl, id }) => {
-  // console.log(id);
-
   return (
     <Link className="no-underline" to={`/user/detail-recipe/${id}`}>
-      {/* {name} */}
-
       <div className="w-72 h-50 bg-primary-100 hover:drop-shadow-2xl rounded-lg overflow-hidden flex flex-col mr-4">
         <img
           src={imageUrl}

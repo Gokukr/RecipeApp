@@ -1,14 +1,11 @@
 import React from "react";
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Cookies from "js-cookie";
-
 const ChangePasswordModal = ({ handleClose }) => {
   const notify = (message) => toast(message);
-  // const Navigate = useNavigate();
   const userId = Cookies.get("user_id");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -17,8 +14,35 @@ const ChangePasswordModal = ({ handleClose }) => {
   const handleChange1 = (event) => setOldPassword(event.target.value);
   const handleChange2 = (event) => setNewPassword(event.target.value);
   const handleChange3 = (event) => setConfirmPassword(event.target.value);
-
-  const handleChangePassword = () => {
+  const getPasswordStrength = (newPassword) => {
+    const hasCapitalLetter = /[A-Z]/.test(newPassword);
+    const hasSmallLetter = /[a-z]/.test(newPassword);
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
+    const hasMinimumLength = newPassword.length >= 8;
+    if (newPassword.length === 0) {
+      return "Please enter a password";
+    }
+    if (newPassword.length === 1) {
+      return "Very Weak";
+    }
+    if (
+      hasCapitalLetter &&
+      hasSmallLetter &&
+      hasSpecialCharacter &&
+      hasMinimumLength
+    ) {
+      return "Very Strong";
+    }
+    if (hasCapitalLetter && hasSmallLetter && hasMinimumLength) {
+      return "Strong";
+    }
+    if ((hasCapitalLetter || hasSmallLetter) && hasMinimumLength) {
+      return "Medium";
+    }
+    return "Weak";
+  };
+  const passwordStrength = getPasswordStrength(newPassword);
+    const handleChangePassword = () => {
     if (oldPassword === "" || newPassword === "" || confirmPassword === "") {
       notify("Fields Empty !!");
     } else if (newPassword !== confirmPassword) {
@@ -53,6 +77,7 @@ const ChangePasswordModal = ({ handleClose }) => {
         });
     }
   };
+
   const cancelDelete = () => {
     handleClose();
   };
@@ -103,7 +128,54 @@ const ChangePasswordModal = ({ handleClose }) => {
                             className="block mt-1 w-full bg-textbg rounded-md box-border border-0 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             onChange={handleChange2}
                           />
-                        </div>
+                                <div className="mt-2 flex justify-between">
+                  <div className="flex-1 mr-2">
+                    <div
+                      className={`h-2 rounded ${
+                        passwordStrength === "Very Weak"
+                          ? "bg-red-400"
+                          : "bg-gray-300"
+                      }`}
+                    ></div>
+                  </div>
+                  <div className="flex-1 mr-2">
+                    <div
+                      className={`h-2 rounded ${
+                        passwordStrength === "Weak"
+                          ? "bg-orange-400"
+                          : "bg-gray-300"
+                      }`}
+                    ></div>
+                  </div>
+                  <div className="flex-1 mr-2">
+                    <div
+                      className={`h-2 rounded ${
+                        passwordStrength === "Medium"
+                          ? "bg-yellow-400"
+                          : "bg-gray-300"
+                      }`}
+                    ></div>
+                  </div>
+                  <div className="flex-1 mr-2">
+                    <div
+                      className={`h-2 rounded ${
+                        passwordStrength === "Strong"
+                          ? "bg-green-400"
+                          : "bg-gray-300"
+                      }`}
+                    ></div>
+                  </div>
+                  <div className="flex-1">
+                    <div
+                      className={`h-2 rounded ${
+                        passwordStrength === "Very Strong"
+                          ? "bg-blue-400"
+                          : "bg-gray-300"
+                      }`}
+                    ></div>
+                  </div>
+                </div>
+              </div>
                         <div className="py-0.5">
                           <span className="mb-2 text-md">
                             Confirm New Password
@@ -145,5 +217,4 @@ const ChangePasswordModal = ({ handleClose }) => {
     </div>
   );
 };
-
 export default ChangePasswordModal;

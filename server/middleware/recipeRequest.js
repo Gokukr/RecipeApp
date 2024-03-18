@@ -14,5 +14,4 @@ const handleRecipeRequest = (id, status) => {
 module.exports = {
   getRecipeRequests,
   handleRecipeRequest,
-  // handleAcceptRequest,
 };

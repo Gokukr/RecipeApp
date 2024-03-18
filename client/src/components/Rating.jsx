@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Rating({ recipeId }) {
   const navigate = useNavigate();
   const notify = (message) => toast(message);
-  const [selectedRating, setSelectedRating] = useState(Number); // Adjust based on user's previous rating
+  const [selectedRating, setSelectedRating] = useState(Number); 
   const [lastRating, setLastRating] = useState(Number);
   const [load, setLoad] = useState(true);
   const userId = Cookies.get("user_id");
@@ -22,15 +22,12 @@ function Rating({ recipeId }) {
         console.error(error);
       });
   }, [recipeId, userId, navigate]);
-  console.log(lastRating);
-
   const handleRatingChange = (newRating) => {
     setSelectedRating(newRating);
     setLoad(false);
   };
   const [initialAverageRating, setRating] = useState(0);
   const [total_ratings, setTotal] = useState(0);
-  // console.log(recipeId);
   useEffect(() => {
     axios
       .get(`http://localhost:1200/api/detail/recipes/${recipeId}`)
@@ -54,7 +51,6 @@ function Rating({ recipeId }) {
           `http://localhost:1200/api/detail/recipe/update/${recipeId}/${newRating}/${total}`
         )
         .then(() => {
-          console.log("Review Submitted");
           notify("Ratings Submitted. Thanks for Rating!");
         })
         .catch((error) => {
@@ -66,10 +62,9 @@ function Rating({ recipeId }) {
           `http://localhost:1200/api/detail/ratings/post/${recipeId}/${userId}/${selectedRating}`
         )
         .then(() => {
-          console.log("submitted");
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
           window.location.reload();
         });
     } else {
@@ -82,7 +77,6 @@ function Rating({ recipeId }) {
           `http://localhost:1200/api/detail/recipe/update/${recipeId}/${newRating}/${total}`
         )
         .then(() => {
-          console.log("Review Submitted");
           notify("Ratings Submitted. Thanks for Rating!");
         })
         .catch((error) => {
@@ -94,7 +88,6 @@ function Rating({ recipeId }) {
           `http://localhost:1200/api/detail/ratings/update/${recipeId}/${userId}/${selectedRating}`
         )
         .then(() => {
-          console.log("Ratings Updated");
         })
         .catch((error) => {
           console.error("Error");
@@ -136,7 +129,6 @@ function Rating({ recipeId }) {
             </span>
           ))}
         </div>
-        {/* <p className="mt-5 text-sm">Selected Rating: {selectedRating}</p> */}
         <button
           onClick={submitRating}
           className="mt-4 bg-primary-100 text-white font-medium px-4 py-2 rounded-md hover:bg-blue-700"

@@ -1,13 +1,11 @@
 import React from "react";
-
 const PopupDialog = ({ isOpen, onClose, onConfirm }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log();
     onConfirm(event.target[0].value);
   };
 
-  if (!isOpen) return null; // Render nothing if the popup is not open
+  if (!isOpen) return null; 
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto flex items-center justify-center font-open-sans">
@@ -38,7 +36,6 @@ const PopupDialog = ({ isOpen, onClose, onConfirm }) => {
             />
           </div>
         </div>
-
         <div className="flex justify-center gap-5 font-open-sans">
           <button
             type="submit"

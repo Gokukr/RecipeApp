@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const AddRecipe = () => {
   const userId = Cookies.get("user_id");
   const notify = (message) => toast(message);
@@ -23,7 +22,6 @@ const AddRecipe = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setVerify(response.data);
         setLoading(false);
       })
@@ -45,7 +43,6 @@ const AddRecipe = () => {
           "http://localhost:1200/api/manage/add",
           newRecipe
         );
-        console.log(newRecipe);
         if (role === "admin") 
         {
         notify("Recipe added successfully!");

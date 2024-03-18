@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
-// import AddIngredientsDialog from "./AddIngredientsDialog";
-// import IngredientCheckbox from "./IngredientCheckbox";
 import "react-toastify/dist/ReactToastify.css";
 import data from "../data.json";
 
@@ -113,7 +110,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       id="recipename"
                       autoComplete="recipename"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      // className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                       placeholder="Recipe"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -157,7 +153,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       autoComplete="preparation-time"
                       id="preparation-time"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      // className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                       value={preparationTime}
                       onChange={(e) => setPreparationTime(e.target.value)}
                     />
@@ -180,7 +175,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       name="cooking-time"
                       id="cooking-time"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      // className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                     />
                   </div>
                 </div>
@@ -198,7 +192,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       name="servings"
                       id="servings"
                       autoComplete="servings"
-                      // className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={servings}
                       onChange={(e) => setServings(e.target.value)}
@@ -217,7 +210,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                     <select
                       name="cuisine-type"
                       id="cuisine-type"
-                      // className="cursor-pointer block w-full border-0 py-1.5 text-gray-900 font-open-sans shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={cuisineType}
                       onChange={(e) => setCuisineType(e.target.value)}
@@ -240,7 +232,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                     <select
                       name="course-type"
                       id="course-type"
-                      // className="cursor-pointer block w-full border-0 font-open-sans py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={courseType}
                       onChange={(e) => setCourseType(e.target.value)}
@@ -261,7 +252,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                   </label>
                   <div className="mt-2">
                     <select
-                      // className="cursor-pointer block w-full border-0 font-open-sans py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-100 sm:text-sm sm:leading-6 bg-textbg"
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={difficultyLevel}
                       onChange={(e) => setDifficultyLevel(e.target.value)}
@@ -286,7 +276,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                     id="image"
                     autoComplete="image"
                     className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    // className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset bg-textbg focus:ring-primary-100 sm:text-sm sm:leading-6 placeholder:font-open-sans"
                     placeholder="https://www.image.jpg"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
@@ -308,7 +297,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       autoComplete="description"
                       rows={3}
                       className="block w-full mt-1.5 rounded-md box-border border-0 pl-2  bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      // className="block w-full box-border border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset bg-textbg focus:ring-primary-100 sm:text-sm sm:leading-6 placeholder:font-open-sans"
                       placeholder="Some information about the recipe, maybe some tips."
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
@@ -329,7 +317,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       <div
                         key={index}
                         className="mb-5 p-1 block w-full mt-1.5 rounded-md box-border border-0 bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-sanfocus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        // className="mb-5 p-1 ring-1 ring-inset ring-gray-300 shadow-sm bg-textbg hover:ring-2 hover:ring-inset hover:ring-primary-100 sm:text-sm sm:leading-6 placeholder:font-san"
                       >
                         <div className="relative">
                           <input
@@ -382,8 +369,6 @@ const ManageRecipes = ({ handleSubmit, recipe }) => {
                       <div
                         key={index}
                         className="mb-5 p-1 block w-full mt-1.5 rounded-md box-border border-0 bg-textbg text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-sanfocus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-
-                        // className="mb-5 p-1 ring-1 ring-inset ring-gray-300 shadow-sm bg-textbg hover:ring-2 hover:ring-inset hover:ring-primary-100 sm:text-sm sm:leading-6 placeholder:font-san"
                       >
                         <div className="relative">
                           <input

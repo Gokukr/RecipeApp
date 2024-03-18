@@ -13,12 +13,11 @@ const RecipeRequest = () => {
   const notify = (message) => toast(message);
   const [isPopupOpen, setPopup] = React.useState(false);
   const [rejectId, setrejectId] = React.useState();
-
+  const [curRecipe, setRecipe] = React.useState();
   const getRequests = async () => {
     setLoading(true);
     try {
       const result = await getRecipeRequests();
-      // console.log(result);
       setLoading(false);
       setRecReq(result.data.rows);
     } catch (error) {
@@ -27,13 +26,12 @@ const RecipeRequest = () => {
     }
   };
 
-  const handleRecipeAction = async (isAccept, id, message = "") => {
+  const handleRecipeAction = async (isAccept, id, name, message = "") => {
     try {
-      const res = await recipeResponse(isAccept, id, message);
-      console.log(res);
+      const res = await recipeResponse(isAccept, id, name, message);
       notify(`Recipe ${isAccept ? "Accepted" : "Rejected"}`);
-      // console.log(result);
       setrejectId("");
+      setRecipe("");
       getRequests();
     } catch (error) {
       console.error(error);
@@ -96,7 +94,6 @@ const RecipeRequest = () => {
       >
         <p
           className={`font-open-sans min-w-24 rounded min-h-8 text-center pt-2  ${
-            // status === "Pending" ? "bg-green-500" : "bg-red-500"
             getTagClass(status)
           }`}
         >
@@ -117,6 +114,7 @@ const RecipeRequest = () => {
               onClick={() => {
                 setPopup(true);
                 setrejectId(id);
+                setRecipe(recipeName);
               }}
             >
               Reject
@@ -142,13 +140,12 @@ const RecipeRequest = () => {
           </div>
         ) : (
           <>
-            {/* {recReq.length == 0 ? } */}
             <PopupDialog
               isOpen={isPopupOpen}
               onClose={closePopup}
               onConfirm={(message) => {
                 closePopup();
-                handleRecipeAction(false, rejectId, message);
+                handleRecipeAction(false, rejectId, curRecipe, message);
               }}
             />
             <div class="mx-40">

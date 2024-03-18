@@ -3,15 +3,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useState } from "react";
-
 const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
   const notify = (message) => toast(message);
   const [feedbackText, setFeedbackText] = useState("");
-
   const handleChange = (event) => {
     setFeedbackText(event.target.value.trim());
   };
-
   function handleAccept() {
     const updatedStatus = "Accepted";
     axios
@@ -33,13 +30,8 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
     axios
       .post(`http://localhost:1200/notify/notification`, body)
       .then((response) => {
-        console.log(
-          "Notification created successfully:",
-          response.data.message
-        );
       });
   }
-
   function handleReject() {
     const updatedStatus = "Rejected";
     axios
@@ -63,21 +55,15 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
     axios
       .post(`http://localhost:1200/notify/notification`, body)
       .then((response) => {
-        console.log(
-          "Notification created successfully:",
-          response.data.message
-        );
         handleClose();
       })
       .catch((error) => {
         handleClose();
       });
   }
-
   const cancel = () => {
     handleClose();
   };
-
   return (
     <>
       <ToastContainer />
@@ -146,7 +132,6 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
                           name="adminFeedback"
                           rows="4"
                           className="resize-none rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-textbg"
-                          // value="Give Feedback"
                           onChange={handleChange}
                           required
                         />

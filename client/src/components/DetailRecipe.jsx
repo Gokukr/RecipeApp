@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import DeleteRecipe from "./DeleteRecipe";
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
-
 function Detailrecipe() {
   const navigate = useNavigate();
   const { recipeId } = useParams();
@@ -73,15 +72,12 @@ function Detailrecipe() {
         setfav(response.data.fav);
       });
   }, [userId, recipeId]);
-  console.log("value of fav is : ");
-  console.log(fav);
   const handleAddToFavourites = () => {
     try {
       const res = axios.post(
         `http://localhost:1200/api/${userId}/save-a-recipe`,
         { recipeId: recipeId, date: new Date() }
       );
-      console.log(res);
     } catch (error) {
       console.error("Error checking or adding recipe to favourites:", error);
     }
@@ -106,7 +102,6 @@ function Detailrecipe() {
 
   const setStatus = async () => {
     const updatedStatus = { recipeStatus, recipeId };
-    console.log(updatedStatus);
     try {
       const response = await axios.put(
         "http://localhost:1200/api/manage/status",
@@ -118,6 +113,7 @@ function Detailrecipe() {
   };
   return (
     <div class="bg-white">
+      <ToastContainer/>
       <Header />
       <div class=" mx-40 mb-10 sm:my-10 px-4 pb-6 rounded-xl bg-white font-open-sans">
         {recipe ? (

@@ -41,7 +41,6 @@ export default function CulinarianRequests({show}) {
                 axios.get("http://localhost:1200/notify/notification")
                 .then(response=>
                   { 
-                    console.log(response.data);
                     const body = {
                       user_id : response.data,
                       reason  :data + " Requested to be a culinarian"
@@ -49,15 +48,12 @@ export default function CulinarianRequests({show}) {
                     axios.post("http://localhost:1200/notify/notification",body)
                     .then(response=>
                       {
-                         console.log(response.data) 
                       })
                      .catch(error=>
                       {
-                         console.log(error);
                       })
                   })
                   .catch(error => {
-                    console.log(error);
                   })
                 notify("Request as sent to Admin")
                 setTimeout(()=>{

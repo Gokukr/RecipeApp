@@ -3,7 +3,6 @@ import Card from "./Card";
 import NoRecipeFound from "./NoRecipeFound";
 
 export default function RecipeContainer({ data }) {
-  // debugger;
   if (data === undefined || data.length === 0) return <NoRecipeFound />;
 
   return (

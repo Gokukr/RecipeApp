@@ -1,6 +1,5 @@
 import { memo, useState } from "react";
 import hatimage from "../assets/hat.png";
-// import search from "../assets/Vector.png";
 import user from "../assets/Vector (1).png";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -128,22 +127,9 @@ const Header = memo(() => {
             </b>
             <ToastContainer className="text-lgi" />
           </div>
-
-          {/* <b className="h-[30px] flex-1 relative tracking-[0.03em] inline-block whitespace-nowrap z-[1]">
-            About us
-          </b> */}
-          {/* <div className="flex flex-col items-start justify-start py-0 pr-[17px] pl-0">
-            {/* <img
-              className="w-[39px] h-[33px] relative overflow-hidden shrink-0"
-              loading="eager"
-              alt=""
-              src={search}
-            /> */}
-          {/* </div> */}
           <div className="flex items-center justify-center">
             <div
               className="cursor-pointer h-8 w-8 relative mr-8 flex items-center justify-center text-primary-300 bg-none  hover:cursor-pointer"
-              // style={{ fontSize: "2.5 rem" }}
               onClick={toggleNotification}
             >
               <FaBell />

@@ -1,5 +1,4 @@
 import React from "react";
-
 const Footer = () => {
   return (
     <footer className="bg-primary-100 text-gray-300 p-4 text-center font-open-sans ">

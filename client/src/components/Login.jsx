@@ -65,7 +65,7 @@ export default function Login() {
     }
     catch(err)
     {
-       console.log(err.message);
+       console.error(err.message);
     }
 
 }
@@ -137,7 +137,7 @@ export default function Login() {
         Navigate("/");
       }
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
     }
   };
   const handleChange = (e) => {
@@ -172,7 +172,6 @@ const FormSubmit = async(e) =>
   try{
   e.preventDefault();
   const body = {Email}
-  console.log(Email);
   Cookies.set('email',Email,{expires:1});
   const response = await fetch("http://localhost:1200/api/OtpVerify",
   {
@@ -200,7 +199,7 @@ const FormSubmit = async(e) =>
   }
   }
    catch(err){
-    console.log(err.message)
+    console.error(err.message)
    }
 }
 

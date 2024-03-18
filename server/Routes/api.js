@@ -11,7 +11,6 @@ const saveRecipe = require("../middleware/savedRecipe");
 const randomize = require("randomatic");
 const {
   getRecipeRequests,
-  // handleAcceptRequest,
   handleRecipeRequest,
 } = require("../middleware/recipeRequest");
 
@@ -20,7 +19,7 @@ router.get("/recipe-requests", async (req, res) => {
     const result = await getRecipeRequests();
     res.send(result);
   } catch (error) {
-    console.log("error recieving reicpes ", error);
+    console.error("error recieving reicpes ", error);
     res.send("Unable to get recipe requests");
   }
 });
@@ -31,11 +30,6 @@ router.post("/recipe-response/:recipeId", async (req, res) => {
       req.params.recipeId,
       req.body.isAccept ? "Accepted" : "Rejected"
     );
-    // if (req.body.isAccept) {
-    //   result = await handleAcceptRequest(req.params.recipeId, "Accepted");
-    // } else {
-    //   result = await handleRejectRequest(req.params.recipeId, "Rejected");
-    // }
     const recipeDetail = await db.query(
       "select user_id,name from recipe where id = $1",
       [req.params.recipeId]
@@ -52,7 +46,7 @@ router.post("/recipe-response/:recipeId", async (req, res) => {
     );
     res.send(result);
   } catch (error) {
-    console.log("Error handling recipe request", error);
+    console.error("Error handling recipe request", error);
     res.send("Server error : Recipe request error");
   }
 });
@@ -68,7 +62,7 @@ router.get("/recipes/all", async (req, res) => {
     });
     res.send(result);
   } catch (error) {
-    console.log("error recieving recipes ", error);
+    console.error("error recieving recipes ", error);
     res.send("Server error");
   }
 });
@@ -100,16 +94,6 @@ router.post("/:userId/save-a-recipe", async (req, res) => {
   res.send(result);
 });
 
-// function isStrongPassword(password) {
-//   const strongRegex =
-//     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-//   return strongRegex.test(password);
-// }
-
-// router.get("/api/data", (req, res) => {
-//   const data = { message: "Hello world" };
-//   res.json(data);
-// });
 router.post("/register", async (req, res) => {
   try {
     const {
@@ -123,13 +107,6 @@ router.post("/register", async (req, res) => {
       password,
       repassword,
     } = req.body;
-    // if (!isStrongPassword(password)) {
-    //   return res
-    //     .status(401)
-    //     .send(
-    //       "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
-    //     );
-    // }
     if (repassword === password) {
       const registration = await db.query(
         "SELECT * FROM user_data WHERE email = $1",
@@ -161,7 +138,6 @@ router.post("/register", async (req, res) => {
         [email]
       );
       const newUser = newUserQuery.rows[0];
-      // console.log(newUser);
       mailservice.sendmail(
         email,
         "Cook Buddy",
@@ -173,7 +149,7 @@ router.post("/register", async (req, res) => {
       return res.status(401).send("Password Mismatch");
     }
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -204,16 +180,13 @@ router.post("/login", async (req, res) => {
     };
     res.json(body);
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
 
-//for fetching userdata in profile page
 router.get("/user-profile/:id", (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
-
   db.query(
     `select * from user_data where id= $1`,
     [userId],
@@ -226,7 +199,6 @@ router.get("/user-profile/:id", (req, res) => {
           res.status(404).json({ error: "User not found" });
         } else {
           const user = result.rows[0];
-          console.log(user);
           res.json({
             id: user.id,
             name: user.first_name + " " + user.last_name,
@@ -249,38 +221,11 @@ router.get("/notification", (req, res) => {
       message: "hello",
     };
     res.send(notification);
-    console.log(notification);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
 
-//for meal type table
-// router.post("/mealtype", async (req, res) => {
-//   try {
-//     const { name, description, type } = req.body;
-//     await db.query(
-//       "INSERT INTO meal_type(name,description,type)VALUES($1,$2,$3)",
-//       [name, description, type]
-//     );
-//     console.log(name);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error: "internal server error" });
-//   }
-// });
-
-//for favorites table
-// router.post("/favorites", async (req, res) => {
-//   try {
-//     const { notes } = req.body;
-//     await db.query("INSERT INTO favorites(notes) VALUES($1)", [notes]);
-//     console.log(notes);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ error: "internal server error" });
-//   }
-// });
 
 router.post("/OtpVerify", async (req, res) => {
   try {
@@ -303,7 +248,7 @@ router.post("/OtpVerify", async (req, res) => {
       return res.status(401).json(`user not exist`);
     }
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -311,13 +256,6 @@ router.post("/OtpVerify", async (req, res) => {
 router.post("/ChangePassword", async (req, res) => {
   try {
     const { email, Password, repassword } = req.body;
-    // if (!isStrongPassword(Password)) {
-    //   return res
-    //     .status(401)
-    //     .send(
-    //       "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
-    //     );
-    // }
     if (Password == repassword) {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
@@ -333,7 +271,7 @@ router.post("/ChangePassword", async (req, res) => {
       return res.status(401).send("Password Mismatch");
     }
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -345,7 +283,7 @@ router.get("/culinarianAccepted", async (req, res) => {
     );
     res.json(rows);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "server error" });
   }
 });
@@ -357,7 +295,7 @@ router.get("/getdata", async (req, res) => {
     );
     res.json(rows);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -378,7 +316,7 @@ router.post("/Checkrole", async (req, res) => {
       res.json(check.rows[0].role);
     }
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 });
 
@@ -397,7 +335,7 @@ router.post("/culinarian", async (req, res) => {
     const firstName = request.rows[0].first_name;
     res.json(firstName);
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 });
 

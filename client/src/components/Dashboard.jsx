@@ -5,26 +5,20 @@ import Search from "./Search";
 import Card from "./Card";
 import Container from "./Container";
 import Cookies from "js-cookie";
-import RecipeContainer from "./RecipeContainer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import fields from "../data.json";
 import NoRecipeFound from "./NoRecipeFound";
-
 export default function Dashboard() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [Ttoken, setTtoken] = useState("");
   const [role, setRole] = useState("");
   const [user_id, Setuser_id] = useState("");
-  // const [showAll, setShowAll] = useState(true);
   const Navigate = useNavigate();
   const [verify, setVerify] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  // Reference to the container element
   const containerRef = useRef(null);
-
   useEffect(() => {
     const id = Cookies.get("user_id");
     Setuser_id(id);
@@ -34,7 +28,6 @@ export default function Dashboard() {
     axios
       .post("http://localhost:1200/api/Checkrole", body)
       .then((response) => {
-        // console.log(response.data);
         Cookies.set("role", response.data);
       })
       .catch((error) => {
@@ -52,7 +45,6 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        // console.log(response.role);
         setVerify(response.data);
         setLoading(false);
       })
@@ -68,13 +60,6 @@ export default function Dashboard() {
       fetchData();
     }
   }, [verify]);
-
-  // useEffect(() => {
-  //   if (!isLoading && containerRef.current) {
-  //     // Scroll to the container element when it mounts
-  //     containerRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [isLoading]);
 
   const fetchData = async () => {
     try {
@@ -99,7 +84,6 @@ export default function Dashboard() {
         <div className="dashboard-container overflow-y-auto">
           <Header />
           <Search setData={setData} />
-
           {isLoading ? (
             <div className="loader-container">
               <div className="loader">

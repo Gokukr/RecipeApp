@@ -11,11 +11,9 @@ import Container from "./Container";
 import { ClipLoader } from "react-spinners";
 import fields from "../data.json";
 import NoRecipeFound from "./NoRecipeFound";
-
 function SavedRecipe() {
   const { userId } = useParams();
   const [recipes, setRecipes] = useState([]);
-  // const [showAll, setShowAll] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
@@ -83,7 +81,6 @@ function SavedRecipe() {
         <div className="flex-1 flex flex-col items-center justify-center gap-26 max-w-full text-center text-13xl text-primary-100 font-open-sans">
           <SearchBar
             onSearch={setItems}
-            // allRecipe={setShowAll}
             placeholder={"Search favorite recipes..."}
           />
         </div>

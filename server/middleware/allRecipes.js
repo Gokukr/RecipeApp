@@ -6,9 +6,7 @@ const allRecipes = async (searchText = "", filter) =>{
       arr.map(item => out += `,'${item}'`);
       return out.substring(1);
     }
-    const filterQryConstruct = (filter, value) => ` and ${filter} IN (${value ? arrayReduce(value):""})`;
-    // const ratingQry = (value) => `and rating >= ${value}`;
-    
+    const filterQryConstruct = (filter, value) => ` and ${filter} IN (${value ? arrayReduce(value):""})`;    
     let qry;
     if(filter.culinarian){
       qry = `select r.id, r.image, r.total_time, r.name, r.cuisine, u.first_name, r.status
