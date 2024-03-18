@@ -9,19 +9,29 @@ const Notification = () => {
   const toggleVisibility = () => {
     setVisible(!visible);
   };
-
+  // to fetch data for notifications
   useEffect(() => {
-    const id = Cookies.get("user_id");
-    axios
-      .get(`http://localhost:1200/notify/notification1?user_id=${id}`)
-      .then((response) => {
+    const fetchNotifications = async () => {
+      try {
+        const id = Cookies.get("user_id");
+        const response = await axios.get(
+          `http://localhost:1200/notify/notification1?user_id=${id}`
+        );
         const notificationsData = response.data;
-        console.log(response.data);
         setNotifications(notificationsData);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching notification data:", error);
-      });
+      }
+    };
+
+    // Fetch notifications initially
+    fetchNotifications();
+
+    // Fetch notifications every 60 seconds
+    const interval = setInterval(fetchNotifications, 60000);
+
+    // Cleanup function to clear the interval
+    return () => clearInterval(interval);
   }, []);
 
   // Function to format date
@@ -51,13 +61,19 @@ const Notification = () => {
                   {formatDate(notification.created_at)}
                 </div>
                 <div className="flex float-start ml-2">
-                  <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
-                    <strong className="text-black">
-                      {notification.first_name}
-                    </strong>{" "}
-                    {notification.reason}
-                    
-                  </div>
+                  {notification.role === "admin" && (
+                    <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
+                      {`${notification.reason}`}
+                    </div>
+                  )}
+                  {notification.role !== "admin" && (
+                    <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
+                      {notification.first_name && (
+                        <b>{notification.first_name}</b>
+                      )}
+                      {notification.reason && ` ${notification.reason}`}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

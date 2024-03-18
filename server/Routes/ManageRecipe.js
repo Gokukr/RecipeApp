@@ -44,12 +44,34 @@ router.post("/add", async (req, res) => {
         userId,
       ]
     );
-
     res.json(newRecipe.rows[0]);
+    if(!AddNotification(newRecipe.rows[0].id,newRecipe.rows[0].user_id,newRecipe.rows[0].name))
+    {
+       console.log("Notification is not added")
+    }
+    
   } catch (err) {
     console.error(err.message);
   }
 });
+async function AddNotification(recipe_id,user_id, Recipename){ 
+    try{
+      const name = await pool.query("select * from user_data where id=$1",[user_id])
+      const requires = await pool.query(
+        "select * from user_data where role='admin'"
+      );
+      const reason = "Culinarian "+ name.rows[0].first_name + "request for accept the recipe name " +  Recipename;
+      await pool.query(
+        "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
+        [requires.rows[0].id, recipe_id, reason]
+      );
+      return true;
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
+  }
 
 // Update a recipe
 router.put("/update", async (req, res) => {

@@ -31,9 +31,7 @@ const Header = memo(() => {
   function handleRecipeReqClick() {
     navigator("/recipe-request");
   }
-  function handleMyRecipes() {
-    navigator("#");
-  }
+
   const notify = (message) => toast(message);
   function handleLogout() {
     Cookies.remove("token");

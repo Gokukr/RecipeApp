@@ -27,7 +27,7 @@ const SearchBar = ({
   useEffect(() => {
     fetchCulinarians();
   }, []);
-
+  //to fetch culinarians
   const fetchCulinarians = async () => {
     try {
       const response = await fetch(
@@ -46,10 +46,11 @@ const SearchBar = ({
     setSearchTerm(event.target.value);
     console.log("search item", searchTerm);
   };
-
+  // for filter toggle
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
+  //handle selected filters
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters({
       ...selectedFilters,
@@ -64,22 +65,14 @@ const SearchBar = ({
       culinarian: event.target.value,
     });
   };
+  //apply filters
   const handleApplyFilters = () => {
     console.log("Selected Filters:", selectedFilters);
     onSearch(searchTerm, selectedFilters);
-    // JSON.stringify(selectedFilters) ==
-    //   JSON.stringify({
-    //     cuisine: [],
-    //     mealType: [],
-    //     courseType: [],
-    //     rating: [],
-    //     culinarian: "",
-    //   }) && searchTerm === ""
-    //   ? allRecipe(true)
-    //   : allRecipe(false);
+
     toggleSidebar();
   };
-
+  // cancel filters
   const handleCancelFilters = () => {
     setSelectedFilters({
       cuisine: [],
@@ -91,15 +84,11 @@ const SearchBar = ({
     // Close the sidebar
     toggleSidebar();
   };
-  // const handleCulinarianChange = (event) => {
-  //   setSelectedFilters({
-  //     ...selectedFilters,
-  //     culinarian: event.target.value,
-  //   });
-  // };
+
   const toggleNotification = () => {
     setNotificationVisible(!notificationVisible);
   };
+  // reset filters
   const handleResetFilters = () => {
     setSelectedFilters({
       cuisine: [],
@@ -113,19 +102,6 @@ const SearchBar = ({
   React.useEffect(() => {
     onSearch(searchTerm, selectedFilters);
   }, [searchTerm]);
-
-  // React.useEffect(() => {
-  //   JSON.stringify(selectedFilters) ==
-  //     JSON.stringify({
-  //       cuisine: [],
-  //       mealType: [],
-  //       courseType: [],
-  //       rating: [],
-  //       culinarian: "",
-  //     }) && searchTerm === ""
-  //     ? allRecipe(true)
-  //     : allRecipe(false);
-  // }, [searchTerm]);
 
   return (
     <div

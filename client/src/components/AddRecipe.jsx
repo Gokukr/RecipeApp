@@ -46,8 +46,15 @@ const AddRecipe = () => {
           newRecipe
         );
         console.log(newRecipe);
-        if (role === "admin") notify("Recipe added successfully!");
-        else notify("Request sent to add recipe");
+        if (role === "admin") 
+        {
+        notify("Recipe added successfully!");
+        }
+        else 
+        {
+          notify("Request sent to add recipe");
+             
+        }
         setTimeout(() => {
           Navigate("/dashboard");
         }, 2000);

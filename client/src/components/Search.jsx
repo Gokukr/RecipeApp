@@ -1,29 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
-// import Container from "./Container";
-// import Card from "./Card";
-// import FilterDialog from "./FilterDialog";
-// import applyFilters from "./Filter";
+
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-// import RecipeContainer from "./RecipeContainer";
+
 
 const Search = ({ allRecipe, setData = (a) => a }) => {
   const [role, setRole] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
 
-  // const [filterOptions, setFilterOptions] = useState({
-  //   cuisine: [],
-  //   mealType: [],
-  //   courseType: [],
-  //   rating: [],
-  // });
-  // const [showFilterDialog, setShowFilterDialog] = useState(false);
-  // const [searchUsed, setSearchUsed] = useState(false);
-  // const [originalData, setOriginalData] = useState([]);
-
+  
+//to fetch recipes
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:1200/api/recipes/all");
@@ -33,7 +22,7 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
       console.error("Error fetching data:", error);
     }
   };
-
+// for search and filter
   const handleSearch = async (
     query = "",
     filters = {
@@ -68,7 +57,7 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
     }
   };
   const [buttonPosition, setButtonPosition] = useState("bottom-[90px]");
-
+// for scroll bar
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
@@ -92,7 +81,7 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-
+// for finding type of user
   useEffect(() => {
     fetchData();
 
@@ -104,7 +93,7 @@ const Search = ({ allRecipe, setData = (a) => a }) => {
   return (
     <>
       {role !== "user" && (
-        // <div className="absolute top-0 right-0 mr-4 mt-4">
+        
         <div
           className={`fixed ${buttonPosition} right-[80px] ${
             isHovered ? "w-[150px] h-[50px]" : " w-[70px] h-[70px]"

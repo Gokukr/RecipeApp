@@ -18,7 +18,7 @@ router.get("/notification1", async (req, res) => {
     console.log("User ID:", user_id);
     const result = await db.query(
       `
-      SELECT n.*, u.first_name 
+      SELECT n.*, u.first_name ,u.role
       FROM notifications AS n
       JOIN user_data AS u ON n.user_id = u.id
       WHERE n.user_id = $1
@@ -82,7 +82,7 @@ router.post("/notifications", async (req, res) => {
     console.log(user_id, "recipe");
 
     await db.query(
-      "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3, $4)",
+      "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
       [user_id, recipe_id, reason]
     );
 

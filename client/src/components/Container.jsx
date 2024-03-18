@@ -1,7 +1,7 @@
 import React from "react";
 
 const Container = ({ cuisineName, children }) => {
-  // Convert a single child into an array if it's not already an array
+  
   const childrenArray = Array.isArray(children) ? children : [children];
 
   return (
