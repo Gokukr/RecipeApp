@@ -45,33 +45,41 @@ router.post("/add", async (req, res) => {
       ]
     );
     res.json(newRecipe.rows[0]);
-    if(!AddNotification(newRecipe.rows[0].id,newRecipe.rows[0].user_id,newRecipe.rows[0].name))
-    {
-       console.log("Notification is not added")
+    if (
+      !AddNotification(
+        newRecipe.rows[0].id,
+        newRecipe.rows[0].user_id,
+        newRecipe.rows[0].name
+      )
+    ) {
+      console.log("Notification is not added");
     }
-    
   } catch (err) {
     console.error(err.message);
   }
 });
-async function AddNotification(recipe_id,user_id, Recipename){ 
-    try{
-      const name = await pool.query("select * from user_data where id=$1",[user_id])
-      const requires = await pool.query(
-        "select * from user_data where role='admin'"
-      );
-      const reason = "Culinarian "+ name.rows[0].first_name + "request for accept the recipe name " +  Recipename;
-      await pool.query(
-        "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
-        [requires.rows[0].id, recipe_id, reason]
-      );
-      return true;
-    }
-    catch(err)
-    {
-      console.log(err)
-    }
+async function AddNotification(recipe_id, user_id, Recipename) {
+  try {
+    const name = await pool.query("select * from user_data where id=$1", [
+      user_id,
+    ]);
+    const requires = await pool.query(
+      "select * from user_data where role='admin'"
+    );
+    const reason =
+      name.rows[0].first_name +
+      " " +
+      "request for accept the recipe name " +
+      Recipename;
+    await pool.query(
+      "INSERT INTO notifications(user_id, recipe_id, reason) VALUES ($1, $2, $3)",
+      [requires.rows[0].id, recipe_id, reason]
+    );
+    return true;
+  } catch (err) {
+    console.log(err);
   }
+}
 
 // Update a recipe
 router.put("/update", async (req, res) => {
@@ -139,10 +147,9 @@ router.put("/update", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const deleteRecipe = await pool.query(
-      "DELETE FROM recipe WHERE id = $1",
-      [id]
-    );
+    const deleteRecipe = await pool.query("DELETE FROM recipe WHERE id = $1", [
+      id,
+    ]);
     res.json({ message: "Recipe deleted successfully" });
   } catch (err) {
     console.error(err.message);
@@ -153,13 +160,10 @@ router.delete("/delete/:id", async (req, res) => {
 router.put("/status", async (req, res) => {
   try {
     const { recipeStatus, recipeId } = req.body;
-    console.log(recipeStatus, recipeId)
+    console.log(recipeStatus, recipeId);
     const updatedStatus = await pool.query(
       `UPDATE recipe SET status = $1 WHERE id = $2 RETURNING *; `,
-      [
-        recipeStatus,
-        recipeId,
-      ]
+      [recipeStatus, recipeId]
     );
     res.json(updatedStatus.rows[0]);
   } catch (err) {
@@ -171,13 +175,10 @@ router.put("/status", async (req, res) => {
 router.put("/status", async (req, res) => {
   try {
     const { recipeStatus, recipeId } = req.body;
-    console.log(recipeStatus, recipeId)
+    console.log(recipeStatus, recipeId);
     const updatedStatus = await pool.query(
       `UPDATE recipe SET status = $1 WHERE id = $2 RETURNING *; `,
-      [
-        recipeStatus,
-        recipeId,
-      ]
+      [recipeStatus, recipeId]
     );
     res.json(updatedStatus.rows[0]);
   } catch (err) {
@@ -196,23 +197,42 @@ router.get("/myrecipes/:id", async (req, res) => {
   };
   const arrayReduce = (arr) => {
     let out = "";
-    arr.map(item => out += `,'${item}'`);
+    arr.map((item) => (out += `,'${item}'`));
     return out.substring(1);
-  }
-  const filterQryConstruct = (filter, value) => ` and ${filter} IN (${value ? arrayReduce(value) : ""})`;
+  };
+  const filterQryConstruct = (filter, value) =>
+    ` and ${filter} IN (${value ? arrayReduce(value) : ""})`;
   let qry = `select r.id, r.image, r.total_time, r.name, r.cuisine, u.first_name, r.status
     from recipe r JOIN user_data u ON u.id = r.user_id
     where u.id = '${req.params.id}'
       and r.name ilike '%${searchText}%' 
       ${filter.rating ? `and r.rating >= ${filter.rating[0]}` : ""} 
-      ${filter.mealType ? (Array.isArray(filter.mealType) ? filterQryConstruct("r.meal_type", filter.mealType) : `and r.meal_type = '${filter.mealType}'`) : ""} 
-      ${filter.course ? (Array.isArray(filter.course) ? filterQryConstruct("r.course_type", filter.course) : `and r.course_type = '${filter.course}'`) : ""} 
-      ${filter.cuisine ? (Array.isArray(filter.cuisine) ? filterQryConstruct("r.cuisine", filter.cuisine) : `and r.cuisine = '${filter.cuisine}'`) : ""};
+      ${
+        filter.mealType
+          ? Array.isArray(filter.mealType)
+            ? filterQryConstruct("r.meal_type", filter.mealType)
+            : `and r.meal_type = '${filter.mealType}'`
+          : ""
+      } 
+      ${
+        filter.course
+          ? Array.isArray(filter.course)
+            ? filterQryConstruct("r.course_type", filter.course)
+            : `and r.course_type = '${filter.course}'`
+          : ""
+      } 
+      ${
+        filter.cuisine
+          ? Array.isArray(filter.cuisine)
+            ? filterQryConstruct("r.cuisine", filter.cuisine)
+            : `and r.cuisine = '${filter.cuisine}'`
+          : ""
+      };
       `;
   try {
     const allMyRecipes = await pool.query(qry);
     res.json(allMyRecipes.rows);
-    console.log(allMyRecipes.rows)
+    console.log(allMyRecipes.rows);
   } catch (err) {
     console.error(err.message);
   }

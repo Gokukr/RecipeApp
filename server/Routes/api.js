@@ -41,7 +41,7 @@ router.post("/recipe-response/:recipeId", async (req, res) => {
       [req.params.recipeId]
     );
     let msg;
-    if (req.body.message === undefined) {
+    if (req.body.message) {
       msg = `${recipeDetail.rows[0].name}: Your recipe has been accepted`;
     } else {
       msg = req.body.message;
@@ -100,11 +100,11 @@ router.post("/:userId/save-a-recipe", async (req, res) => {
   res.send(result);
 });
 
-function isStrongPassword(password) {
-  const strongRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return strongRegex.test(password);
-}
+// function isStrongPassword(password) {
+//   const strongRegex =
+//     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+//   return strongRegex.test(password);
+// }
 
 // router.get("/api/data", (req, res) => {
 //   const data = { message: "Hello world" };
@@ -123,13 +123,13 @@ router.post("/register", async (req, res) => {
       password,
       repassword,
     } = req.body;
-    if (!isStrongPassword(password)) {
-      return res
-        .status(401)
-        .send(
-          "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
-        );
-    }
+    // if (!isStrongPassword(password)) {
+    //   return res
+    //     .status(401)
+    //     .send(
+    //       "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
+    //     );
+    // }
     if (repassword === password) {
       const registration = await db.query(
         "SELECT * FROM user_data WHERE email = $1",
@@ -311,13 +311,13 @@ router.post("/OtpVerify", async (req, res) => {
 router.post("/ChangePassword", async (req, res) => {
   try {
     const { email, Password, repassword } = req.body;
-    if (!isStrongPassword(Password)) {
-      return res
-        .status(401)
-        .send(
-          "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
-        );
-    }
+    // if (!isStrongPassword(Password)) {
+    //   return res
+    //     .status(401)
+    //     .send(
+    //       "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long"
+    //     );
+    // }
     if (Password == repassword) {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);

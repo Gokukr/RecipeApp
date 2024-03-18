@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-
 const Notification = () => {
   const [visible, setVisible] = useState(true);
   const [notifications, setNotifications] = useState([]);
@@ -9,29 +8,19 @@ const Notification = () => {
   const toggleVisibility = () => {
     setVisible(!visible);
   };
-  // to fetch data for notifications
+
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const id = Cookies.get("user_id");
-        const response = await axios.get(
-          `http://localhost:1200/notify/notification1?user_id=${id}`
-        );
+    const id = Cookies.get("user_id");
+    axios
+      .get(`http://localhost:1200/notify/notification1?user_id=${id}`)
+      .then((response) => {
         const notificationsData = response.data;
+        console.log(response.data);
         setNotifications(notificationsData);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching notification data:", error);
-      }
-    };
-
-    // Fetch notifications initially
-    fetchNotifications();
-
-    // Fetch notifications every 60 seconds
-    const interval = setInterval(fetchNotifications, 60000);
-
-    // Cleanup function to clear the interval
-    return () => clearInterval(interval);
+      });
   }, []);
 
   // Function to format date
@@ -52,31 +41,30 @@ const Notification = () => {
             marginRight: "200px",
           }}
         >
-          {notifications
-            .slice()
-            .reverse()
-            .map((notification, index) => (
-              <div key={index} className="flex flex-col mb-3 mr-6 mt-1">
-                <div className="text-center justify-center text-xs text-gray-500 mb-2">
-                  {formatDate(notification.created_at)}
-                </div>
-                <div className="flex float-start ml-2">
-                  {notification.role === "admin" && (
-                    <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
-                      {`${notification.reason}`}
-                    </div>
-                  )}
-                  {notification.role !== "admin" && (
-                    <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
-                      {notification.first_name && (
-                        <b>{notification.first_name}</b>
-                      )}
-                      {notification.reason && ` ${notification.reason}`}
-                    </div>
-                  )}
-                </div>
+          {notifications.map((notification, index) => (
+            <div key={index} className="flex flex-col mb-3 mr-6 mt-1">
+              <div className="text-center justify-center text-xs text-gray-500 mb-2">
+                {formatDate(notification.created_at)}
               </div>
-            ))}
+              <div className="flex float-start ml-2">
+                {notification.role === "admin" && (
+                  <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-sans">
+                    {/* Conditional bolding using template literal and split() */}
+                    <b>{notification.reason.split(" ")[0]}</b>{" "}
+                    {notification.reason.split(" ").slice(1).join(" ")}
+                  </div>
+                )}
+                {notification.role != "admin" && (
+                  <div className="bg-gray-200 rounded-lg p-0 text-xs md:p-2 md:text-sm font-open-san">
+                    {notification.first_name && (
+                      <b>{notification.first_name}</b>
+                    )}
+                    {notification.reason && ` ${notification.reason}`}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </>
