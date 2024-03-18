@@ -8,10 +8,12 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
   const notify = (message) => toast(message);
   const [feedbackText, setFeedbackText] = useState("");
 
+  //record feedback text
   const handleChange = (event) => {
     setFeedbackText(event.target.value.trim());
   };
 
+  //accept culinarian
   function handleAccept() {
     const updatedStatus = "Accepted";
     axios
@@ -40,6 +42,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
       });
   }
 
+  //reject culinarian
   function handleReject() {
     const updatedStatus = "Rejected";
     axios
@@ -74,6 +77,7 @@ const AcceptDeleteReq = ({ handleClose, status, culId, user_id }) => {
       });
   }
 
+  //close modal popup
   const cancel = () => {
     handleClose();
   };
