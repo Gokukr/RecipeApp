@@ -17,7 +17,8 @@ const ChangePasswordModal = ({ handleClose }) => {
   const handleChange1 = (event) => setOldPassword(event.target.value);
   const handleChange2 = (event) => setNewPassword(event.target.value);
   const handleChange3 = (event) => setConfirmPassword(event.target.value);
-
+  
+  //change password
   const handleChangePassword = () => {
     if (oldPassword === "" || newPassword === "" || confirmPassword === "") {
       notify("Fields Empty !!");
@@ -53,6 +54,8 @@ const ChangePasswordModal = ({ handleClose }) => {
         });
     }
   };
+
+  //close modal popup
   const cancelDelete = () => {
     handleClose();
   };
